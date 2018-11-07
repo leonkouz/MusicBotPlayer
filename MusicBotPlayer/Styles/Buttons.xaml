@@ -11,13 +11,13 @@
     <Style TargetType="{x:Type Button}" x:Key="MenuButton" BasedOn="{StaticResource {x:Type Button}}">
 
         <Setter Property="Background" Value="{StaticResource BackgroundFlatGrayGradient}"/>
+        <Setter Property="BorderBrush" Value="DimGray"/>
+        <Setter Property="BorderThickness" Value="1.5"/>
         <Setter Property="Foreground" Value="{StaticResource ForegroundGrayBrush}"/>
-        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
         <Setter Property="Padding" Value="15 5"/>
-        <Setter Property="Margin" Value="0 10"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -28,26 +28,23 @@
                             BorderThickness="{TemplateBinding BorderThickness}" 
                             Background="{TemplateBinding Background}" 
                             SnapsToDevicePixels="True">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding ImageSource, RelativeSource={RelativeSource TemplatedParent}}"
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                   Margin="{TemplateBinding Padding}" 
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                   />
                             <TextBlock x:Name="textBox"
                                        Text="{TemplateBinding Content}" 
                                        FontFamily="{TemplateBinding FontFamily}"
                                        FontSize="{TemplateBinding FontSize}"
-                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                       Margin="{TemplateBinding Padding}" 
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                        />
-                        </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
 
-                        <Trigger Property="IsPressed" Value="True">
-                            <Trigger.EnterActions>
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Foreground" Value="White"/>
+
+                            <DataTrigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <local:LinearGradientAnimation Storyboard.TargetProperty="Background" 
@@ -56,8 +53,29 @@
                                                                        To="{StaticResource BackgroundPurpleGradient}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </Trigger.EnterActions>
+                            </DataTrigger.EnterActions>
+                            
+                            <DataTrigger.ExitActions>
+                                
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" 
+                                                                       Duration="0:0:0.2"
+                                                                       From="{StaticResource BackgroundPurpleGradient}"
+                                                                       To="{StaticResource BackgroundFlatGrayGradient}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource BackgroundPurpleGradient}"/>
+
                         </Trigger>
+
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:MusicBotPlayer"
         mc:Ignorable="d"
         Title="MainWindow" Height="535.805" Width="800">
+
+    <Window.DataContext>
+        <local:ApplicationViewModel/>
+    </Window.DataContext>
+
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -18,7 +23,8 @@
         <!-- Side Menu Bar -->
         <Grid Background="{StaticResource BackgroundDarkBrush}"
               Grid.Column="0"
-              HorizontalAlignment="Stretch">
+              HorizontalAlignment="Stretch"
+              >
 
             <TextBlock HorizontalAlignment="Left" 
                        Margin="22,27,0,0" 
@@ -40,23 +46,19 @@
                        Height="18" 
                        Width="68"/>
 
-            <Button Content="Youtube" 
-                    Style="{StaticResource MenuButton}"
-                    HorizontalAlignment="Left" 
-                    Margin="34,123,0,0" 
-                    VerticalAlignment="Top" 
-                    Width="170" 
-                    Height="34"/>
+            <local:SideMenuButton x:Name="YouTubeButton"
+                                  Margin="34,111,45,339"
+                                  Text="Youtube"
+                                  Command="{Binding MenuButtonClickedCommand}"
+                                  Click="SideMenuButton_Click"
+                                  />
 
-            <Button Content="Spotify" 
-                    HorizontalAlignment="Left"
-                    Margin="34,171,0,0" 
-                    VerticalAlignment="Top" 
-                    Width="170" 
-                    Height="34"/>
-
-
-
+            <local:SideMenuButton x:Name="SpotifyButton"
+                                  Margin="34,171,45,280"
+                                  Command="{Binding MenuButtonClickedCommand}"
+                                  Click="SideMenuButton_Click"
+                                  Text="Spotify"
+                                  />
 
         </Grid>
 

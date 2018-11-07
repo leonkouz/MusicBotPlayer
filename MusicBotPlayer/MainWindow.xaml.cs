@@ -20,9 +20,33 @@ namespace MusicBotPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<SideMenuButton> buttons = new List<SideMenuButton>();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            // Add the side menu buttons to the buttons list for later use.
+            buttons.Add(YouTubeButton);
+            buttons.Add(SpotifyButton);
+        }
+
+        /// <summary>
+        /// Fires when a <see cref="SideMenuButton"/> is clicked. Resets the 
+        /// IsSelected property on all buttons
+        /// </summary>
+        /// <param name="sender">The <see cref="SideMenuButton"/></param>
+        /// <param name="e"></param>
+        private void SideMenuButton_Click(object sender, EventArgs e)
+        {
+            foreach(SideMenuButton button in buttons)
+            {
+                button.IsSelected = false;
+            }
+
+            SideMenuButton bttn = (SideMenuButton)sender;
+
+            bttn.IsSelected = true;
         }
     }
 }
