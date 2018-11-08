@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\HorizontalMenuBar.xaml.cs">
+      <DependentUpon>HorizontalMenuBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SideMenuButton.xaml.cs">
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
     </Compile>
@@ -63,6 +66,10 @@
     <Compile Include="ViewModels\Base\DelegateCommand.cs" />
     <Compile Include="ViewModels\SpotifyViewModel.cs" />
     <Compile Include="ViewModels\YoutubeViewModel.cs" />
+    <Page Include="Controls\HorizontalMenuBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

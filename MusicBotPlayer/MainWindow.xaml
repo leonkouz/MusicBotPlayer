@@ -79,8 +79,12 @@
                 BorderBrush="DimGray"
                 BorderThickness="1 0 0 0">
 
-            <Grid >
-
+            <Grid>
+                <Canvas>
+                    
+                    <local:HorizontalMenuBar Margin="23,92,21,319"/>
+                    
+                </Canvas>
             </Grid>
 
         </Border>
