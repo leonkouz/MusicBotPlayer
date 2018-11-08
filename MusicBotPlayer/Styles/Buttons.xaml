@@ -7,8 +7,8 @@
         <ResourceDictionary Source="Colours.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <!-- Menu Button -->
-    <Style TargetType="{x:Type Button}" x:Key="MenuButton" BasedOn="{StaticResource {x:Type Button}}">
+    <!-- Side Menu Button -->
+    <Style TargetType="{x:Type Button}" x:Key="SideMenuButton" BasedOn="{StaticResource {x:Type Button}}">
 
         <Setter Property="Background" Value="{StaticResource BackgroundFlatGrayGradient}"/>
         <Setter Property="BorderBrush" Value="DimGray"/>

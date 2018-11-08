@@ -8,7 +8,7 @@
 
     <Button x:Name="button"
             Content="{Binding Path=Text}"
-            Style="{StaticResource MenuButton}"
+            Style="{StaticResource SideMenuButton}"
             Click="ButtonClick"
             VerticalAlignment="Center" 
             Width="170" 
