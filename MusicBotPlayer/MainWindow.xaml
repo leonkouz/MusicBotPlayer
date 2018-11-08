@@ -26,40 +26,51 @@
               HorizontalAlignment="Stretch"
               >
 
-            <TextBlock HorizontalAlignment="Left" 
-                       Margin="22,27,0,0" 
-                       Text="Music Bot Player" 
-                       FontFamily="Microsoft Sans Serif"
-                       FontSize="26"
-                       Foreground="White"
-                       VerticalAlignment="Top" 
-                       Height="31" 
-                       Width="199"/>
+            <Canvas>
 
-            <TextBlock HorizontalAlignment="Left" 
-                       Margin="22,88,0,0" 
-                       TextWrapping="Wrap" 
-                       Text="Integrations" 
-                       FontFamily="Microsoft Sans Serif"
-                       Foreground="White"
-                       VerticalAlignment="Top" 
-                       Height="18" 
-                       Width="68"/>
+                <TextBlock HorizontalAlignment="Left" 
+                           Text="Music Bot Player" 
+                           FontFamily="Microsoft Sans Serif"
+                           FontSize="26"
+                           Foreground="White"
+                           VerticalAlignment="Top" 
+                           Height="31" 
+                           Width="199" 
+                           Canvas.Left="22" 
+                           Canvas.Top="19"/>
 
-            <local:SideMenuButton x:Name="YouTubeButton"
-                                  Margin="34,111,45,339"
-                                  Text="Youtube"
-                                  Command="{Binding MenuButtonClickedCommand}"
-                                  Click="SideMenuButton_Click"
-                                  />
+                <TextBlock HorizontalAlignment="Left" 
+                           TextWrapping="Wrap" 
+                           Text="Integrations" 
+                           FontFamily="Microsoft Sans Serif"
+                           Foreground="White"
+                           VerticalAlignment="Top" 
+                           Height="18" 
+                           Width="68" 
+                           Canvas.Left="22" 
+                           Canvas.Top="75"/>
 
-            <local:SideMenuButton x:Name="SpotifyButton"
-                                  Margin="34,171,45,280"
-                                  Command="{Binding MenuButtonClickedCommand}"
-                                  Click="SideMenuButton_Click"
-                                  Text="Spotify"
-                                  />
+                <local:SideMenuButton x:Name="YouTubeButton"
+                                      Text="Youtube"
+                                      Command="{Binding MenuButtonClickedCommand}"
+                                      Click="SideMenuButton_Click" 
+                                      Height="54" 
+                                      Canvas.Left="31" 
+                                      Canvas.Top="157" 
+                                      Width="171"
+                                      />
 
+                <local:SideMenuButton x:Name="SpotifyButton"
+                                      Command="{Binding MenuButtonClickedCommand}"
+                                      Click="SideMenuButton_Click"
+                                      Text="Spotify" 
+                                      Height="54" 
+                                      Canvas.Left="31" 
+                                      Canvas.Top="98" 
+                                      Width="170"
+                                      />
+
+            </Canvas>
         </Grid>
 
         <!-- Main Content Area -->
@@ -87,55 +98,65 @@
                   HorizontalAlignment="Stretch"
                   >
 
-                <Button Margin="381,40,371,10"
-                        Content="Back"
-                        Width="40"
-                        Height="40"
-                        />
+                <Canvas>
 
-                <Button Margin="454,40,298,10"
-                        Width="40"
-                        Height="40"
-                        Content="Play/Pause" RenderTransformOrigin="0.25,0.269"/>
+                    <Button Content="Back"
+                            Width="40"
+                            Height="40" 
+                            Canvas.Left="378" 
+                            Canvas.Top="40"
+                            />
 
-                <Button Margin="526,40,226,10"
-                        Width="40"
-                        Height="40"
-                        Content="Forward"/>
+                    <Button Width="40"
+                            Height="40"
+                            Content="Play/Pause" 
+                            RenderTransformOrigin="0.25,0.269" 
+                            Canvas.Left="445" 
+                            Canvas.Top="40"/>
 
-                <Slider Margin="115,10,0,0" 
-                        VerticalAlignment="Top" 
-                        Width="647"/>
+                    <Button Width="40"
+                            Height="40"
+                            Content="Forward" 
+                            Canvas.Left="510" 
+                            Canvas.Top="40"/>
 
-                <Image HorizontalAlignment="Left" 
-                       Source="Images/AlbumPlaceholder.PNG"
-                       Height="70" 
-                       Margin="10,10,0,0" 
-                       VerticalAlignment="Top" 
-                       Width="89"/>
+                    <Slider VerticalAlignment="Top" 
+                            Width="647" 
+                            Canvas.Left="115" 
+                            Canvas.Top="12"/>
 
-                <TextBlock HorizontalAlignment="Left" 
-                           Margin="115,35,0,0" 
-                           TextWrapping="Wrap" 
-                           VerticalAlignment="Top"
-                           Foreground="White"
-                           >
+                    <Image HorizontalAlignment="Left" 
+                           Source="Images/AlbumPlaceholder.PNG"
+                           Height="70" 
+                           VerticalAlignment="Top" 
+                           Width="89" 
+                           Canvas.Left="10" 
+                           Canvas.Top="10"/>
 
-                    <TextBlock.Inlines>
-                        <Run FontWeight="Bold" FontSize="16" Text="Artist Name"/>
-                    </TextBlock.Inlines>
+                    <TextBlock HorizontalAlignment="Left" 
+                               TextWrapping="Wrap" 
+                               VerticalAlignment="Top"
+                               Foreground="White" Canvas.Left="115" Canvas.Top="37"
+                               >
 
-                </TextBlock>
-                
-                <TextBlock HorizontalAlignment="Left" 
-                           Margin="115,61,0,0" 
-                           Text="Song Name which runs off eventually with elip"
-                           TextTrimming="CharacterEllipsis"
-                           TextWrapping="NoWrap"
-                           VerticalAlignment="Top"
-                           Foreground="White" Width="209"
-                           />
+                        <TextBlock.Inlines>
+                            <Run FontWeight="Bold" FontSize="16" Text="Artist Name"/>
+                        </TextBlock.Inlines>
 
+                    </TextBlock>
+
+                    <TextBlock HorizontalAlignment="Left" 
+                               Text="Song Name which runs off eventually with elip"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="NoWrap"
+                               VerticalAlignment="Top"
+                               Foreground="White" 
+                               Width="209" 
+                               Canvas.Left="115" 
+                               Canvas.Top="63"
+                               />
+
+                </Canvas>
 
             </Grid>
         </Border>
