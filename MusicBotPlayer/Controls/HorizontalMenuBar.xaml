@@ -12,9 +12,9 @@
         <Border x:Name="canBorder"
                 
                 Panel.ZIndex="1"
-                BorderThickness="0 0 0 4"
+                BorderThickness="0 0 0 3"
                 Width="118"
-                Margin="1 0 0 0.5"
+                Margin="1 0 0 0"
                 Height="70"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
@@ -33,29 +33,40 @@
 
             <Button Width="120"
                     Height="70"
+                    Margin="0.3 0"
                     MouseEnter="Button_MouseEnter"
                     Background="{StaticResource BackgroundPurpleGradient}"
+                    BorderThickness="0"
                     Click="Button_Click"
                     Grid.Column="0"
                     />
 
             <Button Width="120"
                     Height="70"
+                    Margin="0.3 0"
                     MouseEnter="Button_MouseEnter"
+                    Background="{StaticResource BackgroundFlatGrayGradient}"
+                    BorderThickness="0"
                     Click="Button_Click"
                     Grid.Column="1"
                     />
 
             <Button Width="120"
                     Height="70"
+                    Margin="0.3 0"
                     MouseEnter="Button_MouseEnter"
+                    Background="{StaticResource BackgroundFlatGrayGradient}"
+                    BorderThickness="0"
                     Click="Button_Click"
                     Grid.Column="2"
                     />
 
             <Button Width="120"
                     Height="70"
+                    Margin="0.3 0"
+                    BorderThickness="0"
                     MouseEnter="Button_MouseEnter"
+                    Background="{StaticResource BackgroundFlatGrayGradient}"
                     Click="Button_Click"
                     Grid.Column="3"
                     />

@@ -37,6 +37,7 @@ namespace MusicBotPlayer
             canBorder.RenderTransform = trans;
             var be = new BackEase();
             DoubleAnimation da1 = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(300));
+            da1.AccelerationRatio = 1;
             trans.BeginAnimation(TranslateTransform.XProperty, da1);
             from = to;
         }

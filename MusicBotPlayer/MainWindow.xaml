@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicBotPlayer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="535.805" Width="800">
+        Title="MainWindow" Height="712.805" Width="1170.5">
 
     <Window.DataContext>
         <local:ApplicationViewModel/>
@@ -81,9 +81,9 @@
 
             <Grid>
                 <Canvas>
-                    
-                    <local:HorizontalMenuBar Margin="23,92,21,319"/>
-                    
+
+                    <local:HorizontalMenuBar Height="94" Canvas.Left="161" Canvas.Top="70" Width="528"/>
+
                 </Canvas>
             </Grid>
 
@@ -107,7 +107,7 @@
                     <Button Content="Back"
                             Width="40"
                             Height="40" 
-                            Canvas.Left="378" 
+                            Canvas.Left="550" 
                             Canvas.Top="40"
                             />
 
@@ -115,17 +115,17 @@
                             Height="40"
                             Content="Play/Pause" 
                             RenderTransformOrigin="0.25,0.269" 
-                            Canvas.Left="445" 
+                            Canvas.Left="616" 
                             Canvas.Top="40"/>
 
                     <Button Width="40"
                             Height="40"
                             Content="Forward" 
-                            Canvas.Left="510" 
+                            Canvas.Left="684" 
                             Canvas.Top="40"/>
 
                     <Slider VerticalAlignment="Top" 
-                            Width="647" 
+                            Width="1037" 
                             Canvas.Left="115" 
                             Canvas.Top="12"/>
 
