@@ -21,6 +21,8 @@ namespace MusicBotPlayer
     /// </summary>
     public partial class HorizontalMenuBar : UserControl
     {
+        private List<HorizontalMenuButton> buttons = new List<HorizontalMenuButton>();
+
         private double from = 0;
 
         private double selectedButtonOffset = 0;
@@ -28,6 +30,11 @@ namespace MusicBotPlayer
         public HorizontalMenuBar()
         {
             InitializeComponent();
+
+            buttons.Add(button1);
+            buttons.Add(button2);
+            buttons.Add(button3);
+            buttons.Add(button4);
         }
 
         private void MoveBorder(double xPosition)
@@ -36,15 +43,26 @@ namespace MusicBotPlayer
             TranslateTransform trans = new TranslateTransform();
             canBorder.RenderTransform = trans;
             var be = new BackEase();
-            DoubleAnimation da1 = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(300));
-            da1.AccelerationRatio = 1;
+            DoubleAnimation da1 = new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(300))
+            {
+                AccelerationRatio = 1
+            };
             trans.BeginAnimation(TranslateTransform.XProperty, da1);
             from = to;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void HorizontalMenuButton_Click(object sender, EventArgs e)
         {
-            var btn = sender as Button;
+            foreach (HorizontalMenuButton button in buttons)
+            {
+                button.IsSelected = false;
+            }
+
+            HorizontalMenuButton bttn = (HorizontalMenuButton)sender;
+
+            bttn.IsSelected = true;
+
+            var btn = sender as HorizontalMenuButton;
             double xOffset = GetVisualOffsetX(btn);
             selectedButtonOffset = xOffset;
             MoveBorder(xOffset);
@@ -53,7 +71,7 @@ namespace MusicBotPlayer
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
             from = GetBorderVisualOffsetX();
-            var btn = sender as Button;
+            var btn = sender as HorizontalMenuButton;
             double xOffset = GetVisualOffsetX(btn);
             MoveBorder(xOffset);
             from = xOffset;
@@ -64,7 +82,7 @@ namespace MusicBotPlayer
             MoveBorder(selectedButtonOffset);
         }
 
-        private double GetVisualOffsetX(Button button)
+        private double GetVisualOffsetX(HorizontalMenuButton button)
         {
             // Return the offset vector for the TextBlock object.
             Vector vector = VisualTreeHelper.GetOffset(button);
@@ -82,6 +100,6 @@ namespace MusicBotPlayer
             return visualTranform.Value.OffsetX;
         }
 
-
+       
     }
 }

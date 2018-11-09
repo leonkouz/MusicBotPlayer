@@ -81,4 +81,71 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <!-- Horizontal Menu Button -->
+    <Style TargetType="{x:Type Button}" x:Key="HorizontalMenuButton" BasedOn="{StaticResource {x:Type Button}}">
+
+        <Setter Property="Background" Value="{StaticResource BackgroundFlatGrayGradient}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{StaticResource ForegroundGrayBrush}"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+        
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            Background="{TemplateBinding Background}" 
+                            SnapsToDevicePixels="True">
+                        <TextBlock x:Name="textBox"
+                               Text="{TemplateBinding Content}" 
+                               Background="{TemplateBinding Background}"
+                               FontFamily="{TemplateBinding FontFamily}"
+                               FontSize="{TemplateBinding FontSize}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                               />
+                    </Border>
+                    <ControlTemplate.Triggers>
+
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+
+                            <Setter Property="Foreground" Value="White"/>
+
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" 
+                                                                       Duration="0:0:0.2"
+                                                                       From="{StaticResource BackgroundFlatGrayGradient}"
+                                                                       To="{StaticResource BackgroundPurpleGradient}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+
+                            <DataTrigger.ExitActions>
+
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" 
+                                                                       Duration="0:0:0.2"
+                                                                       From="{StaticResource BackgroundPurpleGradient}"
+                                                                       To="{StaticResource BackgroundFlatGrayGradient}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
 </ResourceDictionary>

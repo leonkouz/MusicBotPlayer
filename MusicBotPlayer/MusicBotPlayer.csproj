@@ -55,8 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\HorizontalMenuBar.xaml.cs">
+    <Compile Include="Controls\BaseButton.cs" />
+    <Compile Include="Controls\HorizontalMenu\HorizontalMenuBar.xaml.cs">
       <DependentUpon>HorizontalMenuBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HorizontalMenu\HorizontalMenuButton.xaml.cs">
+      <DependentUpon>HorizontalMenuButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SideMenuButton.xaml.cs">
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
@@ -66,9 +70,17 @@
     <Compile Include="ViewModels\Base\DelegateCommand.cs" />
     <Compile Include="ViewModels\SpotifyViewModel.cs" />
     <Compile Include="ViewModels\YoutubeViewModel.cs" />
-    <Page Include="Controls\HorizontalMenuBar.xaml">
+    <Page Include="Controls\HorizontalMenu\HorizontalMenuBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\HorizontalMenu\HorizontalMenuButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SideMenuButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -84,10 +96,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Controls\SideMenuButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Styles\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
