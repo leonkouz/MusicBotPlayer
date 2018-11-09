@@ -97,7 +97,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" 
-                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="1 0 0 1"
+                            BorderBrush="{StaticResource BackgroundDarkBrush}" 
                             Background="{TemplateBinding Background}" 
                             SnapsToDevicePixels="True">
                         <TextBlock x:Name="textBox"

@@ -30,14 +30,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <local:HorizontalMenuButton Width="120"
-                                        Height="70"
-                                        Text="Search"
-                                        MouseEnter="Button_MouseEnter"
-                                        Click="HorizontalMenuButton_Click"
-                                        Grid.Column="0"
-                                        x:Name="button1"
-                                        />
+                <local:HorizontalMenuButton Width="120"
+                                            Height="70"
+                                            Text="Search"
+                                            MouseEnter="Button_MouseEnter"
+                                            Click="HorizontalMenuButton_Click"
+                                            Grid.Column="0"
+                                            x:Name="button1"
+                                            />
 
             <local:HorizontalMenuButton Width="120"
                                         Height="70"
@@ -47,7 +47,7 @@
                                         Grid.Column="1"
                                         x:Name="button2"
                                         />
-            
+
             <local:HorizontalMenuButton Width="120"
                                         Height="70"
                                         Text="Test"
@@ -56,7 +56,7 @@
                                         Grid.Column="2"
                                         x:Name="button3"
                                         />
-            
+
             <local:HorizontalMenuButton Width="120"
                                         Height="70"
                                         Text="Test"
