@@ -82,6 +82,29 @@
             <Grid>
                 <Canvas>
 
+                    <Border Height="46" Width="47" Canvas.Left="227" Canvas.Top="19"
+                            CornerRadius="27"
+                            BorderBrush="{StaticResource BackgroundPurpleGradient}"
+                            Background="{StaticResource BackgroundPurpleGradient}"
+                            Panel.ZIndex="1"
+                            >
+                        <TextBlock Text="{StaticResource FontAwesomeSearchIcon}" 
+                                   FontFamily="{StaticResource FontAwesome}"
+                                   FontSize="23"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+
+                    <Border Canvas.Left="263" Canvas.Top="27"
+                            Width="330"
+                            Height="30"
+                            Panel.ZIndex="0"
+                            >
+                        <TextBox Background="{StaticResource BackgroundFlatGrayGradient}"
+                                 BorderThickness="0"/>
+                    </Border>
+
                     <local:HorizontalMenuBar Height="94" Canvas.Left="161" Canvas.Top="70" Width="528"/>
 
                 </Canvas>
