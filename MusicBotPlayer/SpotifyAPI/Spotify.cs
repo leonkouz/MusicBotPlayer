@@ -18,6 +18,17 @@ namespace MusicBotPlayer
         public static SpotifyAPI Api;
 
         /// <summary>
+        /// List of all search types.
+        /// </summary>
+        public static List<SearchType> AllSearchTypes = new List<SearchType>()
+            {
+                SearchType.album,
+                SearchType.artist,
+                SearchType.playlist,
+                SearchType.track,
+            };
+
+        /// <summary>
         /// Initialises the Spotify API.
         /// </summary>
         public Spotify()
@@ -39,7 +50,7 @@ namespace MusicBotPlayer
 
             Api = new SpotifyAPI(clientID, redirectID, state, scope, true);
         }
-       
+
         /// <summary>
         /// Creates a new thread and authenticates the API.
         /// </summary>

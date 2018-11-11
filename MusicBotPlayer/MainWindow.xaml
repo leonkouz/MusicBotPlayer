@@ -52,6 +52,8 @@
 
                 <local:SideMenuButton x:Name="YouTubeButton"
                                       Text="Youtube"
+                                      IsSelected="{Binding YoutubeViewModel.IsSelected, 
+                                      UpdateSourceTrigger=PropertyChanged}"
                                       Command="{Binding SideMenuButtonClickedCommand}"
                                       Click="SideMenuButton_Click" 
                                       Height="54" 
@@ -61,6 +63,8 @@
                                       />
 
                 <local:SideMenuButton x:Name="SpotifyButton"
+                                      IsSelected="{Binding SpotifyViewModel.IsSelected,
+                                      UpdateSourceTrigger=PropertyChanged, FallbackValue=true}"
                                       Command="{Binding SideMenuButtonClickedCommand}"
                                       Click="SideMenuButton_Click"
                                       Text="Spotify" 
@@ -69,7 +73,6 @@
                                       Canvas.Top="98" 
                                       Width="170"
                                       />
-
             </Canvas>
         </Grid>
 

@@ -58,8 +58,6 @@ namespace MusicBotPlayer
             // Add the side menu buttons to the buttons list for later use.
             buttons.Add(YouTubeButton);
             buttons.Add(SpotifyButton);
-
-            SpotifyButton.IsSelected = true;
         }
 
         private void InitialiseSpotifyApi()

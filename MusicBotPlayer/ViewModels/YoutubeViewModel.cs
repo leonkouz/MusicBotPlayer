@@ -8,6 +8,9 @@ namespace MusicBotPlayer
 {
     public class YoutubeViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Indicates whether the View Model is selected.
+        /// </summary>
         private bool isSelected = false;
 
         /// <summary>
@@ -23,6 +26,9 @@ namespace MusicBotPlayer
             }
         }
 
+        public YoutubeViewModel()
+        {
 
+        }
     }
 }

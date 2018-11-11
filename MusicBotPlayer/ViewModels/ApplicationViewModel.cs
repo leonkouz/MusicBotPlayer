@@ -23,6 +23,8 @@ namespace MusicBotPlayer
 
         public ApplicationViewModel()
         {
+            SpotifyViewModel.IsSelected = true;
+
             SideMenuButtonClickedCommand = new DelegateCommand(OnSideMenuButtonClicked);
         }
        
