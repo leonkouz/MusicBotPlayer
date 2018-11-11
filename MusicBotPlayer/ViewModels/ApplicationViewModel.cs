@@ -11,36 +11,36 @@ namespace MusicBotPlayer
 {
     public class ApplicationViewModel : BaseViewModel
     {
-        private ObservableCollection<BaseViewModel> integrations = new ObservableCollection<BaseViewModel>();
+        /// <summary>
+        /// The Youtube View Model.
+        /// </summary>
+        public YoutubeViewModel YoutubeViewModel = new YoutubeViewModel();
 
-        public ObservableCollection<BaseViewModel> Integrations
-        {
-            get => Integrations;
-        }
+        /// <summary>
+        /// The Spotify View Model.
+        /// </summary>
+        public SpotifyViewModel SpotifyViewModel = new SpotifyViewModel();
 
         public ApplicationViewModel()
         {
-            // Initialise integration view models
-            YoutubeViewModel youtubeViewModel = new YoutubeViewModel();
-            SpotifyViewModel spotifyViewModel = new SpotifyViewModel();
-
-            // Add integrations to list.
-            integrations.Add(youtubeViewModel);
-            integrations.Add(spotifyViewModel);
-
-            MenuButtonClickedCommand = new DelegateCommand(OnSendMessage);
+            SideMenuButtonClickedCommand = new DelegateCommand(OnSideMenuButtonClicked);
         }
        
         /// <summary>
-        /// The command to register for a new account
+        /// The command for when a <see cref="SideMenuButton"/> is clicked.
         /// </summary>
-        public ICommand MenuButtonClickedCommand { get; set; }
+        public ICommand SideMenuButtonClickedCommand { get; set; }
 
-        private void OnSendMessage()
+        
+        /// <summary>
+        /// Fires when a <see cref="SideMenuButton"/> is clicked.
+        /// </summary>
+        private void OnSideMenuButtonClicked()
         {
 
-
         }
+
+        
 
 
     }

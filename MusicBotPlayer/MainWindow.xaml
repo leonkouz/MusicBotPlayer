@@ -52,7 +52,7 @@
 
                 <local:SideMenuButton x:Name="YouTubeButton"
                                       Text="Youtube"
-                                      Command="{Binding MenuButtonClickedCommand}"
+                                      Command="{Binding SideMenuButtonClickedCommand}"
                                       Click="SideMenuButton_Click" 
                                       Height="54" 
                                       Canvas.Left="31" 
@@ -61,7 +61,7 @@
                                       />
 
                 <local:SideMenuButton x:Name="SpotifyButton"
-                                      Command="{Binding MenuButtonClickedCommand}"
+                                      Command="{Binding SideMenuButtonClickedCommand}"
                                       Click="SideMenuButton_Click"
                                       Text="Spotify" 
                                       Height="54" 
@@ -79,7 +79,7 @@
                 BorderBrush="DimGray"
                 BorderThickness="1 0 0 0">
 
-            <Grid>
+            <Grid DataContext="{Binding SpotifyViewModel}" >
                 <Canvas>
 
                     <!-- Search Bar -->
@@ -103,14 +103,15 @@
                             Panel.ZIndex="0"
                             >
                         <TextBox Background="{StaticResource BackgroundFlatGrayGradient}"
+                                 AcceptsReturn="False"
                                  BorderThickness="0" 
                                  HorizontalContentAlignment="Left"
                                  VerticalContentAlignment="Center"
                                  Padding="25 0 0 0"
                                  Foreground="White"
                                  CaretBrush="White"
-                                 
-                                 />
+                                 KeyDown="SearchBar_KeyDown"/>
+
                     </Border>
 
                     <local:HorizontalMenuBar Height="94" Canvas.Left="161" Canvas.Top="70" Width="528"/>

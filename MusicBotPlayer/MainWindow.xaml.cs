@@ -24,19 +24,42 @@ namespace MusicBotPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// The Side Menu buttons.
+        /// </summary>
         private List<SideMenuButton> buttons = new List<SideMenuButton>();
 
+        /// <summary>
+        /// The <see cref="ManualResetEvent"/> for the spotify authentication process.
+        /// </summary>
         private ManualResetEvent spotifyAuthenticationCompleted;
 
+        /// <summary>
+        /// The Application View Model.
+        /// </summary>
+        private ApplicationViewModel viewModel;
+
+        /// <summary>
+        /// Indicates whether the Spotify API has authenticated yet.
+        /// </summary>
+        private bool spotifyAuthenticated;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+
+            viewModel = (ApplicationViewModel)this.DataContext;
 
             InitialiseSpotifyApi();
 
             // Add the side menu buttons to the buttons list for later use.
             buttons.Add(YouTubeButton);
             buttons.Add(SpotifyButton);
+
+            SpotifyButton.IsSelected = true;
         }
 
         private void InitialiseSpotifyApi()
@@ -52,15 +75,19 @@ namespace MusicBotPlayer
 
             string authUrl = Spotify.Api.GetAuthenticationUrl();
 
-            browser.Navigated += Browser_Navigated;
             browser.Navigate(authUrl);
-            
         }
 
+        /// <summary>
+        /// Fires when the Spotify API has authenticated.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void API_Authenticated(object sender, EventArgs e)
         {
             this.Dispatcher.Invoke(() =>
             {
+                spotifyAuthenticated = true;
                 browser.Visibility = Visibility.Hidden;
                 browser.IsEnabled = false;
             });
@@ -82,6 +109,23 @@ namespace MusicBotPlayer
             SideMenuButton bttn = (SideMenuButton)sender;
 
             bttn.IsSelected = true;
+        }
+
+        /// <summary>
+        /// Fires when a key is pressed while the Search Bar is in focus.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchBar_KeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+
+            // If the enter key is pressed and the Spotify API has authenticated, 
+            // do a search.
+            if(e.Key == Key.Enter && spotifyAuthenticated == true)
+            {
+                viewModel.SpotifyViewModel.Search(txtBox.Text);
+            }
         }
     }
 }
