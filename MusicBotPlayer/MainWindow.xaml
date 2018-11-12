@@ -101,7 +101,7 @@
                     </Border>
 
                     <Border Canvas.Left="263" Canvas.Top="27"
-                            Width="330"
+                            Width="422"
                             Height="30"
                             Panel.ZIndex="0"
                             >
@@ -117,7 +117,8 @@
 
                     </Border>
 
-                    <local:HorizontalMenuBar Height="94" Canvas.Left="10" Canvas.Top="65" Width="865"/>
+                    <local:HorizontalMenuBar x:Name="horizontalMenuBar"
+                                             Canvas.Left="32" Canvas.Top="80" />
 
                     <WebBrowser x:Name="browser"
                                 Width="839"

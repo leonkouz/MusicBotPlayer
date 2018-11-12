@@ -5,14 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicBotPlayer"
              mc:Ignorable="d">
+
     <Grid Height="70"
-          Width="800"
+          Width="850"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
           MouseLeave="Grid_MouseLeave">
 
         <Border x:Name="canBorder"
                 Panel.ZIndex="1"
                 BorderThickness="0 0 0 3"
-                Width="199"
+                Width="211"
                 Margin="1 0 0 0"
                 Height="70"
                 VerticalAlignment="Bottom"
