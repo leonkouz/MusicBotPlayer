@@ -38,10 +38,12 @@ namespace MusicBotPlayer
 
         /// <summary>
         /// Fires when a key is pressed while the Search Bar is in focus.
+        /// Requests a search for specified text from the Spotify API.
         /// </summary>
         public void Search(string text)
         {
-            SearchResult test = JsonConvert.DeserializeObject<SearchResult>(Spotify.Api.Search(text, Spotify.AllSearchTypes, 20, 0));
+            string t = Spotify.Api.Search(text, Spotify.AllSearchTypes, 20, 0);
+            SearchResult test = JsonConvert.DeserializeObject<SearchResult>(t);
         }
     }
 }

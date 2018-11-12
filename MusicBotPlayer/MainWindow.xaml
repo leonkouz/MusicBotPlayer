@@ -117,7 +117,7 @@
 
                     </Border>
 
-                    <local:HorizontalMenuBar Height="94" Canvas.Left="161" Canvas.Top="70" Width="528"/>
+                    <local:HorizontalMenuBar Height="94" Canvas.Left="10" Canvas.Top="65" Width="865"/>
 
                     <WebBrowser x:Name="browser"
                                 Width="839"

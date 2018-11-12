@@ -113,6 +113,7 @@ namespace MusicBotPlayer
         /// </summary>
         private void Grid_MouseLeave(object sender, MouseEventArgs e)
         {
+            from = GetBorderVisualOffsetX();
             MoveBorder(selectedButtonOffset);
         }
 

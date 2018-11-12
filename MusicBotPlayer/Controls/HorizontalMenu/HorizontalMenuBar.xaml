@@ -4,15 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicBotPlayer"
-             mc:Ignorable="d" Height="94.386" Width="496.822">
+             mc:Ignorable="d">
     <Grid Height="70"
-          Width="480"
+          Width="800"
           MouseLeave="Grid_MouseLeave">
 
         <Border x:Name="canBorder"
                 Panel.ZIndex="1"
                 BorderThickness="0 0 0 3"
-                Width="118"
+                Width="199"
                 Margin="1 0 0 0"
                 Height="70"
                 VerticalAlignment="Bottom"
@@ -21,7 +21,7 @@
                 >
         </Border>
 
-        <Grid>
+        <Grid HorizontalAlignment="Stretch">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -30,36 +30,28 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-                <local:HorizontalMenuButton Width="120"
-                                            Height="70"
-                                            Text="Search"
+                <local:HorizontalMenuButton Text="Search"
                                             MouseEnter="Button_MouseEnter"
                                             Click="HorizontalMenuButton_Click"
                                             Grid.Column="0"
                                             x:Name="button1"
                                             />
 
-            <local:HorizontalMenuButton Width="120"
-                                        Height="70"
-                                        Text="My Library"
+            <local:HorizontalMenuButton Text="My Library"
                                         MouseEnter="Button_MouseEnter"
                                         Click="HorizontalMenuButton_Click"
                                         Grid.Column="1"
                                         x:Name="button2"
                                         />
 
-            <local:HorizontalMenuButton Width="120"
-                                        Height="70"
-                                        Text="Test"
+            <local:HorizontalMenuButton Text="Test"
                                         MouseEnter="Button_MouseEnter"
                                         Click="HorizontalMenuButton_Click"
                                         Grid.Column="2"
                                         x:Name="button3"
                                         />
 
-            <local:HorizontalMenuButton Width="120"
-                                        Height="70"
-                                        Text="Test"
+            <local:HorizontalMenuButton Text="Test"
                                         MouseEnter="Button_MouseEnter"
                                         Click="HorizontalMenuButton_Click"
                                         Grid.Column="3"
