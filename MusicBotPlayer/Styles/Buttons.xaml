@@ -84,14 +84,12 @@
     
     <!-- Horizontal Menu Button -->
     <Style TargetType="{x:Type Button}" x:Key="HorizontalMenuButton" BasedOn="{StaticResource {x:Type Button}}">
-
         <Setter Property="Background" Value="{StaticResource BackgroundFlatGrayGradient}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Foreground" Value="{StaticResource ForegroundGrayBrush}"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
-        
         
         <Setter Property="Template">
             <Setter.Value>
@@ -146,7 +144,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
-
 </ResourceDictionary>

@@ -122,8 +122,46 @@
 
                     <WebBrowser x:Name="browser"
                                 Width="839"
+                                Panel.ZIndex="1"
                                 Height="402" Canvas.Left="36" Canvas.Top="169"
                                 />
+
+                    <TabControl Width="850"
+                                Height="400" 
+                                Panel.ZIndex="0"
+                                Style="{StaticResource SearchTabControl}"
+                                Background="Transparent"
+                                Canvas.Left="32" Canvas.Top="150" 
+                                >
+                        
+
+                        <TabItem Header="Albums" 
+                                 Height="100"
+                                 Width="100"
+                                 >
+                            
+ 
+                        </TabItem>
+
+                        <TabItem Header="Tracks" Width="100"
+                                 Height="100"
+                                 >
+
+                        </TabItem>
+
+                        <TabItem Header="Playlists" Width="100"
+                                 Height="100"
+                                 >
+
+                        </TabItem>
+
+                        <TabItem Header="Artists" Width="100"
+                                 Height="100"
+                                 >
+
+                        </TabItem>
+
+                    </TabControl>
 
                 </Canvas>
             </Grid>

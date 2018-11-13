@@ -125,5 +125,7 @@ namespace MusicBotPlayer
                 viewModel.SpotifyViewModel.Search(txtBox.Text);
             }
         }
+
+       
     }
 }
