@@ -8,12 +8,24 @@ using System.Threading.Tasks;
 
 namespace MusicBotPlayer
 {
+    /// <summary>
+    /// Used to store the JSON response for a search query 
+    /// to the Spotify API.
+    /// </summary>
+    public class SearchResult
+    {
+        public Albums albums { get; set; }
+        public Artists artists { get; set; }
+        public Tracks tracks { get; set; }
+        public Playlists playlists { get; set; }
+    }
+
     public class ExternalUrls
     {
         public string spotify { get; set; }
     }
 
-    public class Artist
+    public class ArtistSimplified
     {
         public ExternalUrls external_urls { get; set; }
         public string href { get; set; }
@@ -30,10 +42,10 @@ namespace MusicBotPlayer
         public int width { get; set; }
     }
 
-    public class Item
+    public class Album
     {
         public string album_type { get; set; }
-        public List<Artist> artists { get; set; }
+        public List<ArtistSimplified> artists { get; set; }
         public List<string> available_markets { get; set; }
         public ExternalUrls external_urls { get; set; }
         public string href { get; set; }
@@ -50,7 +62,7 @@ namespace MusicBotPlayer
     public class Albums
     {
         public string href { get; set; }
-        public List<Item> items { get; set; }
+        public List<Album> items { get; set; }
         public int limit { get; set; }
         public string next { get; set; }
         public int offset { get; set; }
@@ -64,7 +76,7 @@ namespace MusicBotPlayer
         public int total { get; set; }
     }
 
-    public class Item2
+    public class Artist
     {
         public ExternalUrls external_urls { get; set; }
         public Followers followers { get; set; }
@@ -81,7 +93,7 @@ namespace MusicBotPlayer
     public class Artists
     {
         public string href { get; set; }
-        public List<Item2> items { get; set; }
+        public List<Artist> items { get; set; }
         public int limit { get; set; }
         public object next { get; set; }
         public int offset { get; set; }
@@ -89,59 +101,15 @@ namespace MusicBotPlayer
         public int total { get; set; }
     }
 
-    public class Artist2
-    {
-        public ExternalUrls external_urls { get; set; }
-        public string href { get; set; }
-        public string id { get; set; }
-        public string name { get; set; }
-        public string type { get; set; }
-        public string uri { get; set; }
-    }
-
-    public class Image2
-    {
-        public int height { get; set; }
-        public string url { get; set; }
-        public int width { get; set; }
-    }
-
-    public class Album
-    {
-        public string album_type { get; set; }
-        public List<Artist2> artists { get; set; }
-        public List<string> available_markets { get; set; }
-        public ExternalUrls external_urls { get; set; }
-        public string href { get; set; }
-        public string id { get; set; }
-        public List<Image2> images { get; set; }
-        public string name { get; set; }
-        public string release_date { get; set; }
-        public string release_date_precision { get; set; }
-        public int total_tracks { get; set; }
-        public string type { get; set; }
-        public string uri { get; set; }
-    }
-
-    public class Artist3
-    {
-        public ExternalUrls external_urls { get; set; }
-        public string href { get; set; }
-        public string id { get; set; }
-        public string name { get; set; }
-        public string type { get; set; }
-        public string uri { get; set; }
-    }
-
     public class ExternalIds
     {
         public string isrc { get; set; }
     }
 
-    public class Item3
+    public class Track
     {
         public Album album { get; set; }
-        public List<Artist3> artists { get; set; }
+        public List<ArtistSimplified> artists { get; set; }
         public List<string> available_markets { get; set; }
         public int disc_number { get; set; }
         public int duration_ms { get; set; }
@@ -162,7 +130,7 @@ namespace MusicBotPlayer
     public class Tracks
     {
         public string href { get; set; }
-        public List<Item3> items { get; set; }
+        public List<Track> items { get; set; }
         public int limit { get; set; }
         public string next { get; set; }
         public int offset { get; set; }
@@ -170,7 +138,7 @@ namespace MusicBotPlayer
         public int total { get; set; }
     }
 
-    public class Image3
+    public class ImageNullable
     {
         public int? height { get; set; }
         public string url { get; set; }
@@ -193,13 +161,13 @@ namespace MusicBotPlayer
         public int total { get; set; }
     }
 
-    public class Item4
+    public class Playlist
     {
         public bool collaborative { get; set; }
         public ExternalUrls external_urls { get; set; }
         public string href { get; set; }
         public string id { get; set; }
-        public List<Image3> images { get; set; }
+        public List<ImageNullable> images { get; set; }
         public string name { get; set; }
         public Owner owner { get; set; }
         public object primary_color { get; set; }
@@ -213,7 +181,7 @@ namespace MusicBotPlayer
     public class Playlists
     {
         public string href { get; set; }
-        public List<Item4> items { get; set; }
+        public List<Playlist> items { get; set; }
         public int limit { get; set; }
         public string next { get; set; }
         public int offset { get; set; }
@@ -221,11 +189,5 @@ namespace MusicBotPlayer
         public int total { get; set; }
     }
 
-    public class SearchResult
-    {
-        public Albums albums { get; set; }
-        public Artists artists { get; set; }
-        public Tracks tracks { get; set; }
-        public Playlists playlists { get; set; }
-    }
+    
 }
