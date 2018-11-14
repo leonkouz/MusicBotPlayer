@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace MusicBotPlayer
     /// Used to store the JSON response for a search query 
     /// to the Spotify API.
     /// </summary>
+    [JsonObject]
     public class SearchResult
     {
         public Albums albums { get; set; }
@@ -20,11 +22,13 @@ namespace MusicBotPlayer
         public Playlists playlists { get; set; }
     }
 
+    [JsonObject]
     public class ExternalUrls
     {
         public string spotify { get; set; }
     }
 
+    [JsonObject]
     public class ArtistSimplified
     {
         public ExternalUrls external_urls { get; set; }
@@ -35,6 +39,7 @@ namespace MusicBotPlayer
         public string uri { get; set; }
     }
 
+    [JsonObject]
     public class Image
     {
         public int height { get; set; }
@@ -42,6 +47,7 @@ namespace MusicBotPlayer
         public int width { get; set; }
     }
 
+    [JsonObject]
     public class Album
     {
         public string album_type { get; set; }
@@ -59,7 +65,8 @@ namespace MusicBotPlayer
         public string uri { get; set; }
     }
 
-    public class Albums
+    [JsonObject]
+    public class Albums : IEnumerable<Album>
     {
         public string href { get; set; }
         public List<Album> items { get; set; }
@@ -68,14 +75,37 @@ namespace MusicBotPlayer
         public int offset { get; set; }
         public object previous { get; set; }
         public int total { get; set; }
+
+        /// <summary>
+        /// Returns the item List.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<Album> GetEnumerator()
+        {
+            foreach (Album album in items)
+            {
+                yield return album;
+            }
+        }
+
+        /// <summary>
+        /// Returns the enumerator.
+        /// </summary>
+        /// <returns>The enumerator</returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 
+    [JsonObject]
     public class Followers
     {
         public object href { get; set; }
         public int total { get; set; }
     }
 
+    [JsonObject]
     public class Artist
     {
         public ExternalUrls external_urls { get; set; }
@@ -90,7 +120,8 @@ namespace MusicBotPlayer
         public string uri { get; set; }
     }
 
-    public class Artists
+    [JsonObject]
+    public class Artists : IEnumerable<Artist>
     {
         public string href { get; set; }
         public List<Artist> items { get; set; }
@@ -99,13 +130,28 @@ namespace MusicBotPlayer
         public int offset { get; set; }
         public object previous { get; set; }
         public int total { get; set; }
+
+        public IEnumerator<Artist> GetEnumerator()
+        {
+            foreach (Artist artist in items)
+            {
+                yield return artist;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
 
+    [JsonObject]
     public class ExternalIds
     {
         public string isrc { get; set; }
     }
 
+    [JsonObject]
     public class Track
     {
         public Album album { get; set; }
@@ -127,7 +173,8 @@ namespace MusicBotPlayer
         public string uri { get; set; }
     }
 
-    public class Tracks
+    [JsonObject]
+    public class Tracks : IEnumerable<Track>
     {
         public string href { get; set; }
         public List<Track> items { get; set; }
@@ -136,8 +183,22 @@ namespace MusicBotPlayer
         public int offset { get; set; }
         public object previous { get; set; }
         public int total { get; set; }
+
+        public IEnumerator<Track> GetEnumerator()
+        {
+            foreach (Track track in items)
+            {
+                yield return track;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
 
+    [JsonObject]
     public class ImageNullable
     {
         public int? height { get; set; }
@@ -145,6 +206,7 @@ namespace MusicBotPlayer
         public int? width { get; set; }
     }
 
+    [JsonObject]
     public class Owner
     {
         public string display_name { get; set; }
@@ -155,12 +217,14 @@ namespace MusicBotPlayer
         public string uri { get; set; }
     }
 
+    [JsonObject]
     public class Tracks2
     {
         public string href { get; set; }
         public int total { get; set; }
     }
 
+    [JsonObject]
     public class Playlist
     {
         public bool collaborative { get; set; }
@@ -178,7 +242,8 @@ namespace MusicBotPlayer
         public string uri { get; set; }
     }
 
-    public class Playlists
+    [JsonObject]
+    public class Playlists : IEnumerable<Playlist>
     {
         public string href { get; set; }
         public List<Playlist> items { get; set; }
@@ -187,7 +252,18 @@ namespace MusicBotPlayer
         public int offset { get; set; }
         public object previous { get; set; }
         public int total { get; set; }
-    }
 
-    
+        public IEnumerator<Playlist> GetEnumerator()
+        {
+            foreach (Playlist playlist in items)
+            {
+                yield return playlist;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

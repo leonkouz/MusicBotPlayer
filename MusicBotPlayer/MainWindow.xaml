@@ -117,50 +117,82 @@
 
                     </Border>
 
+                    <!-- Horizontal Menu Bar -->
                     <local:HorizontalMenuBar x:Name="horizontalMenuBar"
                                              Canvas.Left="32" Canvas.Top="80" />
 
+                    <!-- Spotify Authentication Browser window -->
                     <WebBrowser x:Name="browser"
                                 Width="839"
                                 Panel.ZIndex="1"
                                 Height="402" Canvas.Left="36" Canvas.Top="169"
                                 />
 
+                    <!-- Search result window -->
                     <TabControl Width="850"
                                 Height="400" 
                                 Panel.ZIndex="0"
                                 Style="{StaticResource SearchTabControl}"
-                                Background="Transparent"
                                 Canvas.Left="32" Canvas.Top="150" 
                                 >
-                        
-
+                        <!-- Album Tab -->
                         <TabItem Header="Albums" 
                                  Height="100"
                                  Width="100"
                                  >
-                            
- 
+                            <ListView HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      Background="White"
+                                      ItemsSource="{Binding Albums, UpdateSourceTrigger=PropertyChanged}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Title" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding name, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Value" Width="120"  />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
                         </TabItem>
 
+                        <!-- Tracks Tab -->
                         <TabItem Header="Tracks" Width="100"
                                  Height="100"
                                  >
+                            <ListView HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          ItemsSource="{Binding Tracks, UpdateSourceTrigger=PropertyChanged}">
 
+
+                            </ListView>
                         </TabItem>
 
+                        <!-- Playlists Tab -->
                         <TabItem Header="Playlists" Width="100"
                                  Height="100"
                                  >
+                            <ListView HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          ItemsSource="{Binding Playlists, UpdateSourceTrigger=PropertyChanged}">
 
+
+                            </ListView>
                         </TabItem>
 
+                        <!-- Artists Tab -->
                         <TabItem Header="Artists" Width="100"
-                                 Height="100"
-                                 >
+                                 Height="100">
+                            <ListView HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          ItemsSource="{Binding Artists, UpdateSourceTrigger=PropertyChanged}">
 
+
+                            </ListView>
                         </TabItem>
-
                     </TabControl>
 
                 </Canvas>

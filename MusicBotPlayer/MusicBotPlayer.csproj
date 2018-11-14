@@ -73,12 +73,11 @@
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\WebBrowserHelper.cs" />
-    <Compile Include="SpotifyAPI\Objects\SearchResult.cs" />
+    <Compile Include="SpotifyAPI\JSON Objects\SearchResult.cs" />
     <Compile Include="SpotifyAPI\Spotify.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\DelegateCommand.cs" />
-    <Compile Include="ViewModels\Spotify\SpotifySearchViewModel.cs" />
     <Compile Include="ViewModels\Spotify\SpotifyViewModel.cs" />
     <Compile Include="ViewModels\YoutubeViewModel.cs" />
     <Page Include="Controls\HorizontalMenu\HorizontalMenuBar.xaml">

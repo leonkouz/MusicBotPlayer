@@ -14,12 +14,12 @@ namespace MusicBotPlayer
         /// <summary>
         /// The Youtube View Model.
         /// </summary>
-        public YoutubeViewModel YoutubeViewModel = new YoutubeViewModel();
+        public YoutubeViewModel YoutubeViewModel { get; set; } = new YoutubeViewModel();
 
         /// <summary>
         /// The Spotify View Model.
         /// </summary>
-        public SpotifyViewModel SpotifyViewModel = new SpotifyViewModel();
+        public SpotifyViewModel SpotifyViewModel { get; set; } = new SpotifyViewModel();
 
         public ApplicationViewModel()
         {
