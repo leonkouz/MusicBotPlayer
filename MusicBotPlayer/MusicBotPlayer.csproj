@@ -72,6 +72,8 @@
     <Compile Include="Controls\SideMenuButton.xaml.cs">
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ArtistListConcaternatorConverter.cs" />
+    <Compile Include="Converters\SelectImageConverter.cs" />
     <Compile Include="Helpers\WebBrowserHelper.cs" />
     <Compile Include="SpotifyAPI\JSON Objects\SearchResult.cs" />
     <Compile Include="SpotifyAPI\Spotify.cs" />

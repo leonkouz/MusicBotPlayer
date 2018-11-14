@@ -11,6 +11,11 @@
         <local:ApplicationViewModel/>
     </Window.DataContext>
 
+    <Window.Resources>
+        <local:ArtistListConcaternatorConverter x:Key="ArtistListConcaternatorConverter"/>
+        <local:SelectImageConverter x:Key="SelectImageConverter"/>
+    </Window.Resources>
+
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -146,14 +151,45 @@
                                       ItemsSource="{Binding Albums, UpdateSourceTrigger=PropertyChanged}">
                                 <ListView.View>
                                     <GridView>
+                                        
+                                        <!-- Song Name Column -->
                                         <GridViewColumn Header="Title" Width="100">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding name, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="{Binding images, 
+                                                               Converter={StaticResource SelectImageConverter}}"
+                                                               Width="30"
+                                                               Height="30"
+                                                               Margin="0 0 5 0"/>
+                                                        <TextBlock Text="{Binding name, 
+                                                               UpdateSourceTrigger=PropertyChanged}"/>
+                                                    </StackPanel>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
-                                        <GridViewColumn Header="Value" Width="120"  />
+                                        
+                                        <!-- Artist Name Column -->
+                                        <GridViewColumn Header="Artist" Width="120">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding artists, 
+                                                               UpdateSourceTrigger=PropertyChanged,
+                                                               Converter={StaticResource ArtistListConcaternatorConverter}}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+
+                                        <!-- Track Count Column -->
+                                        <GridViewColumn Header="Artist" Width="120">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding total_tracks, 
+                                                               UpdateSourceTrigger=PropertyChanged}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        
                                     </GridView>
                                 </ListView.View>
                             </ListView>
