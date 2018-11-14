@@ -171,19 +171,28 @@ namespace MusicBotPlayer
         {
             await Task.Run(() =>
             {
-                foreach (var album in results.albums)
-                {
-                    App.Current.Dispatcher.Invoke(() =>
-                    {
-                        Albums.Add(album);
-                    });
-                }
-
-
-                    Tracks = new ObservableCollection<Track>(results.tracks);
-                    Playlists = new ObservableCollection<Playlist>(results.playlists);
-                    Artists = new ObservableCollection<Artist>(results.artists);
+                AddToCollection(Albums, results.albums);
+                AddToCollection(Tracks, results.tracks);
+                AddToCollection(Playlists, results.playlists);
+                AddToCollection(Artists, results.artists);
             });
+        }
+
+        /// <summary>
+        /// Adds the items from a specified <see cref="IEnumerable{T}"/> to a <see cref="ObservableCollection{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of <see cref="ObservableCollection{T}"/></typeparam>
+        /// <param name="collectionToAddTo">The collection to add to.</param>
+        /// <param name="toAddFrom">The collection of items to add from.</param>
+        public void AddToCollection<T>(ObservableCollection<T> collectionToAddTo, IEnumerable<object> toAddFrom)
+        {
+            foreach(object obj in toAddFrom)
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    collectionToAddTo.Add((T)obj);
+                });
+            }
         }
 
         /// <summary>
