@@ -60,13 +60,16 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type TabItem}">
-                                <Grid Height="40"
-                                      Name="Border"
-                                      >
-                                    <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center"
-                                                                                  HorizontalAlignment="Center"
-                                                                                  ContentSource="Header" 
-                                                                                  RecognizesAccessKey="True">
+                                <Border Height="40"
+                                        Name="Border"
+                                        BorderBrush="{StaticResource BackgroundDarkBrush}"
+                                        BorderThickness="0 0 1 0"
+                                        >
+                                    <ContentPresenter x:Name="ContentSite" 
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"
+                                                      ContentSource="Header" 
+                                                      RecognizesAccessKey="True">
                                         <ContentPresenter.ContentTemplate>
                                             <ItemContainerTemplate>
                                                 <TextBlock Text="{TemplateBinding Content}"
@@ -74,7 +77,7 @@
                                             </ItemContainerTemplate>
                                         </ContentPresenter.ContentTemplate>
                                     </ContentPresenter>
-                                </Grid>
+                                </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="True">
                                         <Setter Property="Panel.ZIndex" Value="100" />

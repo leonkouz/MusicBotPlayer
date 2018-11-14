@@ -140,15 +140,18 @@ namespace MusicBotPlayer
         /// Fires when a key is pressed while the Search Bar is in focus.
         /// Requests a search for specified text from the Spotify API.
         /// </summary>
-        public void Search(string text)
+        public async void Search(string text)
         {
             ClearCurrentSearch();
 
             string searchResponse = String.Empty;
             try
             {
-                searchResponse = Spotify.Api.Search(text, Spotify.AllSearchTypes, 20, 0);
-                searchResult = JsonConvert.DeserializeObject<SearchResult>(searchResponse);
+                await Task.Run(() =>
+                {
+                    searchResponse = Spotify.Api.Search(text, Spotify.AllSearchTypes, 20, 0);
+                    searchResult = JsonConvert.DeserializeObject<SearchResult>(searchResponse);
+                });
             }
             catch(Exception e)
             {
@@ -166,9 +169,9 @@ namespace MusicBotPlayer
         /// <param name="results">The search results.</param>
         public async void LoadSearchResultsToCollections(SearchResult results)
         {
-            await Task.Run(async () =>
+            await Task.Run(() =>
             {
-                foreach(var album in results.albums)
+                foreach (var album in results.albums)
                 {
                     App.Current.Dispatcher.Invoke(() =>
                     {
@@ -176,12 +179,16 @@ namespace MusicBotPlayer
                     });
                 }
 
-                Tracks = new ObservableCollection<Track>(results.tracks);
-                Playlists = new ObservableCollection<Playlist>(results.playlists);
-                Artists = new ObservableCollection<Artist>(results.artists);
+
+                    Tracks = new ObservableCollection<Track>(results.tracks);
+                    Playlists = new ObservableCollection<Playlist>(results.playlists);
+                    Artists = new ObservableCollection<Artist>(results.artists);
             });
         }
 
+        /// <summary>
+        /// Clears the current search collections.
+        /// </summary>
         private void ClearCurrentSearch()
         {
             Albums.Clear();
