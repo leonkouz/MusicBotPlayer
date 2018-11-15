@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CefSharp;
+using CefSharp.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,13 @@ namespace MusicBotPlayer
     /// </summary>
     public partial class App : Application
     {
+        void App_Startup(object sender, StartupEventArgs e)
+        {
+            
+
+            // Create main application window, starting minimized if specified
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+        }
     }
 }

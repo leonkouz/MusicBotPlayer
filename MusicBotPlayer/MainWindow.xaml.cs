@@ -1,4 +1,6 @@
-﻿using CSharp_SpotifyAPI;
+﻿using CefSharp;
+using CefSharp.Wpf;
+using CSharp_SpotifyAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,31 +51,46 @@ namespace MusicBotPlayer
         /// </summary>
         public MainWindow()
         {
+            // Must be run before the brower control is initialised.
+            InitialiseCefSharpBrowser();
+
             InitializeComponent();
 
-            viewModel = (ApplicationViewModel)this.DataContext;
-
             InitialiseSpotifyApi();
+
+            viewModel = (ApplicationViewModel)this.DataContext;
 
             // Add the side menu buttons to the buttons list for later use.
             buttons.Add(YouTubeButton);
             buttons.Add(SpotifyButton);
         }
 
+        /// <summary>
+        /// Initialise CefSharp browser. Must be run before the control is initialised.
+        /// </summary>
+        private void InitialiseCefSharpBrowser()
+        {
+            var settings = new CefSettings();
+            settings.BrowserSubprocessPath = @"x86\CefSharp.BrowserSubprocess.exe";
+            settings.CachePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MusicBotPlayerCache";
+
+            Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
+        }
+
         private void InitialiseSpotifyApi()
         {
-            Spotify Spotify = new Spotify(); 
+            Spotify Spotify = new Spotify();
 
             spotifyAuthenticationCompleted = new ManualResetEvent(false);
 
             Spotify.Api.Authenticated += API_Authenticated;
 
             //Begin Authentication process, this is run on a different thread
-            Spotify.Authenticate(); 
+            Spotify.Authenticate();
 
             string authUrl = Spotify.Api.GetAuthenticationUrl();
 
-            browser.Navigate(authUrl);
+            browser.Address = authUrl;
         }
 
         /// <summary>
@@ -99,7 +116,7 @@ namespace MusicBotPlayer
         /// <param name="e"></param>
         private void SideMenuButton_Click(object sender, EventArgs e)
         {
-            foreach(SideMenuButton button in buttons)
+            foreach (SideMenuButton button in buttons)
             {
                 button.IsSelected = false;
             }
@@ -120,12 +137,12 @@ namespace MusicBotPlayer
 
             // If the enter key is pressed and the Spotify API has authenticated, 
             // do a search.
-            if(e.Key == Key.Enter && spotifyAuthenticated == true)
+            if (e.Key == Key.Enter && spotifyAuthenticated == true)
             {
                 viewModel.SpotifyViewModel.Search(txtBox.Text);
             }
         }
 
-       
+
     }
 }

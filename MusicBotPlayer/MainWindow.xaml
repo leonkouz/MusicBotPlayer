@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicBotPlayer"
+        xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="712.805" Width="1170.5">
 
@@ -127,11 +128,10 @@
                                              Canvas.Left="32" Canvas.Top="80" />
 
                     <!-- Spotify Authentication Browser window -->
-                    <WebBrowser x:Name="browser"
-                                Width="840"
-                                Panel.ZIndex="1"
-                                Height="402" Canvas.Left="36" Canvas.Top="169"
-                                />
+                    <cefSharp:ChromiumWebBrowser x:Name="browser"
+                                                 Width="840"
+                                                 Panel.ZIndex="1"
+                                                 Height="402" Canvas.Left="36" Canvas.Top="169"/>
 
                     <!-- Search result window -->
                     <TabControl Width="850"
