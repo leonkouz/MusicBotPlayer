@@ -77,6 +77,9 @@ namespace MusicBotPlayer
             Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
         }
 
+        /// <summary>
+        /// Initialise the Spotify API.
+        /// </summary>
         private void InitialiseSpotifyApi()
         {
             Spotify Spotify = new Spotify();
