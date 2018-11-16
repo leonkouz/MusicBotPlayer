@@ -6,61 +6,69 @@
              xmlns:local="clr-namespace:MusicBotPlayer"
              mc:Ignorable="d">
 
-    <Grid Background="{StaticResource BackgroundDarkBrush}"
-          PreviewMouseDown="Grid_PreviewMouseDown"
-          >
-        <Grid.ColumnDefinitions>
-            <!-- Album Image-->
-            <ColumnDefinition Width="180"/>
-            <!-- Album and Artist Name-->
-            <ColumnDefinition Width="400"/>
-            <!-- Blank Space -->
-            <ColumnDefinition Width="*"/>
-            <!-- Arrow -->
-            <ColumnDefinition Width="200"/>
-        </Grid.ColumnDefinitions>
+    <Border BorderThickness="0 1 0 0"
+            BorderBrush="White"
+            Background="{StaticResource BackgroundDarkBrush}"
+            Padding="10"
+            >
+        <Grid PreviewMouseDown="Grid_PreviewMouseDown"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              >
+            <Grid.ColumnDefinitions>
+                <!-- Album Image-->
+                <ColumnDefinition Width="110"/>
+                <!-- Album and Artist Name-->
+                <ColumnDefinition Width="400"/>
+                <!-- Blank Space -->
+                <ColumnDefinition Width="*"/>
+                <!-- Arrow -->
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
 
-        <!-- Album Image -->
-        <Grid Grid.Column="0"
+            <!-- Album Image -->
+            <Grid Grid.Column="0"
               VerticalAlignment="Center"
               HorizontalAlignment="Center">
-            <Image Width="130"
-                   Height="130"
-                   Source="{Binding AlbumImage, RelativeSource={
+                <Image Width="90"
+                       Height="90"
+                       Source="{Binding AlbumImage, RelativeSource={
                        RelativeSource AncestorType={x:Type local:AlbumSearchItem}}}"/>
-        </Grid>
+            </Grid>
 
-        <!-- Album and Artist Name-->
-        <StackPanel Orientation="Vertical"
-                    Grid.Column="1"
-                    VerticalAlignment="Stretch">
+            <!-- Album and Artist Name-->
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        VerticalAlignment="Stretch">
 
-            <TextBlock Height="50"
-                       Margin="0 35 0 0"
-                       Text="{Binding AlbumName, RelativeSource={
-                       RelativeSource AncestorType={x:Type local:AlbumSearchItem}}}"
-                       FontSize="30"
-                       Panel.ZIndex="1"
-                       Foreground="White"
-                       />
+                <TextBlock Margin="0 25 0 0"
+                           FontFamily="Microsoft Sans Serif"
+                           Text="{Binding AlbumName, RelativeSource={
+                           RelativeSource AncestorType={x:Type local:AlbumSearchItem}}}"
+                           FontSize="20"
+                           Panel.ZIndex="1"
+                           Foreground="White"
+                           />
 
-            <TextBlock Height="50"
-                       Text="{Binding ArtistNames, RelativeSource={
-                       RelativeSource AncestorType={x:Type local:AlbumSearchItem}}}"
-                       Margin="0 10 0 0"
-                       Foreground="White"
-                       FontSize="25"
-                       />
-        </StackPanel>
+                <TextBlock FontFamily="Microsoft Sans Serif"
+                           Text="{Binding ArtistNames, RelativeSource={
+                           RelativeSource AncestorType={x:Type local:AlbumSearchItem}}}"
+                           Margin="0 5 0 0"
+                           Foreground="White"
+                           FontSize="15"
+                           />
+            </StackPanel>
 
-        <!-- Arrow -->
-        <TextBlock Grid.Column="3"
+            <!-- Arrow -->
+            <TextBlock Grid.Column="3"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
-                   FontSize="60"
+                   FontSize="50"
                    FontFamily="{StaticResource FontAwesome}"
                    Text="{StaticResource FontAwesomeRightArrowIcon}"
                    Foreground="White"
                    />
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>

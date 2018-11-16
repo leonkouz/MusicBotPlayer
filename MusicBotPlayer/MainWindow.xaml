@@ -89,8 +89,14 @@
                 BorderThickness="1 0 0 0">
 
             <Grid DataContext="{Binding SpotifyViewModel}">
-                <Canvas>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <Canvas Grid.Row="0"
+                        >
                     <!-- Search Bar -->
                     <Border Height="46" Width="47" Canvas.Left="234" Canvas.Top="19"
                             CornerRadius="27"
@@ -123,85 +129,90 @@
 
                     </Border>
 
-                    <!-- Horizontal Menu Bar -->
-                    <local:HorizontalMenuBar x:Name="horizontalMenuBar"
-                                             Canvas.Left="32" Canvas.Top="80" />
+                </Canvas>
 
-                    <!-- Spotify Authentication Browser window -->
-                    <cefSharp:ChromiumWebBrowser x:Name="browser"
-                                                 Width="840"
-                                                 Panel.ZIndex="1"
-                                                 Height="402" Canvas.Left="36" Canvas.Top="169"/>
+                <!-- Horizontal Menu Bar -->
+                <local:HorizontalMenuBar x:Name="horizontalMenuBar"
+                                         Grid.Row="1"/>
 
-                    <!-- Search result window -->
-                    <TabControl Width="850"
-                                Height="400" 
-                                Panel.ZIndex="0"
-                                Style="{StaticResource SearchTabControl}"
-                                Canvas.Left="32" Canvas.Top="150" 
-                                >
-                        <!-- Album Tab -->
-                        <TabItem Header="Albums" 
+                <!-- Spotify Authentication Browser window -->
+                <cefSharp:ChromiumWebBrowser x:Name="browser"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch"
+                                             Panel.ZIndex="1"
+                                             Grid.Row="2"
+                                             Margin="0 0 0 94"/>
+
+                <!-- Search result window -->
+                <TabControl HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Margin="0 0 0 94"
+                            Panel.ZIndex="0"
+                            Grid.Row="2"
+                            Style="{StaticResource SearchTabControl}"
+                            >
+                    <!-- Album Tab -->
+                    <TabItem Header="Albums" 
+                             Height="100"
+                             Width="100"
+                             >
+                        <ListView HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  Background="White"
+                                  Style="{StaticResource CustomListView}"
+                                  BorderThickness="0"
+                                  HorizontalContentAlignment="Stretch"
+                                  ItemsSource="{Binding Albums, UpdateSourceTrigger=PropertyChanged}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <local:AlbumSearchItem ArtistNames="{Binding artists, 
+                                                           Converter={StaticResource ArtistListConcaternatorConverter}}"
+                                                           AlbumImage="{Binding images,
+                                                           Converter={StaticResource SelectImageConverter}}"
+                                                           AlbumName="{Binding name}"
+                                                           HorizontalAlignment="Stretch"
+                                                           />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </TabItem>
+
+                    <!-- Tracks Tab -->
+                    <TabItem Header="Tracks" Width="100"
                                  Height="100"
-                                 Width="100"
                                  >
-                            <ListView HorizontalAlignment="Stretch"
-                                      VerticalAlignment="Stretch"
-                                      Background="White"
-                                      Style="{StaticResource CustomListView}"
-                                      BorderThickness="0"
-                                      ItemsSource="{Binding Albums, UpdateSourceTrigger=PropertyChanged}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <local:AlbumSearchItem ArtistNames="{Binding artists, 
-                                                               Converter={StaticResource ArtistListConcaternatorConverter}}"
-                                                               AlbumImage="{Binding images,
-                                                               Converter={StaticResource SelectImageConverter}}"
-                                                               AlbumName="{Binding name}"
-                                                               HorizontalAlignment="Stretch"
-                                                               />
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </TabItem>
-
-                        <!-- Tracks Tab -->
-                        <TabItem Header="Tracks" Width="100"
-                                 Height="100"
-                                 >
-                            <ListView HorizontalAlignment="Stretch"
+                        <ListView HorizontalAlignment="Stretch"
                                           VerticalAlignment="Stretch"
                                           ItemsSource="{Binding Tracks, UpdateSourceTrigger=PropertyChanged}">
 
 
-                            </ListView>
-                        </TabItem>
+                        </ListView>
+                    </TabItem>
 
-                        <!-- Playlists Tab -->
-                        <TabItem Header="Playlists" Width="100"
+                    <!-- Playlists Tab -->
+                    <TabItem Header="Playlists" Width="100"
                                  Height="100"
                                  >
-                            <ListView HorizontalAlignment="Stretch"
+                        <ListView HorizontalAlignment="Stretch"
                                           VerticalAlignment="Stretch"
                                           ItemsSource="{Binding Playlists, UpdateSourceTrigger=PropertyChanged}">
 
 
-                            </ListView>
-                        </TabItem>
+                        </ListView>
+                    </TabItem>
 
-                        <!-- Artists Tab -->
-                        <TabItem Header="Artists" Width="100"
+                    <!-- Artists Tab -->
+                    <TabItem Header="Artists" Width="100"
                                  Height="100">
-                            <ListView HorizontalAlignment="Stretch"
+                        <ListView HorizontalAlignment="Stretch"
                                           VerticalAlignment="Stretch"
                                           ItemsSource="{Binding Artists, UpdateSourceTrigger=PropertyChanged}">
 
 
-                            </ListView>
-                        </TabItem>
-                    </TabControl>
+                        </ListView>
+                    </TabItem>
+                </TabControl>
 
-                </Canvas>
             </Grid>
 
         </Border>
