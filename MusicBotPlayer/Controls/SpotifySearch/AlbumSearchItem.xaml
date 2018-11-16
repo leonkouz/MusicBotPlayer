@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="MusicBotPlayer.AlbumSearchItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MusicBotPlayer"
+             mc:Ignorable="d" Height="170" Width="1187.085">
+
+    <Grid Background="{StaticResource BackgroundDarkBrush}"
+          PreviewMouseDown="Grid_PreviewMouseDown"
+          >
+        <Grid.ColumnDefinitions>
+            <!-- Album Image-->
+            <ColumnDefinition Width="180"/>
+            <!-- Album and Artist Name-->
+            <ColumnDefinition Width="400"/>
+            <!-- Blank Space -->
+            <ColumnDefinition Width="*"/>
+            <!-- Arrow -->
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Album Image -->
+        <Grid Grid.Column="0"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center">
+            <Image Width="130"
+                   Height="130"
+                   Source="{Binding AlbumImage}"/>
+        </Grid>
+
+        <!-- Album and Artist Name-->
+        <StackPanel Orientation="Vertical"
+                    Grid.Column="1"
+                    VerticalAlignment="Stretch">
+
+            <TextBlock Height="50"
+                       Margin="0 35 0 0"
+                       Text="{Binding AlbumName}"
+                       FontSize="30"
+                       Foreground="White"
+                       />
+
+            <TextBlock Height="50"
+                       Text="{Binding ArtistNames}"
+                       Margin="0 10 0 0"
+                       Foreground="White"
+                       FontSize="25"
+                       />
+        </StackPanel>
+
+        <!-- Arrow -->
+        <TextBlock Grid.Column="3"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="60"
+                   FontFamily="{StaticResource FontAwesome}"
+                   Text="{StaticResource FontAwesomeRightArrowIcon}"
+                   Foreground="White"
+                   />
+    </Grid>
+</UserControl>

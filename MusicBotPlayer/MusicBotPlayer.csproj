@@ -79,6 +79,9 @@
     <Compile Include="Controls\SideMenuButton.xaml.cs">
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SpotifySearch\AlbumSearchItem.xaml.cs">
+      <DependentUpon>AlbumSearchItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\ArtistListConcaternatorConverter.cs" />
     <Compile Include="Converters\SelectImageConverter.cs" />
     <Compile Include="Helpers\WebBrowserHelper.cs" />
@@ -100,6 +103,10 @@
     <Page Include="Controls\SideMenuButton.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Controls\SpotifySearch\AlbumSearchItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
