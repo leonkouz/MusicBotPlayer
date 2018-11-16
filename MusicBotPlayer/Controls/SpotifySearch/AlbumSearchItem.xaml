@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicBotPlayer"
-             mc:Ignorable="d" Height="170" Width="1187.085">
+             mc:Ignorable="d">
 
     <Grid Background="{StaticResource BackgroundDarkBrush}"
           PreviewMouseDown="Grid_PreviewMouseDown"
@@ -26,7 +26,8 @@
               HorizontalAlignment="Center">
             <Image Width="130"
                    Height="130"
-                   Source="{Binding AlbumImage}"/>
+                   Source="{Binding AlbumImage, RelativeSource={
+                       RelativeSource AncestorType={x:Type local:AlbumSearchItem}}}"/>
         </Grid>
 
         <!-- Album and Artist Name-->
@@ -36,13 +37,16 @@
 
             <TextBlock Height="50"
                        Margin="0 35 0 0"
-                       Text="{Binding AlbumName}"
+                       Text="{Binding AlbumName, RelativeSource={
+                       RelativeSource AncestorType={x:Type local:AlbumSearchItem}}}"
                        FontSize="30"
+                       Panel.ZIndex="1"
                        Foreground="White"
                        />
 
             <TextBlock Height="50"
-                       Text="{Binding ArtistNames}"
+                       Text="{Binding ArtistNames, RelativeSource={
+                       RelativeSource AncestorType={x:Type local:AlbumSearchItem}}}"
                        Margin="0 10 0 0"
                        Foreground="White"
                        FontSize="25"

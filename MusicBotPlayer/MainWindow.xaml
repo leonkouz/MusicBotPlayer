@@ -88,7 +88,7 @@
                 BorderBrush="DimGray"
                 BorderThickness="1 0 0 0">
 
-            <Grid DataContext="{Binding SpotifyViewModel}" >
+            <Grid DataContext="{Binding SpotifyViewModel}">
                 <Canvas>
 
                     <!-- Search Bar -->
@@ -151,57 +151,17 @@
                                       Style="{StaticResource CustomListView}"
                                       BorderThickness="0"
                                       ItemsSource="{Binding Albums, UpdateSourceTrigger=PropertyChanged}">
-                                <ListView.View>
-                                    <GridView AllowsColumnReorder="False">
-                                        <!-- Song Name Column -->
-                                        <GridViewColumn Header="Title" Width="400">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Image Source="{Binding images, 
-                                                               Converter={StaticResource SelectImageConverter}}"
-                                                               Width="50"
-                                                               Height="50"
-                                                               VerticalAlignment="Center"
-                                                               Margin="0 0 5 0"/>
-                                                        <TextBlock Text="{Binding name, 
-                                                                   UpdateSourceTrigger=PropertyChanged}"
-                                                                   VerticalAlignment="Center"
-                                                                   Foreground="White"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        
-                                        <!-- Artist Name Column -->
-                                        <GridViewColumn Header="Artist" Width="200">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding artists, 
-                                                               UpdateSourceTrigger=PropertyChanged,
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <local:AlbumSearchItem ArtistNames="{Binding artists, 
                                                                Converter={StaticResource ArtistListConcaternatorConverter}}"
-                                                               Foreground="White"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-
-                                        <!-- Track Count Column -->
-                                        <GridViewColumn Header="Track Count" Width="120">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding total_tracks, 
-                                                               UpdateSourceTrigger=PropertyChanged}"
-                                                               Foreground="White"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        
-                                    </GridView>
-                                </ListView.View>
+                                                               AlbumImage="{Binding images,
+                                                               Converter={StaticResource SelectImageConverter}}"
+                                                               AlbumName="{Binding name}"
+                                                               HorizontalAlignment="Stretch"
+                                                               />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
                             </ListView>
                         </TabItem>
 

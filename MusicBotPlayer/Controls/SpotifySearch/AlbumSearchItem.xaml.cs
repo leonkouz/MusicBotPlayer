@@ -30,8 +30,6 @@ namespace MusicBotPlayer
         /// </summary>
         public AlbumSearchItem()
         {
-            this.DataContext = this;
-
             InitializeComponent();
         }
 
@@ -47,7 +45,7 @@ namespace MusicBotPlayer
 
         #region Dependency Properties
 
-        #region ArtistName Dependency Property
+        #region ArtistNames Dependency Property
 
         /// <summary>
         /// Stores the text for Artist names

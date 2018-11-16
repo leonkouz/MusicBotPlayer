@@ -17,7 +17,7 @@ namespace MusicBotPlayer
             if(imageList.Count != 0)
             {
                 // Return the last image from the list which is 64 x x64
-                return imageList.Last().url;
+                return imageList.First().url;
             }
             else
             {
