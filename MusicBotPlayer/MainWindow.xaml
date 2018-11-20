@@ -254,68 +254,104 @@
 
             <Grid Background="{StaticResource BackgroundGrayBrush}"
                   Height="90"
+                  DataContext="{}"
                   HorizontalAlignment="Stretch"
                   >
 
-                <Canvas>
+                <Grid.ColumnDefinitions>
+                    <!-- Track's album image -->
+                    <ColumnDefinition Width="110" />
+                    <!-- Track's name and artist -->
+                    <ColumnDefinition Width="250"/>
+                    <!-- Blank space -->
+                    <ColumnDefinition Width="*"/>
+                    <!-- Media buttons -->
+                    <ColumnDefinition Width="200"/>
+                    <!-- Blank space -->
+                    <ColumnDefinition Width="2.5*"/>
 
-                    <Button Content="Back"
-                            Width="40"
-                            Height="40" 
-                            Canvas.Left="550" 
-                            Canvas.Top="40"
-                            />
+                </Grid.ColumnDefinitions>
 
-                    <Button Width="40"
-                            Height="40"
-                            Content="Play/Pause" 
-                            RenderTransformOrigin="0.25,0.269" 
-                            Canvas.Left="616" 
-                            Canvas.Top="40"/>
 
-                    <Button Width="40"
-                            Height="40"
-                            Content="Forward" 
-                            Canvas.Left="684" 
-                            Canvas.Top="40"/>
-
-                    <Slider VerticalAlignment="Top" 
-                            Width="1037" 
-                            Canvas.Left="115" 
-                            Canvas.Top="12"/>
-
-                    <Image HorizontalAlignment="Left" 
+                <!-- Album Art -->
+                <Border VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        Padding="5">
+                    <Image Grid.Column="0"
                            Source="Images/AlbumPlaceholder.PNG"
-                           Height="70" 
-                           VerticalAlignment="Top" 
-                           Width="89" 
-                           Canvas.Left="10" 
-                           Canvas.Top="10"/>
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           />
+                </Border>
 
+                <!-- Track Details -->
+                <StackPanel Orientation="Vertical"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            >
+
+                    <!-- Artist Name -->
                     <TextBlock HorizontalAlignment="Left" 
+                               Margin="10 40 0 5"
                                TextWrapping="Wrap" 
                                VerticalAlignment="Top"
-                               Foreground="White" Canvas.Left="115" Canvas.Top="37"
+                               Foreground="White"
                                >
-
                         <TextBlock.Inlines>
                             <Run FontWeight="Bold" FontSize="16" Text="Artist Name"/>
                         </TextBlock.Inlines>
-
                     </TextBlock>
 
-                    <TextBlock HorizontalAlignment="Left" 
-                               Text="Song Name which runs off eventually with elip"
+                    <!-- Track Name -->
+                    <TextBlock Text="Song Name which runs off eventually with elipses"
                                TextTrimming="CharacterEllipsis"
                                TextWrapping="NoWrap"
-                               VerticalAlignment="Top"
+                               Margin="10 0 0 0"
                                Foreground="White" 
-                               Width="209" 
-                               Canvas.Left="115" 
-                               Canvas.Top="63"
                                />
 
-                </Canvas>
+                </StackPanel>
+
+                <!-- Slider -->
+                <Slider VerticalAlignment="Top" 
+                        Grid.Column="1"
+                        Grid.ColumnSpan="4"
+                        Margin="10 10 5 5"
+                        Width="1020" 
+                        />
+
+                <!-- Media Buttons -->
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="4"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Stretch">
+
+                    <!-- Previous Button -->
+                    <Button Content="Back"
+                            Width="40"
+                            Height="40" 
+                            Grid.Column="3"
+                            Margin="10 40 10 10"
+                            />
+
+                    <!-- Play/Pause Button -->
+                    <Button Width="40"
+                            Height="40"
+                            Content="Play/Pause" 
+                            Grid.Column="3"
+                            Margin="10 40 10 10"
+                            />
+
+                    <!-- Next Button -->
+                    <Button Width="40"
+                            Height="40"
+                            Content="Forward" 
+                            Grid.Column="3"
+                            Margin="10 40 10 10"
+                            />
+                    
+                </StackPanel>
 
             </Grid>
         </Border>

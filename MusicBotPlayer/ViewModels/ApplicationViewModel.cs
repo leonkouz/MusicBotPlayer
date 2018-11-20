@@ -21,6 +21,11 @@ namespace MusicBotPlayer
         /// </summary>
         public SpotifyViewModel SpotifyViewModel { get; set; } = new SpotifyViewModel();
 
+        /// <summary>
+        /// The Queue View Model.
+        /// </summary>
+        public QueueViewModel QueueViewModel { get; set; } = new QueueViewModel();
+
         public ApplicationViewModel()
         {
             SpotifyViewModel.IsSelected = true;
@@ -33,7 +38,6 @@ namespace MusicBotPlayer
         /// </summary>
         public ICommand SideMenuButtonClickedCommand { get; set; }
 
-        
         /// <summary>
         /// Fires when a <see cref="SideMenuButton"/> is clicked.
         /// </summary>
@@ -41,9 +45,5 @@ namespace MusicBotPlayer
         {
 
         }
-
-        
-
-
     }
 }
