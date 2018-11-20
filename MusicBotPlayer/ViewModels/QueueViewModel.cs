@@ -99,8 +99,13 @@ namespace MusicBotPlayer
         /// <param name="track">The track to parse.</param>
         private void RaiseQueueEventChanged(QueueTrack track)
         {
+            if(OnQueueChanged == null)
+            {
+                return;
+            }
+
             QueueChangedEventArgs args = new QueueChangedEventArgs(track);
-            OnQueueChanged(this, args);
+            OnQueueChanged(null, args);
         }
     }
 }
