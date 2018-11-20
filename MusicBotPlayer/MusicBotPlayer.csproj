@@ -88,13 +88,16 @@
     <Compile Include="Converters\ArtistListConcaternatorConverter.cs" />
     <Compile Include="Converters\MsToStringConverter.cs" />
     <Compile Include="Converters\SelectImageConverter.cs" />
+    <Compile Include="EventArgs\QueueChangedEventArgs.cs" />
     <Compile Include="Helpers\WebBrowserHelper.cs" />
+    <Compile Include="Models\QueueTrack.cs" />
     <Compile Include="SpotifyAPI\JSON Objects\AlbumTrackSearchResult.cs" />
     <Compile Include="SpotifyAPI\JSON Objects\SearchResult.cs" />
     <Compile Include="SpotifyAPI\Spotify.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\DelegateCommand.cs" />
+    <Compile Include="ViewModels\QueueViewModel.cs" />
     <Compile Include="ViewModels\Spotify\SpotifyViewModel.cs" />
     <Compile Include="ViewModels\YoutubeViewModel.cs" />
     <Page Include="Controls\HorizontalMenu\HorizontalMenuBar.xaml">
