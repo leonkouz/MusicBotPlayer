@@ -50,6 +50,12 @@ namespace MusicBotPlayer
         /// </summary>
         private ObservableCollection<Artist> artists = new ObservableCollection<Artist>();
 
+        /// <summary>
+        /// Stores the tracks of an album. Used to display the tracks of an 
+        /// album when it is clicked on.
+        /// </summary>
+        private ObservableCollection<AblumTrackSearchTrack> albumsTracks = new ObservableCollection<AblumTrackSearchTrack>();
+
         #endregion
 
         #region Public Properties
@@ -127,6 +133,19 @@ namespace MusicBotPlayer
             }
         }
 
+        /// <summary>
+        /// Stores the tracks of an album. Used to display the tracks of an 
+        /// album when it is clicked on.
+        /// </summary>
+        public ObservableCollection<AblumTrackSearchTrack> AlbumsTracks
+        {
+            get => albumsTracks;
+            set
+            {
+                albumsTracks = value;
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -142,13 +161,16 @@ namespace MusicBotPlayer
         /// </summary>
         public async void Search(string text)
         {
-            ClearCurrentSearch();
-
             string searchResponse = String.Empty;
             try
             {
                 await Task.Run(() =>
                 {
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        ClearCurrentSearch();
+                    });
+
                     searchResponse = Spotify.Api.Search(text, Spotify.AllSearchTypes, 20, 0);
                     searchResult = JsonConvert.DeserializeObject<SearchResult>(searchResponse);
                 });
@@ -201,9 +223,36 @@ namespace MusicBotPlayer
         private void ClearCurrentSearch()
         {
             Albums.Clear();
+            AlbumsTracks.Clear();
             Tracks.Clear();
             Playlists.Clear();
             Artists.Clear();
+            AlbumsTracks.Clear();
         }
+
+        /// <summary>
+        /// Search for the tracks of the specified album.
+        /// </summary>
+        /// <param name="id"></param>
+        public async void AlbumTrackSearch(string id)
+        {
+            await Task.Run(() =>
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    AlbumsTracks.Clear();
+                });
+
+                AlbumTrackSearchResult album = JsonConvert.DeserializeObject<AlbumTrackSearchResult>(Spotify.Api.GetAlbumTracks(id, 50, 0));
+
+                if(album.items.Count == 0)
+                {
+                    return;
+                }
+
+                AddToCollection(AlbumsTracks, album.items);
+            });
+        }
+
     }
 }

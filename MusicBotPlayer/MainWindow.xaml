@@ -15,6 +15,7 @@
     <Window.Resources>
         <local:ArtistListConcaternatorConverter x:Key="ArtistListConcaternatorConverter"/>
         <local:SelectImageConverter x:Key="SelectImageConverter"/>
+        <local:MsToStringConverter x:Key="MsToStringConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -112,7 +113,7 @@
                                    FontSize="23"
                                    Foreground="White"
                                    HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"/>
+                                   VerticalAlignment="Center" Margin="12,10,13,12"/>
                     </Border>
 
                     <TextBox Background="{StaticResource BackgroundFlatGrayGradient}"
@@ -153,25 +154,54 @@
                              Height="100"
                              Width="100"
                              >
-                        <ListView HorizontalAlignment="Stretch"
-                                  VerticalAlignment="Stretch"
-                                  Background="White"
-                                  Style="{StaticResource CustomListView}"
-                                  BorderThickness="0"
-                                  HorizontalContentAlignment="Stretch"
-                                  ItemsSource="{Binding Albums, UpdateSourceTrigger=PropertyChanged}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <local:AlbumSearchItem ArtistNames="{Binding artists, 
-                                                           Converter={StaticResource ArtistListConcaternatorConverter}}"
-                                                           AlbumImage="{Binding images,
-                                                           Converter={StaticResource SelectImageConverter}}"
-                                                           AlbumName="{Binding name}"
-                                                           HorizontalAlignment="Stretch"
-                                                           />
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        <Grid>
+                            <!-- Album List View -->
+                            <ListView HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      x:Name="AlbumListView"
+                                      Style="{StaticResource CustomListView}"
+                                      BorderThickness="0"
+                                      Panel.ZIndex="0"
+                                      HorizontalContentAlignment="Stretch"
+                                      ItemsSource="{Binding Albums, UpdateSourceTrigger=PropertyChanged}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <local:AlbumSearchItem ArtistNames="{Binding artists, 
+                                                               Converter={StaticResource ArtistListConcaternatorConverter}}"
+                                                               AlbumImage="{Binding images,
+                                                               Converter={StaticResource SelectImageConverter}}"
+                                                               AlbumName="{Binding name}"
+                                                               AlbumId="{Binding id}"
+                                                               HorizontalAlignment="Stretch"
+                                                               Click="AlbumSearchItem_Click"
+                                                               />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <!-- Album tracks List View -->
+                            <ListView HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      Background="Transparent"
+                                      BorderThickness="0"
+                                      x:Name="AlbumTracksListView"
+                                      Visibility="Collapsed"
+                                      Panel.ZIndex="1"
+                                      Style="{StaticResource CustomListView}"
+                                      HorizontalContentAlignment="Stretch"
+                                      ItemsSource="{Binding AlbumsTracks, UpdateSourceTrigger=PropertyChanged}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <local:TrackSearchItem TrackArtists="{Binding artists,
+                                                               Converter={StaticResource ArtistListConcaternatorConverter}}"
+                                                               TrackName="{Binding name}"
+                                                               TrackLength="{Binding duration_ms,
+                                                               Converter={StaticResource MsToStringConverter}}"
+                                                               />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                        </Grid>
                     </TabItem>
 
                     <!-- Tracks Tab -->

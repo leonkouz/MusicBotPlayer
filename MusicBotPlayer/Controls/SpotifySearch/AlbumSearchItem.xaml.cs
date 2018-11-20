@@ -114,6 +114,29 @@ namespace MusicBotPlayer
 
         #endregion
 
+        #region AlbumId Dependency Property
+
+        /// <summary>
+        /// Stores the text for the album name.
+        /// </summary>
+        public string AlbumId
+        {
+            get { return (string)GetValue(AlbumIdProperty); }
+            set
+            {
+                SetValue(AlbumIdProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// The AlbumName dependency property.
+        /// </summary>
+        public static readonly DependencyProperty AlbumIdProperty =
+            DependencyProperty.Register("AlbumId", typeof(string),
+              typeof(AlbumSearchItem), new PropertyMetadata(null));
+
+        #endregion
+
         #endregion
     }
 }

@@ -15,7 +15,7 @@ namespace MusicBotPlayer
         /// <summary>
         /// The Spotify API.
         /// </summary>
-        public static SpotifyAPI Api;
+        public static SpotifyAPI Api { get; private set; }
 
         /// <summary>
         /// List of all search types.

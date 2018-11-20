@@ -146,6 +146,13 @@ namespace MusicBotPlayer
             }
         }
 
+        private void AlbumSearchItem_Click(object sender, EventArgs e)
+        {
+            AlbumSearchItem album = sender as AlbumSearchItem;
+            viewModel.SpotifyViewModel.AlbumTrackSearch(album.AlbumId);
 
+            AlbumListView.Visibility = Visibility.Collapsed;
+            AlbumTracksListView.Visibility = Visibility.Visible;
+        }
     }
 }
