@@ -153,6 +153,14 @@ namespace MusicBotPlayer
 
             AlbumListView.Visibility = Visibility.Collapsed;
             AlbumTracksListView.Visibility = Visibility.Visible;
+            BackButton.Visibility = Visibility.Visible;
+        }
+
+        private void BackButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            AlbumListView.Visibility = Visibility.Visible;
+            AlbumTracksListView.Visibility = Visibility.Collapsed;
+            BackButton.Visibility = Visibility.Collapsed;
         }
     }
 }

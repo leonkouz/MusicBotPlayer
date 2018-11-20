@@ -38,7 +38,7 @@ namespace MusicBotPlayer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void AlbumSearchItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             Click?.Invoke(this, e);
         }

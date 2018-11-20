@@ -96,6 +96,33 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
+                <!-- Back button -->
+                <Canvas HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+
+                    <StackPanel Orientation="Horizontal" 
+                                x:Name="BackButton"
+                                Visibility="Collapsed"
+                                PreviewMouseDown="BackButton_PreviewMouseDown"
+                                Canvas.Left="11" 
+                                Canvas.Top="245">
+                        <Button Width="30"
+                                Height="30" 
+                                FontFamily="{StaticResource FontAwesome}"
+                                Content="{StaticResource FontAwesomeLeftArrowIcon}"
+                                BorderThickness="0"
+                                Background="Transparent"
+                                Foreground="White"
+                                />
+                        <TextBlock Text="Back"
+                                   Foreground="White"
+                                   VerticalAlignment="Center"
+                                   />
+                    </StackPanel>
+
+
+                </Canvas>
+
                 <Canvas Grid.Row="0"
                         Width="460"
                         Height="60"
@@ -292,7 +319,7 @@
 
                     <!-- Artist Name -->
                     <TextBlock HorizontalAlignment="Left" 
-                               Margin="10 40 0 5"
+                               Margin="10 35 0 5"
                                TextWrapping="Wrap" 
                                VerticalAlignment="Top"
                                Foreground="White"
@@ -315,6 +342,7 @@
                 <!-- Slider -->
                 <Slider VerticalAlignment="Top" 
                         Grid.Column="1"
+                        Style="{StaticResource CustomThumb_Slider}"
                         Grid.ColumnSpan="4"
                         Margin="10 10 5 5"
                         Width="1020" 
@@ -328,7 +356,12 @@
                             VerticalAlignment="Stretch">
 
                     <!-- Previous Button -->
-                    <Button Content="Back"
+                    <Button FontFamily="{StaticResource FontAwesomeSolid}"
+                            Content="{StaticResource FontAwesomeSolidBackwardIcon}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            FontSize="30"
+                            Foreground="{StaticResource BackgroundPurpleGradient}"
                             Width="40"
                             Height="40" 
                             Grid.Column="3"
@@ -338,7 +371,12 @@
                     <!-- Play/Pause Button -->
                     <Button Width="40"
                             Height="40"
-                            Content="Play/Pause" 
+                            Background="Transparent"
+                            BorderThickness="0"
+                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            Content="{StaticResource FontAwesomeSolidPlayIcon}" 
+                            Foreground="{StaticResource BackgroundPurpleGradient}"
+                            FontSize="30"
                             Grid.Column="3"
                             Margin="10 40 10 10"
                             />
@@ -346,11 +384,16 @@
                     <!-- Next Button -->
                     <Button Width="40"
                             Height="40"
-                            Content="Forward" 
+                            Background="Transparent"
+                            BorderThickness="0"
+                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            Content="{StaticResource FontAwesomeSolidForwardIcon}" 
+                            Foreground="{StaticResource BackgroundPurpleGradient}"
+                            FontSize="30"
                             Grid.Column="3"
                             Margin="10 40 10 10"
                             />
-                    
+
                 </StackPanel>
 
             </Grid>

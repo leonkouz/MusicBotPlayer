@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="Styles/TabControls.xaml"/>
                 <ResourceDictionary Source="Styles/ListViews.xaml"/>
+                <ResourceDictionary Source="Styles/Sliders.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

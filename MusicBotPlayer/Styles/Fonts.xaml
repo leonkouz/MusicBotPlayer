@@ -4,9 +4,20 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <FontFamily x:Key="FontAwesome">/Fonts/fontawesome-webfont.ttf#FontAwesome</FontFamily>
+    <FontFamily x:Key="FontAwesomeBrandsRegular">/Fonts/Font Awesome 5 Brands-Regular-400.otf#Font Awesome 5 Brands Regular</FontFamily>
+    <FontFamily x:Key="FontAwesomeRegular">/Fonts/Font Awesome 5 Free-Regular-400.otf#Font Awesome 5 Free Regular</FontFamily>
+    <FontFamily x:Key="FontAwesomeSolid">/Fonts/Font Awesome 5 Free-Solid-900.otf#Font Awesome 5 Free Solid</FontFamily>
     
     <system:String x:Key="FontAwesomeSearchIcon">&#xf002;</system:String>
+    
+    <!-- Arrows -->
     <system:String x:Key="FontAwesomeRightArrowIcon">&#xf061;</system:String>
-    <system:String x:Key="FontAwesomePlayButtonCircle">&#xf04b;</system:String>
+    <system:String x:Key="FontAwesomeLeftArrowIcon">&#xf060;</system:String>
+    
+    <!-- Media Icons -->
+    <system:String x:Key="FontAwesomeRegularPlayButtonCircle">&#xf144;</system:String>
+    <system:String x:Key="FontAwesomeSolidBackwardIcon">&#xf04a;</system:String>
+    <system:String x:Key="FontAwesomeSolidPlayIcon">&#xf04b;</system:String>
+    <system:String x:Key="FontAwesomeSolidForwardIcon">&#xf04e;</system:String>
 
 </ResourceDictionary>

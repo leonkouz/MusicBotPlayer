@@ -10,9 +10,9 @@
             BorderBrush="White"
             Background="{StaticResource BackgroundDarkBrush}"
             Padding="10"
+            PreviewMouseDown="AlbumSearchItem_PreviewMouseDown"
             >
-        <Grid PreviewMouseDown="Grid_PreviewMouseDown"
-              HorizontalAlignment="Stretch"
+        <Grid HorizontalAlignment="Stretch"
               VerticalAlignment="Stretch"
               >
             <Grid.ColumnDefinitions>
