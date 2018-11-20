@@ -11,9 +11,20 @@ namespace MusicBotPlayer
     {
         private static readonly ObservableCollection<QueueTrack> queue = new ObservableCollection<QueueTrack>();
 
+        private static bool isPlaying = false;
+
         public delegate void QueueChangedHandler(object sender, QueueChangedEventArgs e);
 
         public static event QueueChangedHandler OnQueueChanged;
+
+        public static bool IsPlaying
+        {
+            get => isPlaying;
+            set
+            {
+                isPlaying = value;
+            }
+        }
 
         public static ObservableCollection<QueueTrack> Queue
         {
