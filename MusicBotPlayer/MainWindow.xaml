@@ -223,6 +223,7 @@
                                                                TrackName="{Binding name}"
                                                                TrackLength="{Binding duration_ms,
                                                                Converter={StaticResource MsToStringConverter}}"
+                                                               Click="TrackSearchItem_Click"
                                                                />
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

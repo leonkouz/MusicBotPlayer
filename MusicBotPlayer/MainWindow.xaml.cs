@@ -162,5 +162,12 @@ namespace MusicBotPlayer
             AlbumTracksListView.Visibility = Visibility.Collapsed;
             BackButton.Visibility = Visibility.Collapsed;
         }
+
+        private void TrackSearchItem_Click(object sender, EventArgs e)
+        {
+            TrackSearchItem track = sender as TrackSearchItem;
+
+            viewModel.QueueViewModel.AddToQueue(track);
+        }
     }
 }

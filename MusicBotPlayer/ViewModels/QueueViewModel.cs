@@ -9,15 +9,24 @@ namespace MusicBotPlayer
 {
     public class QueueViewModel : BaseViewModel
     {
-        private static readonly ObservableCollection<QueueTrack> queue = new ObservableCollection<QueueTrack>();
+        /// <summary>
+        /// The list of tracks currently in the queue.
+        /// </summary>
+        private readonly ObservableCollection<QueueTrack> queue = new ObservableCollection<QueueTrack>();
 
-        private static bool isPlaying = false;
+        /// <summary>
+        /// Specifies whether the queue is currently playing or not.
+        /// </summary>
+        private bool isPlaying = false;
 
         public delegate void QueueChangedHandler(object sender, QueueChangedEventArgs e);
 
-        public static event QueueChangedHandler OnQueueChanged;
+        public event QueueChangedHandler OnQueueChanged;
 
-        public static bool IsPlaying
+        /// <summary>
+        /// Specifies whether the queue is currently playing or not.
+        /// </summary>
+        public bool IsPlaying
         {
             get => isPlaying;
             set
@@ -26,22 +35,72 @@ namespace MusicBotPlayer
             }
         }
 
-        public static ObservableCollection<QueueTrack> Queue
+        /// <summary>
+        /// The list of tracks currently in the queue.
+        /// </summary>
+        public ObservableCollection<QueueTrack> Queue
         {
             get => queue;
         }
 
-        public static void AddToQueue(QueueTrack track)
+        /// <summary>
+        /// Adds the specified <see cref="QueueTrack"/> to the queue.
+        /// </summary>
+        /// <param name="track">The track</param>
+        public void AddToQueue(QueueTrack track)
         {
             Queue.Add(track);
 
-            QueueChangedEventArgs args = new QueueChangedEventArgs(track);
-            OnQueueChanged(null, args);
+            RaiseQueueEventChanged(track);
         }
 
-        public static void RemoveFromQueue(int index)
+        /// <summary>
+        /// Adds the specified <see cref="TrackSearchItem"/> to the queue.
+        /// </summary>
+        /// <param name="track"></param>
+        public void AddToQueue(TrackSearchItem track)
+        {
+            QueueTrack qTrack = ConvertToQueueTrack(track);
+
+            Queue.Add(qTrack);
+
+            RaiseQueueEventChanged(qTrack);
+        }
+
+        /// <summary>
+        /// Removes a track from the queue at the specified index.
+        /// </summary>
+        /// <param name="index">The index to remove the track at.</param>
+        public void RemoveFromQueue(int index)
         {
             queue.RemoveAt(index);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="TrackSearchItem"/> object to a <see cref="QueueTrack"/> object.
+        /// </summary>
+        /// <param name="trackSearch"></param>
+        /// <returns></returns>
+        private QueueTrack ConvertToQueueTrack(TrackSearchItem trackSearch)
+        {
+            QueueTrack track = new QueueTrack
+            {
+                Artist = StringHelper.StringToArray(trackSearch.TrackArtists),
+                Name = trackSearch.TrackName,
+                Duration = trackSearch.TrackLength
+            };
+
+            return track;
+        }
+
+        /// <summary>
+        /// Raise the QueueChanged event.
+        /// </summary>
+        /// <param name="track">The track to parse.</param>
+        private void RaiseQueueEventChanged(QueueTrack track)
+        {
+            QueueChangedEventArgs args = new QueueChangedEventArgs(track);
+            OnQueueChanged(this, args);
         }
     }
 }

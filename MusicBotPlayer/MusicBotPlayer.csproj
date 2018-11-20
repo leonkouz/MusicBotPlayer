@@ -89,6 +89,7 @@
     <Compile Include="Converters\MsToStringConverter.cs" />
     <Compile Include="Converters\SelectImageConverter.cs" />
     <Compile Include="EventArgs\QueueChangedEventArgs.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\WebBrowserHelper.cs" />
     <Compile Include="Models\QueueTrack.cs" />
     <Compile Include="SpotifyAPI\JSON Objects\AlbumTrackSearchResult.cs" />

@@ -11,14 +11,14 @@ namespace MusicBotPlayer
         #region Private Fields
 
         /// <summary>
-        /// The title of the track.
+        /// The name of the track.
         /// </summary>
-        private string title;
+        private string name;
 
         /// <summary>
-        /// The Spotify ID of the track, if applicable.
+        /// The duration of the track.
         /// </summary>
-        private string spotifyId;
+        private string duration;
 
         /// <summary>
         /// The artists of the track.
@@ -30,26 +30,26 @@ namespace MusicBotPlayer
         #region Public Properties
 
         /// <summary>
-        /// The title of the track.
+        /// The name of the track.
         /// </summary>
-        public string Title
+        public string Name
         {
-            get => title;
+            get => name;
             set
             {
-                title = value;
+                name = value;
             }
         }
 
         /// <summary>
-        /// The Spotify ID of the track, if applicable.
+        /// The duration of the track.
         /// </summary>
-        public string SpotifyId
+        public string Duration
         {
-            get => spotifyId;
+            get => duration;
             set
             {
-                spotifyId = value;
+                duration = value;
             }
         }
 
