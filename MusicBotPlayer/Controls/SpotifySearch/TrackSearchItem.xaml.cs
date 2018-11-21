@@ -23,7 +23,7 @@ namespace MusicBotPlayer
         /// <summary>
         /// Exposes the Click event on the button.
         /// </summary>
-        public virtual event EventHandler Click;
+        public virtual event EventHandler PlayButtonClick;
 
         public TrackSearchItem()
         {
@@ -99,7 +99,6 @@ namespace MusicBotPlayer
             DependencyProperty.Register("TrackLength", typeof(string),
               typeof(TrackSearchItem), new PropertyMetadata(null));
 
-
         #endregion
 
         #endregion
@@ -111,7 +110,7 @@ namespace MusicBotPlayer
         /// <param name="e"></param>
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            Click?.Invoke(this, e);
+            PlayButtonClick?.Invoke(this, e);
         }
     }
 }

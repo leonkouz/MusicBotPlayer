@@ -13,7 +13,7 @@
             <!-- Track's name and artist -->
             <ColumnDefinition Width="200"/>
             <!-- Blank Space button -->
-            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="10*" />
             <!-- Duration -->
             <ColumnDefinition Width="70"/>
             <!-- Blank Space button -->
@@ -25,7 +25,8 @@
         <!-- Album Image -->
         <Border Padding="10">
             <Image Grid.Column="0"
-                   
+                   Source="{Binding AlbumImage, RelativeSource={
+                           RelativeSource AncestorType={x:Type local:QueueItem}}}"
                    />
         </Border>
 
@@ -36,20 +37,24 @@
 
             <TextBlock Foreground="{StaticResource BackgroundPurpleGradient}"
                        Margin="15 20 0 0"
-                       Text="Song Name"
+                       Text="{Binding TrackName, RelativeSource={
+                       RelativeSource AncestorType={x:Type local:QueueItem}},
+                       FallbackValue='Song Name'}"
                        FontSize="20"
                        />
 
             <TextBlock Foreground="White"
-                       Text="Artist Names"
-                       Margin="15 0 0 0"
+                       Text="{Binding TrackArtists, RelativeSource={
+                       RelativeSource AncestorType={x:Type local:QueueItem}},
+                       FallbackValue='Artists'}"
+                       Margin="15 7 0 0"
                        FontSize="15"
                        />
 
         </StackPanel>
 
         <!--Download Progress Bar -->
-        <ProgressBar Width="500"
+        <ProgressBar Width="450"
                      Height="10"
                      Grid.Column="1"
                      HorizontalAlignment="Left"
@@ -69,13 +74,17 @@
                        VerticalAlignment="Center"
                        FontSize="15"/>
 
-            <TextBlock Text="0%"
+            <TextBlock Text="{Binding ProgressPercentage, RelativeSource={
+                             RelativeSource AncestorType={x:Type local:QueueItem}},
+                             FallbackValue='0%'}"
                        Foreground="White"
                        VerticalAlignment="Center"
                        FontSize="15"/>
         </StackPanel>
 
-        <TextBlock Text="0:00"
+        <TextBlock Text="{Binding TrackLength, RelativeSource={
+                         RelativeSource AncestorType={x:Type local:QueueItem}},
+                         FallbackValue='0:00'}"
                    Grid.Column="3"
                    Foreground="White"
                    FontSize="15"
@@ -89,6 +98,7 @@
                    FontFamily="{StaticResource FontAwesomeSolid}"
                    Text="{StaticResource FontAwesomeSolidCross}"
                    FontSize="40"
+                   PreviewMouseDown="DeleteButton_PreviewMouseDown"
                    Foreground="{StaticResource BackgroundPurpleGradient}"/>
         
         

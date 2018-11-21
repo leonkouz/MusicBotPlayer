@@ -175,7 +175,8 @@
 
                 <!-- Horizontal Menu Bar -->
                 <local:HorizontalMenuBar x:Name="horizontalMenuBar"
-                                         Grid.Row="1"/>
+                                         Grid.Row="1"
+                                         />
 
                 <!-- Spotify Authentication Browser window -->
                 <cefSharp:ChromiumWebBrowser x:Name="browser"
@@ -240,7 +241,7 @@
                                                                TrackName="{Binding name}"
                                                                TrackLength="{Binding duration_ms,
                                                                Converter={StaticResource MsToStringConverter}}"
-                                                               Click="TrackSearchItem_Click"
+                                                               PlayButtonClick="TrackSearchItem_Click"
                                                                />
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
