@@ -9,7 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Track's Album Image -->
-            <ColumnDefinition Width="170"/>
+            <ColumnDefinition Width="160"/>
             <!-- Track's name and artist -->
             <ColumnDefinition Width="200"/>
             <!-- Blank Space button -->
@@ -25,6 +25,8 @@
         <!-- Album Image -->
         <Border Padding="10">
             <Image Grid.Column="0"
+                   Width="130"
+                   Height="120"
                    Source="{Binding AlbumImage, RelativeSource={
                            RelativeSource AncestorType={x:Type local:QueueItem}}}"
                    />

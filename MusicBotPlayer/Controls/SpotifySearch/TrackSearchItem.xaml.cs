@@ -101,6 +101,29 @@ namespace MusicBotPlayer
 
         #endregion
 
+        #region TrackId Dependency Property
+
+        /// <summary>
+        /// Stores the text for Track's length.
+        /// </summary>
+        public string TrackId
+        {
+            get { return (string)GetValue(TrackIdProperty); }
+            set
+            {
+                SetValue(TrackIdProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// The TrackLength dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TrackIdProperty =
+            DependencyProperty.Register("TrackId", typeof(string),
+              typeof(TrackSearchItem), new PropertyMetadata(null));
+
+        #endregion
+
         #endregion
 
         /// <summary>

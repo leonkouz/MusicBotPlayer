@@ -136,6 +136,25 @@ namespace MusicBotPlayer
             {
                 SpotifyGrid.Visibility = Visibility.Collapsed;
             }
+
+            if (bttn.Name == "YouTubeButton")
+            {
+                YoutubeGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                YoutubeGrid.Visibility = Visibility.Collapsed;
+            }
+
+            if (bttn.Name == "QueueButton")
+            {
+                QueueGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                QueueGrid.Visibility = Visibility.Collapsed;
+            }
+
         }
 
         /// <summary>

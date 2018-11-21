@@ -16,6 +16,7 @@
         <local:ArtistListConcaternatorConverter x:Key="ArtistListConcaternatorConverter"/>
         <local:SelectImageConverter x:Key="SelectImageConverter"/>
         <local:MsToStringConverter x:Key="MsToStringConverter"/>
+        <local:ArtistIEnumerableConcaternatorConverter x:Key="ArtistIEnumerableConcaternatorConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -69,7 +70,7 @@
                                       Canvas.Top="98" 
                                       Width="170"
                                       />
-                
+
                 <!-- Youtube button -->
                 <local:SideMenuButton x:Name="YouTubeButton"
                                       Text="Youtube"
@@ -99,7 +100,7 @@
             </Canvas>
         </Grid>
 
-        <!-- Main Content Area -->
+        <!-- Spotify Content Area -->
         <Border Grid.Column="1"
                 x:Name="SpotifyGrid"
                 Background="{StaticResource BackgroundDarkBrush}"
@@ -241,6 +242,7 @@
                                                                TrackName="{Binding name}"
                                                                TrackLength="{Binding duration_ms,
                                                                Converter={StaticResource MsToStringConverter}}"
+                                                               TrackId="{Binding id}"
                                                                PlayButtonClick="TrackSearchItem_Click"
                                                                />
                                     </DataTemplate>
@@ -289,6 +291,42 @@
             </Grid>
 
         </Border>
+
+        <!-- Youtube Content Area -->
+        <Grid Grid.Column="1"
+              x:Name="YoutubeGrid">
+
+        </Grid>
+
+        <!-- Queue Content Area -->
+        <Grid Grid.Column="1"
+              x:Name="QueueGrid"
+              Visibility="Collapsed"
+              Background="{StaticResource BackgroundDarkBrush}"
+              DataContext="{Binding QueueViewModel}">
+
+            <!-- Queue List View -->
+            <ListView HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      x:Name="QueueListView"
+                      Style="{StaticResource CustomListView}"
+                      BorderThickness="0"
+                      Panel.ZIndex="0"
+                      HorizontalContentAlignment="Stretch"
+                      ItemsSource="{Binding Queue, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:QueueItem AlbumImage="{Binding Image, UpdateSourceTrigger=PropertyChanged}"
+                                         TrackArtists="{Binding Artists,
+                                         Converter={StaticResource ArtistIEnumerableConcaternatorConverter}}"
+                                         TrackName="{Binding Name}"
+                                         TrackLength="{Binding Duration}"
+                                         />
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
 
         <!-- Music Controller -->
         <Border Grid.ColumnSpan="2"
