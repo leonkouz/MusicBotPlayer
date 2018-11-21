@@ -209,6 +209,9 @@
     <Compile Include="Controls\HorizontalMenu\HorizontalMenuButton.xaml.cs">
       <DependentUpon>HorizontalMenuButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Queue\QueueItem.xaml.cs">
+      <DependentUpon>QueueItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SideMenuButton.xaml.cs">
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
     </Compile>
@@ -218,6 +221,7 @@
     <Compile Include="Controls\SpotifySearch\TrackSearchItem.xaml.cs">
       <DependentUpon>TrackSearchItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ArtistIEnumerableConcaternatorConverter.cs" />
     <Compile Include="Converters\ArtistListConcaternatorConverter.cs" />
     <Compile Include="Converters\MsToStringConverter.cs" />
     <Compile Include="Converters\SelectImageConverter.cs" />
@@ -229,6 +233,7 @@
     <Compile Include="Models\QueueTrack.cs" />
     <Compile Include="SpotifyAPI\JSON Objects\AlbumTrackSearchResult.cs" />
     <Compile Include="SpotifyAPI\JSON Objects\SearchResult.cs" />
+    <Compile Include="SpotifyAPI\JSON Objects\TrackSearchResult.cs" />
     <Compile Include="SpotifyAPI\Spotify.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
@@ -241,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\HorizontalMenu\HorizontalMenuButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Queue\QueueItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

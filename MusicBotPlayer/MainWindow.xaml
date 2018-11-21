@@ -16,6 +16,7 @@
         <local:ArtistListConcaternatorConverter x:Key="ArtistListConcaternatorConverter"/>
         <local:SelectImageConverter x:Key="SelectImageConverter"/>
         <local:MsToStringConverter x:Key="MsToStringConverter"/>
+        <local:ArtistIEnumerableConcaternatorConverter x:Key="ArtistIEnumerableConcaternatorConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -57,6 +58,20 @@
                            Canvas.Left="22" 
                            Canvas.Top="75"/>
 
+                <!-- Spotify button -->
+                <local:SideMenuButton x:Name="SpotifyButton"
+                                      IsSelected="{Binding SpotifyViewModel.IsSelected,
+                                      UpdateSourceTrigger=PropertyChanged, FallbackValue=true}"
+                                      Command="{Binding SideMenuButtonClickedCommand}"
+                                      Click="SideMenuButton_Click"
+                                      Text="Spotify" 
+                                      Height="54" 
+                                      Canvas.Left="31" 
+                                      Canvas.Top="98" 
+                                      Width="170"
+                                      />
+
+                <!-- Youtube button -->
                 <local:SideMenuButton x:Name="YouTubeButton"
                                       Text="Youtube"
                                       IsSelected="{Binding YoutubeViewModel.IsSelected, 
@@ -69,22 +84,25 @@
                                       Width="171"
                                       />
 
-                <local:SideMenuButton x:Name="SpotifyButton"
-                                      IsSelected="{Binding SpotifyViewModel.IsSelected,
-                                      UpdateSourceTrigger=PropertyChanged, FallbackValue=true}"
+                <!-- Queue button -->
+                <local:SideMenuButton x:Name="QueueButton"
+                                      Text="Queue"
+                                      IsSelected="{Binding YoutubeViewModel.IsSelected, 
+                                      UpdateSourceTrigger=PropertyChanged}"
                                       Command="{Binding SideMenuButtonClickedCommand}"
-                                      Click="SideMenuButton_Click"
-                                      Text="Spotify" 
+                                      Click="SideMenuButton_Click" 
                                       Height="54" 
                                       Canvas.Left="31" 
-                                      Canvas.Top="98" 
-                                      Width="170"
+                                      Canvas.Top="216" 
+                                      Width="171"
                                       />
+
             </Canvas>
         </Grid>
 
-        <!-- Main Content Area -->
+        <!-- Spotify Content Area -->
         <Border Grid.Column="1"
+                x:Name="SpotifyGrid"
                 Background="{StaticResource BackgroundDarkBrush}"
                 BorderBrush="DimGray"
                 BorderThickness="1 0 0 0">
@@ -144,21 +162,22 @@
                     </Border>
 
                     <TextBox Background="{StaticResource BackgroundFlatGrayGradient}"
-                                 AcceptsReturn="False"
-                                 BorderThickness="0" 
-                                 Width="400"
-                                 Height="30"
-                                 HorizontalContentAlignment="Left"
-                                 VerticalContentAlignment="Center"
-                                 Padding="25 0 0 0"
-                                 Foreground="White"
-                                 CaretBrush="White"
-                                 KeyDown="SearchBar_KeyDown" Canvas.Left="54" Canvas.Top="18"/>
+                             AcceptsReturn="False"
+                             BorderThickness="0" 
+                             Width="400"
+                             Height="30"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center"
+                             Padding="15 0 0 0"
+                             Foreground="White"
+                             CaretBrush="White"
+                             KeyDown="SearchBar_KeyDown" Canvas.Left="54" Canvas.Top="18"/>
                 </Canvas>
 
                 <!-- Horizontal Menu Bar -->
                 <local:HorizontalMenuBar x:Name="horizontalMenuBar"
-                                         Grid.Row="1"/>
+                                         Grid.Row="1"
+                                         />
 
                 <!-- Spotify Authentication Browser window -->
                 <cefSharp:ChromiumWebBrowser x:Name="browser"
@@ -223,7 +242,8 @@
                                                                TrackName="{Binding name}"
                                                                TrackLength="{Binding duration_ms,
                                                                Converter={StaticResource MsToStringConverter}}"
-                                                               Click="TrackSearchItem_Click"
+                                                               TrackId="{Binding id}"
+                                                               PlayButtonClick="TrackSearchItem_Click"
                                                                />
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -271,6 +291,42 @@
             </Grid>
 
         </Border>
+
+        <!-- Youtube Content Area -->
+        <Grid Grid.Column="1"
+              x:Name="YoutubeGrid">
+
+        </Grid>
+
+        <!-- Queue Content Area -->
+        <Grid Grid.Column="1"
+              x:Name="QueueGrid"
+              Visibility="Collapsed"
+              Background="{StaticResource BackgroundDarkBrush}"
+              DataContext="{Binding QueueViewModel}">
+
+            <!-- Queue List View -->
+            <ListView HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      x:Name="QueueListView"
+                      Style="{StaticResource CustomListView}"
+                      BorderThickness="0"
+                      Panel.ZIndex="0"
+                      HorizontalContentAlignment="Stretch"
+                      ItemsSource="{Binding Queue, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:QueueItem AlbumImage="{Binding Image, UpdateSourceTrigger=PropertyChanged}"
+                                         TrackArtists="{Binding Artists,
+                                         Converter={StaticResource ArtistIEnumerableConcaternatorConverter}}"
+                                         TrackName="{Binding Name}"
+                                         TrackLength="{Binding Duration}"
+                                         />
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
 
         <!-- Music Controller -->
         <Border Grid.ColumnSpan="2"

@@ -23,7 +23,7 @@ namespace MusicBotPlayer
         /// <summary>
         /// Exposes the Click event on the button.
         /// </summary>
-        public virtual event EventHandler Click;
+        public virtual event EventHandler PlayButtonClick;
 
         public TrackSearchItem()
         {
@@ -99,6 +99,28 @@ namespace MusicBotPlayer
             DependencyProperty.Register("TrackLength", typeof(string),
               typeof(TrackSearchItem), new PropertyMetadata(null));
 
+        #endregion
+
+        #region TrackId Dependency Property
+
+        /// <summary>
+        /// Stores the text for Track's length.
+        /// </summary>
+        public string TrackId
+        {
+            get { return (string)GetValue(TrackIdProperty); }
+            set
+            {
+                SetValue(TrackIdProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// The TrackLength dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TrackIdProperty =
+            DependencyProperty.Register("TrackId", typeof(string),
+              typeof(TrackSearchItem), new PropertyMetadata(null));
 
         #endregion
 
@@ -111,7 +133,7 @@ namespace MusicBotPlayer
         /// <param name="e"></param>
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            Click?.Invoke(this, e);
+            PlayButtonClick?.Invoke(this, e);
         }
     }
 }

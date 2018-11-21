@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MusicBotPlayer
 {
     public class QueueViewModel : BaseViewModel
     {
+        private ApplicationViewModel parentViewModel;
+
         /// <summary>
         /// The list of tracks currently in the queue.
         /// </summary>
@@ -18,6 +22,11 @@ namespace MusicBotPlayer
         /// Specifies whether the queue is currently playing or not.
         /// </summary>
         private bool isPlaying = false;
+
+        /// <summary>
+        /// The track that is currently playing.
+        /// </summary>
+        private QueueTrack currentlyPlayingTrack;
 
         public delegate void QueueChangedHandler(object sender, QueueChangedEventArgs e);
 
@@ -33,6 +42,26 @@ namespace MusicBotPlayer
             {
                 isPlaying = value;
             }
+        }
+
+        /// <summary>
+        /// The track that is currently playing.
+        /// </summary>
+        public QueueTrack CurrentlyPlayingTrack
+        {
+            get => currentlyPlayingTrack;
+            set
+            {
+                currentlyPlayingTrack = value;
+            }
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public QueueViewModel(ApplicationViewModel parentViewModel)
+        {
+            this.parentViewModel = parentViewModel;
         }
 
         /// <summary>
@@ -83,12 +112,19 @@ namespace MusicBotPlayer
         /// <returns></returns>
         private QueueTrack ConvertToQueueTrack(TrackSearchItem trackSearch)
         {
-            QueueTrack track = new QueueTrack
+            QueueTrack track = null;
+
+            App.Current.Dispatcher.Invoke(() =>
             {
-                Artist = StringHelper.StringToArray(trackSearch.TrackArtists),
-                Name = trackSearch.TrackName,
-                Duration = trackSearch.TrackLength
-            };
+                track = new QueueTrack()
+                {
+                    Artists = StringHelper.StringToArray(trackSearch.TrackArtists),
+                    Name = trackSearch.TrackName,
+                    Duration = trackSearch.TrackLength,
+                    SpotifyId = trackSearch.TrackId                    
+                };
+
+            });
 
             return track;
         }
@@ -99,13 +135,11 @@ namespace MusicBotPlayer
         /// <param name="track">The track to parse.</param>
         private void RaiseQueueEventChanged(QueueTrack track)
         {
-            if(OnQueueChanged == null)
+            if (OnQueueChanged != null)
             {
-                return;
+                QueueChangedEventArgs args = new QueueChangedEventArgs(track);
+                OnQueueChanged(null, args);
             }
-
-            QueueChangedEventArgs args = new QueueChangedEventArgs(track);
-            OnQueueChanged(null, args);
         }
     }
 }

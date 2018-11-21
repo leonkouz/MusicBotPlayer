@@ -1,5 +1,6 @@
 ﻿using CSharp_SpotifyAPI;
 using CSharp_SpotifyAPI.Enums;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,6 +67,19 @@ namespace MusicBotPlayer
         private void DoAuthentication()
         {
             Api.Authenticate(false);
+        }
+
+        /// <summary>
+        /// Gets the image of the track.
+        /// </summary>
+        /// <param name="id">The id of the track.</param>
+        /// <returns></returns>
+        public static string GetTrackImage(string id)
+        {
+            TrackSearchResult result = JsonConvert.DeserializeObject<TrackSearchResult>(Spotify.Api.GetTrack(id));
+            string image = result.album.images[2].url;
+
+            return image;
         }
     }
 }

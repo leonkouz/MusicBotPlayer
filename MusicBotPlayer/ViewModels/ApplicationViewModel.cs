@@ -25,10 +25,12 @@ namespace MusicBotPlayer
         /// <summary>
         /// The Queue View Model.
         /// </summary>
-        public QueueViewModel QueueViewModel { get; set; } = new QueueViewModel();
+        public QueueViewModel QueueViewModel { get; set; } 
 
         public ApplicationViewModel()
         {
+            QueueViewModel = new QueueViewModel(this);
+
             SpotifyViewModel.IsSelected = true;
 
             SideMenuButtonClickedCommand = new DelegateCommand(OnSideMenuButtonClicked);
