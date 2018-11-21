@@ -63,6 +63,7 @@ namespace MusicBotPlayer
             // Add the side menu buttons to the buttons list for later use.
             buttons.Add(YouTubeButton);
             buttons.Add(SpotifyButton);
+            buttons.Add(QueueButton);
         }
 
         /// <summary>
@@ -125,8 +126,16 @@ namespace MusicBotPlayer
             }
 
             SideMenuButton bttn = (SideMenuButton)sender;
-
             bttn.IsSelected = true;
+
+            if(bttn.Name == "SpotifyButton")
+            {
+                SpotifyGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SpotifyGrid.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>

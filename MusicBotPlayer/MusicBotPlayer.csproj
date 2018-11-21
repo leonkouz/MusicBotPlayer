@@ -76,6 +76,9 @@
     <Compile Include="Controls\HorizontalMenu\HorizontalMenuButton.xaml.cs">
       <DependentUpon>HorizontalMenuButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Queue\QueueItem.xaml.cs">
+      <DependentUpon>QueueItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SideMenuButton.xaml.cs">
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
     </Compile>
@@ -106,6 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\HorizontalMenu\HorizontalMenuButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Queue\QueueItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

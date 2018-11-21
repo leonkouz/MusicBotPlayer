@@ -57,6 +57,20 @@
                            Canvas.Left="22" 
                            Canvas.Top="75"/>
 
+                <!-- Spotify button -->
+                <local:SideMenuButton x:Name="SpotifyButton"
+                                      IsSelected="{Binding SpotifyViewModel.IsSelected,
+                                      UpdateSourceTrigger=PropertyChanged, FallbackValue=true}"
+                                      Command="{Binding SideMenuButtonClickedCommand}"
+                                      Click="SideMenuButton_Click"
+                                      Text="Spotify" 
+                                      Height="54" 
+                                      Canvas.Left="31" 
+                                      Canvas.Top="98" 
+                                      Width="170"
+                                      />
+                
+                <!-- Youtube button -->
                 <local:SideMenuButton x:Name="YouTubeButton"
                                       Text="Youtube"
                                       IsSelected="{Binding YoutubeViewModel.IsSelected, 
@@ -69,22 +83,25 @@
                                       Width="171"
                                       />
 
-                <local:SideMenuButton x:Name="SpotifyButton"
-                                      IsSelected="{Binding SpotifyViewModel.IsSelected,
-                                      UpdateSourceTrigger=PropertyChanged, FallbackValue=true}"
+                <!-- Queue button -->
+                <local:SideMenuButton x:Name="QueueButton"
+                                      Text="Queue"
+                                      IsSelected="{Binding YoutubeViewModel.IsSelected, 
+                                      UpdateSourceTrigger=PropertyChanged}"
                                       Command="{Binding SideMenuButtonClickedCommand}"
-                                      Click="SideMenuButton_Click"
-                                      Text="Spotify" 
+                                      Click="SideMenuButton_Click" 
                                       Height="54" 
                                       Canvas.Left="31" 
-                                      Canvas.Top="98" 
-                                      Width="170"
+                                      Canvas.Top="216" 
+                                      Width="171"
                                       />
+
             </Canvas>
         </Grid>
 
         <!-- Main Content Area -->
         <Border Grid.Column="1"
+                x:Name="SpotifyGrid"
                 Background="{StaticResource BackgroundDarkBrush}"
                 BorderBrush="DimGray"
                 BorderThickness="1 0 0 0">
@@ -144,16 +161,16 @@
                     </Border>
 
                     <TextBox Background="{StaticResource BackgroundFlatGrayGradient}"
-                                 AcceptsReturn="False"
-                                 BorderThickness="0" 
-                                 Width="400"
-                                 Height="30"
-                                 HorizontalContentAlignment="Left"
-                                 VerticalContentAlignment="Center"
-                                 Padding="25 0 0 0"
-                                 Foreground="White"
-                                 CaretBrush="White"
-                                 KeyDown="SearchBar_KeyDown" Canvas.Left="54" Canvas.Top="18"/>
+                             AcceptsReturn="False"
+                             BorderThickness="0" 
+                             Width="400"
+                             Height="30"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center"
+                             Padding="15 0 0 0"
+                             Foreground="White"
+                             CaretBrush="White"
+                             KeyDown="SearchBar_KeyDown" Canvas.Left="54" Canvas.Top="18"/>
                 </Canvas>
 
                 <!-- Horizontal Menu Bar -->

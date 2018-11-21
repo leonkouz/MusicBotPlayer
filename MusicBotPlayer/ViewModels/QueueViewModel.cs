@@ -19,6 +19,11 @@ namespace MusicBotPlayer
         /// </summary>
         private bool isPlaying = false;
 
+        /// <summary>
+        /// The track that is currently playing.
+        /// </summary>
+        private QueueTrack currentlyPlayingTrack;
+
         public delegate void QueueChangedHandler(object sender, QueueChangedEventArgs e);
 
         public event QueueChangedHandler OnQueueChanged;
@@ -32,6 +37,18 @@ namespace MusicBotPlayer
             set
             {
                 isPlaying = value;
+            }
+        }
+
+        /// <summary>
+        /// The track that is currently playing.
+        /// </summary>
+        public QueueTrack CurrentlyPlayingTrack
+        {
+            get => currentlyPlayingTrack;
+            set
+            {
+                currentlyPlayingTrack = value;
             }
         }
 
