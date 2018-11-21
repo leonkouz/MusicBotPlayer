@@ -299,14 +299,16 @@
         </Grid>
 
         <!-- Queue Content Area -->
-        <Grid Grid.Column="1"
-              x:Name="QueueGrid"
-              Visibility="Collapsed"
-              Background="{StaticResource BackgroundDarkBrush}"
-              DataContext="{Binding QueueViewModel}">
-
-            <!-- Queue List View -->
-            <ListView HorizontalAlignment="Stretch"
+        <Border Grid.Column="1"
+                x:Name="QueueGrid"
+                BorderBrush="DimGray"
+                BorderThickness="0 0 0 1"
+                Visibility="Collapsed"
+                Background="{StaticResource BackgroundDarkBrush}"
+                DataContext="{Binding QueueViewModel}">
+            <Grid>
+                <!-- Queue List View -->
+                <ListView HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
                       x:Name="QueueListView"
                       Style="{StaticResource CustomListView}"
@@ -314,20 +316,21 @@
                       Panel.ZIndex="0"
                       HorizontalContentAlignment="Stretch"
                       ItemsSource="{Binding Queue, UpdateSourceTrigger=PropertyChanged}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <local:QueueItem AlbumImage="{Binding Image, UpdateSourceTrigger=PropertyChanged}"
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <local:QueueItem AlbumImage="{Binding Image, UpdateSourceTrigger=PropertyChanged}"
                                          TrackArtists="{Binding Artists,
                                          Converter={StaticResource ArtistIEnumerableConcaternatorConverter}}"
                                          TrackName="{Binding Name}"
                                          TrackLength="{Binding Duration}"
                                          />
 
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
-
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
+        
         <!-- Music Controller -->
         <Border Grid.ColumnSpan="2"
                 BorderBrush="DimGray"
