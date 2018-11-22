@@ -36,6 +36,7 @@
 
             <Canvas>
 
+                <!-- Title -->
                 <TextBlock HorizontalAlignment="Left" 
                            Text="Music Bot Player" 
                            FontFamily="Microsoft Sans Serif"
@@ -47,6 +48,7 @@
                            Canvas.Left="22" 
                            Canvas.Top="19"/>
 
+                <!-- Integrations text -->
                 <TextBlock HorizontalAlignment="Left" 
                            TextWrapping="Wrap" 
                            Text="Integrations" 
@@ -123,7 +125,7 @@
                                 Visibility="Collapsed"
                                 PreviewMouseDown="BackButton_PreviewMouseDown"
                                 Canvas.Left="11" 
-                                Canvas.Top="245">
+                                Canvas.Top="265">
                         <Button Width="30"
                                 Height="30" 
                                 FontFamily="{StaticResource FontAwesome}"
@@ -256,11 +258,28 @@
                     <TabItem Header="Tracks" Width="100"
                                  Height="100"
                                  >
+
+                        <!-- Album tracks List View -->
                         <ListView HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          ItemsSource="{Binding Tracks, UpdateSourceTrigger=PropertyChanged}">
-
-
+                                  VerticalAlignment="Stretch"
+                                  Background="Transparent"
+                                  BorderThickness="0"
+                                  x:Name="TracksListView"
+                                  Style="{StaticResource CustomListView}"
+                                  HorizontalContentAlignment="Stretch"
+                                  ItemsSource="{Binding Tracks, UpdateSourceTrigger=PropertyChanged}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <local:TrackSearchItem TrackArtists="{Binding artists,
+                                                           Converter={StaticResource ArtistListConcaternatorConverter}}"
+                                                           TrackName="{Binding name}"
+                                                           TrackLength="{Binding duration_ms,
+                                                           Converter={StaticResource MsToStringConverter}}"
+                                                           TrackId="{Binding id}"
+                                                           PlayButtonClick="TrackSearchItem_Click"
+                                                           />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </TabItem>
 
