@@ -41,6 +41,7 @@ namespace MusicBotPlayer
             set
             {
                 isPlaying = value;
+                OnPropertyChanged("IsPlaying");
             }
         }
 
@@ -53,15 +54,8 @@ namespace MusicBotPlayer
             set
             {
                 currentlyPlayingTrack = value;
+                OnPropertyChanged("CurrentlyPlayingTrack");
             }
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public QueueViewModel(ApplicationViewModel parentViewModel)
-        {
-            this.parentViewModel = parentViewModel;
         }
 
         /// <summary>
@@ -70,6 +64,28 @@ namespace MusicBotPlayer
         public ObservableCollection<QueueTrack> Queue
         {
             get => queue;
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public QueueViewModel(ApplicationViewModel parentViewModel)
+        {
+            this.parentViewModel = parentViewModel;
+
+            this.OnQueueChanged += QueueViewModel_OnQueueChanged;
+        }
+
+        private void QueueViewModel_OnQueueChanged(object sender, QueueChangedEventArgs e)
+        {
+            // If there is no currently playing track.
+            if (CurrentlyPlayingTrack == null)
+            {
+                // Add the first track in the queue to the currently playing track.
+                CurrentlyPlayingTrack = Queue.First();
+                // Remove the track from the queue.
+                Queue.Remove(e.Track);
+            }
         }
 
         /// <summary>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MusicBotPlayer"
         xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="712.805" Width="1170.5">
+        Title="MainWindow" Height="716.805" Width="1251.5">
 
     <Window.DataContext>
         <local:ApplicationViewModel/>
@@ -309,13 +309,13 @@
             <Grid>
                 <!-- Queue List View -->
                 <ListView HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
-                      x:Name="QueueListView"
-                      Style="{StaticResource CustomListView}"
-                      BorderThickness="0"
-                      Panel.ZIndex="0"
-                      HorizontalContentAlignment="Stretch"
-                      ItemsSource="{Binding Queue, UpdateSourceTrigger=PropertyChanged}">
+                          VerticalAlignment="Stretch"
+                          x:Name="QueueListView"
+                          Style="{StaticResource CustomListView}"
+                          BorderThickness="0"
+                          Panel.ZIndex="0"
+                          HorizontalContentAlignment="Stretch"
+                          ItemsSource="{Binding Queue, UpdateSourceTrigger=PropertyChanged}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <local:QueueItem AlbumImage="{Binding Image, UpdateSourceTrigger=PropertyChanged}"
@@ -330,7 +330,7 @@
                 </ListView>
             </Grid>
         </Border>
-        
+
         <!-- Music Controller -->
         <Border Grid.ColumnSpan="2"
                 BorderBrush="DimGray"
@@ -341,7 +341,7 @@
 
             <Grid Background="{StaticResource BackgroundGrayBrush}"
                   Height="90"
-                  DataContext="{}"
+                  DataContext="{Binding QueueViewModel}"
                   HorizontalAlignment="Stretch"
                   >
 
@@ -365,7 +365,7 @@
                         HorizontalAlignment="Stretch"
                         Padding="5">
                     <Image Grid.Column="0"
-                           Source="Images/AlbumPlaceholder.PNG"
+                           Source="{Binding CurrentlyPlayingTrack.Image}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            />
@@ -385,12 +385,17 @@
                                Foreground="White"
                                >
                         <TextBlock.Inlines>
-                            <Run FontWeight="Bold" FontSize="16" Text="Artist Name"/>
+                            <Run FontWeight="Bold" 
+                                 FontSize="16" 
+                                 Text="{Binding CurrentlyPlayingTrack.Artists,
+                                        Converter={StaticResource ArtistIEnumerableConcaternatorConverter},
+                                        FallbackValue='-'}"/>
                         </TextBlock.Inlines>
                     </TextBlock>
 
                     <!-- Track Name -->
-                    <TextBlock Text="Song Name which runs off eventually with elipses"
+                    <TextBlock Text="{Binding CurrentlyPlayingTrack.Name,
+                                        FallbackValue='-'}"
                                TextTrimming="CharacterEllipsis"
                                TextWrapping="NoWrap"
                                Margin="10 0 0 0"
@@ -399,14 +404,31 @@
 
                 </StackPanel>
 
-                <!-- Slider -->
-                <Slider VerticalAlignment="Top" 
-                        Grid.Column="1"
-                        Style="{StaticResource CustomThumb_Slider}"
-                        Grid.ColumnSpan="4"
-                        Margin="10 10 5 5"
-                        Width="1020" 
-                        />
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Center"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="4"
+                            Margin="10 10 5 5"
+                             >
+
+                    <TextBlock Text="0:00"
+                               Margin="0 1 10 0"
+                               Foreground="White"
+                               VerticalAlignment="Center"/>
+
+                    <!-- Slider -->
+                    <Slider Style="{StaticResource CustomThumb_Slider}"
+                            Width="1020"
+                            />
+
+                    <TextBlock Text="{Binding CurrentlyPlayingTrack.Duration,
+                                FallbackValue='0:00'}"
+                               Margin="10 1 0 0"
+                               Foreground="White"/>
+
+                </StackPanel>
+
 
                 <!-- Media Buttons -->
                 <StackPanel Orientation="Horizontal"
