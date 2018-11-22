@@ -43,6 +43,10 @@ namespace MusicBotPlayer
             Initialise().GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// Run initialisation process.
+        /// </summary>
+        /// <returns></returns>
         private static async Task Initialise()
         {
             client = new DiscordSocketClient();
@@ -63,6 +67,10 @@ namespace MusicBotPlayer
             await Task.Delay(-1);
         }
 
+        /// <summary>
+        /// Install the command module.
+        /// </summary>
+        /// <returns></returns>
         public static async Task InstallCommands()
         {
             // Hook the MessageReceived Event into our Command Handler
@@ -71,6 +79,11 @@ namespace MusicBotPlayer
             await commands.AddModulesAsync(Assembly.GetEntryAssembly());
         }
 
+        /// <summary>
+        /// Handles commands.
+        /// </summary>
+        /// <param name="messageParam"></param>
+        /// <returns></returns>
         public static async Task HandleCommand(SocketMessage messageParam)
         {
             // Don't process the command if it was a System Message
@@ -119,6 +132,11 @@ namespace MusicBotPlayer
             return process;
         }
 
+        /// <summary>
+        /// Sends audio to the discord voice channel.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static async Task SendAudioToVoice(string path)
         {
             var ffmpeg = InitialiseAudioStream(@"D:\Downloads\DarudeSandstorm.mp3");
