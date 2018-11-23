@@ -126,7 +126,8 @@
 
                 <!-- Back button -->
                 <Canvas HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch">
+                        VerticalAlignment="Stretch"
+                        Panel.ZIndex="1">
 
                     <StackPanel Orientation="Horizontal" 
                                 x:Name="BackButton"
