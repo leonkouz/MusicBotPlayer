@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -30,6 +31,8 @@ namespace MusicBotPlayer
         /// The Audio Channel.
         /// </summary>
         public static IAudioClient AudioClient { get; set; } = null;
+
+        public static TimeSpan TrackCurrentPlayingTime;
 
         private static CommandService commands;
         private static IServiceProvider services;
@@ -125,11 +128,28 @@ namespace MusicBotPlayer
                 Arguments = $"-i {songPath} " + // Here we provide a list of arguments to feed into FFmpeg. -i means the location of the file/URL it will read from
                            "-f s16le -stats -ar 48000 -ac 2 pipe:1", // Next, we tell it to output 16-bit 48000Hz PCM, over 2 channels, to stdout.
                 UseShellExecute = false,
-                RedirectStandardOutput = true // Capture the stdout of the process
-                
+                RedirectStandardOutput = true, // Capture the stdout of the process
+                RedirectStandardError = true,
+                CreateNoWindow = true,
+
             });
 
+            process.ErrorDataReceived += Process_ErrorDataReceived;
+
+            process.BeginErrorReadLine();
+
             return process;
+        }
+
+        private static void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (e.Data.Contains("time="))
+            {
+                string[] data = e.Data.Split(' ');
+
+                string time = data[5].Substring(5);
+                TrackCurrentPlayingTime = TimeSpan.TryParse(time, out TrackCurrentPlayingTime) ? TrackCurrentPlayingTime : TrackCurrentPlayingTime;
+            }
         }
 
         /// <summary>
@@ -139,11 +159,33 @@ namespace MusicBotPlayer
         /// <returns></returns>
         public static async Task SendAudioToVoice(string path)
         {
-            var ffmpeg = InitialiseAudioStream(@"D:\Downloads\DarudeSandstorm.mp3");
-            var output = ffmpeg.StandardOutput.BaseStream;
+            int blockSize = 3840; // The size of bytes to read per frame; 1920 for mono
+            byte[] buffer = new byte[blockSize];
+            int byteCount;
+
             var discord = AudioClient.CreatePCMStream(AudioApplication.Mixed);
-            await output.CopyToAsync(discord);
-            await discord.FlushAsync();
+
+            var ffmpeg = InitialiseAudioStream(@"D:\Downloads\DarudeSandstorm.mp3");
+            //var output = ffmpeg.StandardOutput.BaseStream;
+
+            while ((byteCount = await ffmpeg.StandardOutput.BaseStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+            {
+                await ffmpeg.StandardOutput.BaseStream.CopyToAsync(discord);
+                await discord.FlushAsync();
+            }
+        }
+
+
+        public static async void ReadLog(Process proc)
+        {
+            await Task.Run(() =>
+            {
+                while (true)
+                {
+                    //string test = proc.StandardOutput.ReadToEnd();
+                    string test2 = proc.StandardError.ReadToEnd();
+                }
+            });
         }
     }
 }
