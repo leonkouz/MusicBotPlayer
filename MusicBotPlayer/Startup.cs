@@ -10,13 +10,12 @@ namespace MusicBotPlayer
     {
         public static string LoadSpotifyClientId()
         {
-
+            throw new NotImplementedException();
         }
 
         public static string LoadDiscordBotToken()
         {
-
+            throw new NotImplementedException();
         }
-
     }
 }

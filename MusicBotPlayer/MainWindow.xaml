@@ -460,6 +460,7 @@
                     <Button FontFamily="{StaticResource FontAwesomeSolid}"
                             Content="{StaticResource FontAwesomeSolidBackwardIcon}"
                             Background="Transparent"
+                            Command="{Binding PreviousTrackCommand}"
                             BorderThickness="0"
                             FontSize="30"
                             Foreground="{StaticResource BackgroundPurpleGradient}"
@@ -485,7 +486,9 @@
                     <!-- Next Button -->
                     <Button Width="40"
                             Height="40"
+                            x:Name="NextSongButton"
                             Background="Transparent"
+                            Command="{Binding NextTrackCommand}"
                             BorderThickness="0"
                             FontFamily="{StaticResource FontAwesomeSolid}"
                             Content="{StaticResource FontAwesomeSolidForwardIcon}" 

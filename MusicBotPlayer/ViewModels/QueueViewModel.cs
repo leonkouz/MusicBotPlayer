@@ -6,17 +6,28 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MusicBotPlayer
 {
     public class QueueViewModel : BaseViewModel
     {
+        #region Private Fields
+
+        /// <summary>
+        /// The parent View Model.
+        /// </summary>
         private ApplicationViewModel parentViewModel;
 
         /// <summary>
         /// The list of tracks currently in the queue.
         /// </summary>
         private readonly ObservableCollection<QueueTrack> queue = new ObservableCollection<QueueTrack>();
+
+        /// <summary>
+        /// The history of tracks played. 
+        /// </summary>
+        private ObservableCollection<QueueTrack> history = new ObservableCollection<QueueTrack>();
 
         /// <summary>
         /// Specifies whether the queue is currently playing or not.
@@ -28,9 +39,9 @@ namespace MusicBotPlayer
         /// </summary>
         private QueueTrack currentlyPlayingTrack;
 
-        public delegate void QueueChangedHandler(object sender, QueueChangedEventArgs e);
+        #endregion
 
-        public event QueueChangedHandler OnQueueChanged;
+        #region Public Properties
 
         /// <summary>
         /// Specifies whether the queue is currently playing or not.
@@ -66,6 +77,39 @@ namespace MusicBotPlayer
             get => queue;
         }
 
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// QueueChanged event delegate.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void QueueChangedHandler(object sender, QueueChangedEventArgs e);
+
+        /// <summary>
+        /// QueueChanged event.
+        /// </summary>
+        public event QueueChangedHandler OnQueueChanged;
+
+        #endregion
+
+
+        #region Commands
+
+        /// <summary>
+        /// The command to skip to the next track.
+        /// </summary>
+        public ICommand NextTrackCommand { get; set; }
+
+        /// <summary>
+        /// The command to go to the previous track.
+        /// </summary>
+        public ICommand PreviousTrackCommand { get; set; }
+
+        #endregion
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -74,6 +118,134 @@ namespace MusicBotPlayer
             this.parentViewModel = parentViewModel;
 
             this.OnQueueChanged += QueueViewModel_OnQueueChanged;
+
+            NextTrackCommand = new DelegateCommand(OnNextTrack);
+            PreviousTrackCommand = new DelegateCommand(OnPreviousTrack);
+        }
+
+        /// <summary>
+        /// Skips to the next track in the queue.
+        /// </summary>
+        private void OnNextTrack()
+        {
+            AddCurrentTrackToHistory();
+
+            AddNextTrackFromQueueToCurrentTrack();
+        }
+
+        /// <summary>
+        /// Goes to the previous track in the history.
+        /// </summary>
+        private void OnPreviousTrack()
+        {
+            if(history.Count != 0)
+            {
+                if (IsCurrentTrackAlreadyNextInQueue() == false)
+                {
+                    AddCurrentTrackToQueue();
+
+                    RetrievePreviousTrackFromHistory();
+                }
+                else
+                {
+                    RetrievePreviousTrackFromHistory();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets <see cref="CurrentlyPlayingTrack"/> to the next track 
+        /// from the queue and removes the first track from the Queue.
+        /// </summary>
+        private void AddNextTrackFromQueueToCurrentTrack()
+        {
+            if (Queue.Count != 0)
+            {
+                CurrentlyPlayingTrack = Queue.First();
+
+                Queue.Remove(Queue.First());
+            }
+            else
+            {
+                CurrentlyPlayingTrack = null;
+            }
+        }
+
+        /// <summary>
+        /// Sets the CurrentlyPlayingTrack as the previous track played.
+        /// </summary>
+        private void RetrievePreviousTrackFromHistory()
+        {
+            if (history.Count != 0)
+            {
+                // Get the last track from history as that 
+                // would be the most recent track added to history.
+                CurrentlyPlayingTrack = history.Last();
+
+                history.Remove(history.Last());
+            }
+            else
+            {
+                // Rewind to the start of the song.
+            }
+        }
+
+        /// <summary>
+        /// Determines if the current track is already the next track
+        /// in queue.
+        /// </summary>
+        /// <returns>True if next track in queue is the same, false if not.</returns>
+        private bool IsCurrentTrackAlreadyNextInQueue()
+        {
+            // If current track is not null
+            if(CurrentlyPlayingTrack != null)
+            {
+                // If the queue does not contain any tracks.
+                if(Queue.Count != 0)
+                {
+                    if (CurrentlyPlayingTrack.Name == Queue.First().Name &&
+                         CurrentlyPlayingTrack.Artists[0] == Queue.First().Artists[0])
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Adds the currently playing track to history.
+        /// </summary>
+        private void AddCurrentTrackToHistory()
+        {
+            if(CurrentlyPlayingTrack != null)
+            {
+                history.Add(CurrentlyPlayingTrack);
+            }
+        }
+
+        /// <summary>
+        /// Add the current track to the queue.
+        /// </summary>
+        private void AddCurrentTrackToQueue()
+        {
+            if(CurrentlyPlayingTrack != null)
+            {
+                // Insert the track to the start of the queue
+                // so the next track will be the current track.
+                Queue.Insert(0, CurrentlyPlayingTrack);
+            }
         }
 
         private void QueueViewModel_OnQueueChanged(object sender, QueueChangedEventArgs e)
@@ -137,7 +309,7 @@ namespace MusicBotPlayer
                     Artists = StringHelper.StringToArray(trackSearch.TrackArtists),
                     Name = trackSearch.TrackName,
                     Duration = trackSearch.TrackLength,
-                    SpotifyId = trackSearch.TrackId                    
+                    SpotifyId = trackSearch.TrackId
                 };
 
             });
