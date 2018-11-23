@@ -141,6 +141,11 @@ namespace MusicBotPlayer
             return process;
         }
 
+        /// <summary>
+        /// Fires when error data is received by ffmpeg. Stores the current point in time of the currently playing track.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (e.Data.Contains("time="))
@@ -166,26 +171,12 @@ namespace MusicBotPlayer
             var discord = AudioClient.CreatePCMStream(AudioApplication.Mixed);
 
             var ffmpeg = InitialiseAudioStream(@"D:\Downloads\DarudeSandstorm.mp3");
-            //var output = ffmpeg.StandardOutput.BaseStream;
 
             while ((byteCount = await ffmpeg.StandardOutput.BaseStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
             {
                 await ffmpeg.StandardOutput.BaseStream.CopyToAsync(discord);
                 await discord.FlushAsync();
             }
-        }
-
-
-        public static async void ReadLog(Process proc)
-        {
-            await Task.Run(() =>
-            {
-                while (true)
-                {
-                    //string test = proc.StandardOutput.ReadToEnd();
-                    string test2 = proc.StandardError.ReadToEnd();
-                }
-            });
         }
     }
 }
