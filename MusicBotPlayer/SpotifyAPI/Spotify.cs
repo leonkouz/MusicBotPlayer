@@ -34,7 +34,7 @@ namespace MusicBotPlayer
         /// </summary>
         public Spotify()
         {
-            string clientID = "305dbadf23cd4d9688868eb01857b54b";
+            string clientID = Startup.GetSpotifyClientIdFromAppData();
             string redirectID = "http%3A%2F%2Flocalhost%3A62177";
             string state = "123";
 
