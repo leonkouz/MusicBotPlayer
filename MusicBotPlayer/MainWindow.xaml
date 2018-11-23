@@ -434,7 +434,7 @@
                             Margin="10 10 5 5"
                              >
 
-                    <TextBlock Text="0:00"
+                    <TextBlock Text="{Binding CurrentPointInTrack, UpdateSourceTrigger=PropertyChanged}"
                                Margin="0 1 10 0"
                                Foreground="White"
                                VerticalAlignment="Center"/>

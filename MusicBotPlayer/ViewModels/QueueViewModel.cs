@@ -14,6 +14,8 @@ namespace MusicBotPlayer
     {
         #region Private Fields
 
+        private TimeSpan currentPointInTrack;
+
         /// <summary>
         /// The parent View Model.
         /// </summary>
@@ -77,6 +79,17 @@ namespace MusicBotPlayer
             get => queue;
         }
 
+
+        public TimeSpan CurrentPointInTrack
+        {
+            get => currentPointInTrack;
+            set
+            {
+                currentPointInTrack = value;
+                OnPropertyChanged("CurrentPointInTrack");
+            }
+        }
+
         #endregion
 
         #region Events
@@ -94,7 +107,6 @@ namespace MusicBotPlayer
         public event QueueChangedHandler OnQueueChanged;
 
         #endregion
-
 
         #region Commands
 
@@ -115,6 +127,8 @@ namespace MusicBotPlayer
         /// </summary>
         public QueueViewModel(ApplicationViewModel parentViewModel)
         {
+            CurrentPointInTrack = DiscordBot.TrackCurrentPlayingTime;
+
             this.parentViewModel = parentViewModel;
 
             this.OnQueueChanged += QueueViewModel_OnQueueChanged;

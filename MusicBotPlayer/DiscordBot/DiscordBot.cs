@@ -5,6 +5,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace MusicBotPlayer
 {
     public class DiscordBot
     {
+        private static QueueViewModel queueViewModel { get; set; }
+
         /// <summary>
         /// Specifies if the bot is connected to a voice channel.
         /// </summary>
@@ -41,8 +44,9 @@ namespace MusicBotPlayer
         /// <summary>
         /// Initialise the bot and login.
         /// </summary>
-        public static void InitialiseBot()
+        public static void InitialiseBot(QueueViewModel queueViewModel)
         {
+            DiscordBot.queueViewModel = queueViewModel;
             Initialise().GetAwaiter().GetResult();
         }
 
@@ -131,7 +135,6 @@ namespace MusicBotPlayer
                 RedirectStandardOutput = true, // Capture the stdout of the process
                 RedirectStandardError = true,
                 CreateNoWindow = true,
-
             });
 
             process.ErrorDataReceived += Process_ErrorDataReceived;
@@ -153,7 +156,14 @@ namespace MusicBotPlayer
                 string[] data = e.Data.Split(' ');
 
                 string time = data[5].Substring(5);
-                TrackCurrentPlayingTime = TimeSpan.TryParse(time, out TrackCurrentPlayingTime) ? TrackCurrentPlayingTime : TrackCurrentPlayingTime;
+
+                TimeSpan timeSpan;
+                TimeSpan.TryParse(time, out timeSpan);
+
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    queueViewModel.CurrentPointInTrack = timeSpan;
+                });
             }
         }
 

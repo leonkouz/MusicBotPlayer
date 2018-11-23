@@ -35,7 +35,7 @@ namespace MusicBotPlayer
 
             SideMenuButtonClickedCommand = new DelegateCommand(OnSideMenuButtonClicked);
 
-            Thread discordThread = new Thread(new ThreadStart(DiscordBot.InitialiseBot));
+            Thread discordThread = new Thread(() => DiscordBot.InitialiseBot(QueueViewModel));
             discordThread.Start();
         }
        
