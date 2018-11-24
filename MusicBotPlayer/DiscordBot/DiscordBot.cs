@@ -207,6 +207,8 @@ namespace MusicBotPlayer
                 await discord.FlushAsync();
             }
 
+            ffmpeg.Close();
+
             OnTrackFinishedPlaying(EventArgs.Empty);
         }
 
