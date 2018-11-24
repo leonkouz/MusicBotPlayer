@@ -14,6 +14,14 @@ namespace MusicBotPlayer
     {
         #region Private Fields
 
+        /// <summary>
+        /// The full duration of the currently playing track.
+        /// </summary>
+        private TimeSpan trackDuration;
+
+        /// <summary>
+        /// The current time of the song being played.
+        /// </summary>
         private TimeSpan currentPointInTrack;
 
         /// <summary>
@@ -79,7 +87,9 @@ namespace MusicBotPlayer
             get => queue;
         }
 
-
+        /// <summary>
+        /// The current time of the song being played.
+        /// </summary>
         public TimeSpan CurrentPointInTrack
         {
             get => currentPointInTrack;
@@ -87,6 +97,19 @@ namespace MusicBotPlayer
             {
                 currentPointInTrack = value;
                 OnPropertyChanged("CurrentPointInTrack");
+            }
+        }
+
+        /// <summary>
+        /// The full duration of the currently playing track.
+        /// </summary>
+        public TimeSpan TrackDuration
+        {
+            get => trackDuration;
+            set
+            {
+                trackDuration = value;
+                OnPropertyChanged("TrackDuration");
             }
         }
 
@@ -127,14 +150,19 @@ namespace MusicBotPlayer
         /// </summary>
         public QueueViewModel(ApplicationViewModel parentViewModel)
         {
-            CurrentPointInTrack = DiscordBot.TrackCurrentPlayingTime;
-
             this.parentViewModel = parentViewModel;
 
             this.OnQueueChanged += QueueViewModel_OnQueueChanged;
+            DiscordBot.TrackFinishedPlaying += DiscordBot_TrackFinishedPlaying;
 
             NextTrackCommand = new DelegateCommand(OnNextTrack);
             PreviousTrackCommand = new DelegateCommand(OnPreviousTrack);
+        }
+
+        private void DiscordBot_TrackFinishedPlaying(object sender, EventArgs e)
+        {
+            IsPlaying = false;
+            OnNextTrack();
         }
 
         /// <summary>
@@ -178,6 +206,8 @@ namespace MusicBotPlayer
                 CurrentlyPlayingTrack = Queue.First();
 
                 Queue.Remove(Queue.First());
+
+                RaiseQueueEventChanged(CurrentlyPlayingTrack);
             }
             else
             {
@@ -197,6 +227,8 @@ namespace MusicBotPlayer
                 CurrentlyPlayingTrack = history.Last();
 
                 history.Remove(history.Last());
+
+                RaiseQueueEventChanged(CurrentlyPlayingTrack);
             }
             else
             {
@@ -262,6 +294,11 @@ namespace MusicBotPlayer
             }
         }
 
+        /// <summary>
+        /// Fires when the queue is changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void QueueViewModel_OnQueueChanged(object sender, QueueChangedEventArgs e)
         {
             // If there is no currently playing track.
@@ -272,6 +309,22 @@ namespace MusicBotPlayer
                 // Remove the track from the queue.
                 Queue.Remove(e.Track);
             }
+
+            // If the bot is not playing, play the current track.
+            if (IsPlaying == false)
+            {
+                PlayCurrentTrack();
+            }
+        }
+
+        /// <summary>
+        /// Play the current track.
+        /// </summary>
+        public void PlayCurrentTrack()
+        {
+            DiscordBot.Play(CurrentlyPlayingTrack);
+
+            IsPlaying = true;
         }
 
         /// <summary>

@@ -17,6 +17,7 @@
         <local:SelectImageConverter x:Key="SelectImageConverter"/>
         <local:MsToStringConverter x:Key="MsToStringConverter"/>
         <local:ArtistIEnumerableConcaternatorConverter x:Key="ArtistIEnumerableConcaternatorConverter"/>
+        <local:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -432,9 +433,10 @@
                             Grid.Column="1"
                             Grid.ColumnSpan="4"
                             Margin="10 10 5 5"
-                             >
+                            >
 
-                    <TextBlock Text="{Binding CurrentPointInTrack, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBlock Text="{Binding CurrentPointInTrack, UpdateSourceTrigger=PropertyChanged,
+                               Converter={StaticResource TimeSpanToStringConverter}}"
                                Margin="0 1 10 0"
                                Foreground="White"
                                VerticalAlignment="Center"/>
@@ -442,10 +444,13 @@
                     <!-- Slider -->
                     <Slider Style="{StaticResource CustomThumb_Slider}"
                             Width="1020"
+                            x:Name="slider"
+                            Minimum="0"
+                            ValueChanged="Slider_ValueChanged"
                             />
 
-                    <TextBlock Text="{Binding CurrentlyPlayingTrack.Duration,
-                                FallbackValue='0:00'}"
+                    <TextBlock Text="{Binding TrackDuration, UpdateSourceTrigger=PropertyChanged,
+                               FallbackValue='0:00', Converter={StaticResource TimeSpanToStringConverter}}"
                                Margin="10 1 0 0"
                                Foreground="White"/>
 

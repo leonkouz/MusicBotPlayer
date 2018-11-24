@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace MusicBotPlayer
 {
@@ -46,6 +47,8 @@ namespace MusicBotPlayer
         /// </summary>
         private bool spotifyAuthenticated;
 
+        private DispatcherTimer sliderTimer = new DispatcherTimer();
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -64,6 +67,33 @@ namespace MusicBotPlayer
             buttons.Add(YouTubeButton);
             buttons.Add(SpotifyButton);
             buttons.Add(QueueButton);
+
+            sliderTimer.Interval = TimeSpan.FromSeconds(1);
+            sliderTimer.Tick += SliderTimer_Tick;
+            sliderTimer.Start();
+        }
+
+        /// <summary>
+        /// Update the value of the slider.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SliderTimer_Tick(object sender, EventArgs e)
+        {
+            if (viewModel.QueueViewModel.CurrentPointInTrack != null)
+            {
+                if(viewModel.QueueViewModel.TrackDuration.TotalSeconds != 0 && viewModel.QueueViewModel.CurrentPointInTrack.TotalSeconds != 0)
+                {
+                    slider.Maximum = viewModel.QueueViewModel.TrackDuration.TotalSeconds;
+
+                    var sliderValue = viewModel.QueueViewModel.CurrentPointInTrack.TotalSeconds;
+
+                    if (slider.Value != sliderValue)
+                    {
+                        slider.Value = sliderValue;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -196,6 +226,11 @@ namespace MusicBotPlayer
             TrackSearchItem track = sender as TrackSearchItem;
 
             viewModel.QueueViewModel.AddToQueue(track);
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
         }
     }
 }

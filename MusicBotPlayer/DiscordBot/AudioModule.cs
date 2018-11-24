@@ -39,14 +39,14 @@ namespace MusicBotPlayer
         [Command("play", RunMode = RunMode.Async)]
         public async Task PlayAudio(IVoiceChannel channel = null)
         {
-            await DiscordBot.SendAudioToVoice("test");
+            //await DiscordBot.SendAudioToVoice("test");
         }
 
 
-        [Command("disconnect", RunMode = RunMode.Async)]
+        [Command("disconnect")]
         public async Task Disconnect(IVoiceChannel channel = null)
         {
-            await Disconnect();
+            DiscordBot.AudioClient.Dispose();
         }
     }
 }

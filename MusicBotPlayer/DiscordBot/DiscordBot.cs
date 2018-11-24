@@ -35,7 +35,10 @@ namespace MusicBotPlayer
         /// </summary>
         public static IAudioClient AudioClient { get; set; } = null;
 
-        public static TimeSpan TrackCurrentPlayingTime;
+        /// <summary>
+        /// Fires when track has finished playing.
+        /// </summary>
+        public static event EventHandler TrackFinishedPlaying;
 
         private static CommandService commands;
         private static IServiceProvider services;
@@ -151,11 +154,27 @@ namespace MusicBotPlayer
         /// <param name="e"></param>
         private static void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (e.Data.Contains("time="))
+            if (e.Data != null && e.Data.Contains("Duration"))
             {
                 string[] data = e.Data.Split(' ');
 
-                string time = data[5].Substring(5);
+                // Get the duration of the track and trim the comma off the end.
+                string duration = data[3].TrimEnd(',');
+
+                TimeSpan timeSpan;
+                TimeSpan.TryParse(duration, out timeSpan);
+
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    queueViewModel.TrackDuration = timeSpan;
+                });
+            }
+
+            if (e.Data != null && e.Data.Contains("time="))
+            {
+                string[] data = e.Data.Split(' ');
+
+                string time = data.Where(x => x.Contains("time=")).First().Substring(5);
 
                 TimeSpan timeSpan;
                 TimeSpan.TryParse(time, out timeSpan);
@@ -172,7 +191,7 @@ namespace MusicBotPlayer
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static async Task SendAudioToVoice(string path)
+        private static async Task SendAudioToVoice(string pathOrUrl)
         {
             int blockSize = 3840; // The size of bytes to read per frame; 1920 for mono
             byte[] buffer = new byte[blockSize];
@@ -180,13 +199,35 @@ namespace MusicBotPlayer
 
             var discord = AudioClient.CreatePCMStream(AudioApplication.Mixed);
 
-            var ffmpeg = InitialiseAudioStream(@"D:\Downloads\DarudeSandstorm.mp3");
+            var ffmpeg = InitialiseAudioStream(pathOrUrl);
 
             while ((byteCount = await ffmpeg.StandardOutput.BaseStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
             {
-                await ffmpeg.StandardOutput.BaseStream.CopyToAsync(discord);
+                await ffmpeg.StandardOutput.BaseStream.CopyToAsync(discord, buffer.Length);
                 await discord.FlushAsync();
             }
+
+            OnTrackFinishedPlaying(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Play the track.
+        /// </summary>
+        /// <param name="track">The track to play.</param>
+        public static async void Play(QueueTrack track)
+        {
+            string artists = StringHelper.ArrayToString(track.Artists);
+
+            string url = YoutubeApi.YoutubeSearch(track.Name + artists);
+
+            string videoUrl = LibVideo.GetLink(url);
+
+            await SendAudioToVoice(videoUrl);
+        }
+
+        private static void OnTrackFinishedPlaying(EventArgs e)
+        {
+            TrackFinishedPlaying?.Invoke(null, e);
         }
     }
 }

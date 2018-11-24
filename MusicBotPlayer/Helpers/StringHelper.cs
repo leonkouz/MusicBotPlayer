@@ -18,5 +18,22 @@ namespace MusicBotPlayer
             var array = str.Split(',');
             return array;
         }
+
+        /// <summary>
+        /// Cocnatenates an array into a string.
+        /// </summary>
+        /// <param name="arr">The array to concatenate.</param>
+        /// <returns>A string containing all elements of the array.</returns>
+        public static string ArrayToString(string[] arr)
+        {
+            string fullString = String.Empty;
+
+            foreach(string str in arr)
+            {
+                fullString += str + ",";
+            }
+
+            return fullString.TrimEnd(',');
+        }
     }
 }
