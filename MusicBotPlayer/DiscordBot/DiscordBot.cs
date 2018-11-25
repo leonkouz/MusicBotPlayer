@@ -44,6 +44,8 @@ namespace MusicBotPlayer
         private static IServiceProvider services;
         private static DiscordSocketClient client;
 
+        private static CancellationTokenSource cts = new CancellationTokenSource();
+
         /// <summary>
         /// Initialise the bot and login.
         /// </summary>
@@ -187,6 +189,17 @@ namespace MusicBotPlayer
         }
 
         /// <summary>
+        /// Stop the discord bot playing the current song.
+        /// </summary>
+        public static Task StopPlaying()
+        {
+            cts.Cancel();
+            cts = new CancellationTokenSource();
+
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
         /// Sends audio to the discord voice channel.
         /// </summary>
         /// <param name="path"></param>
@@ -201,10 +214,18 @@ namespace MusicBotPlayer
 
             var ffmpeg = InitialiseAudioStream(pathOrUrl);
 
-            while ((byteCount = await ffmpeg.StandardOutput.BaseStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+            try
             {
-                await ffmpeg.StandardOutput.BaseStream.CopyToAsync(discord, buffer.Length);
+                while ((byteCount = await ffmpeg.StandardOutput.BaseStream.ReadAsync(buffer, 0, buffer.Length, cts.Token)) > 0)
+                {
+                    await ffmpeg.StandardOutput.BaseStream.CopyToAsync(discord, buffer.Length, cts.Token);
+                    await discord.FlushAsync();
+                }
+            }
+            catch (OperationCanceledException opCanceledException)
+            {
                 await discord.FlushAsync();
+                ffmpeg.Close();
             }
 
             ffmpeg.Close();

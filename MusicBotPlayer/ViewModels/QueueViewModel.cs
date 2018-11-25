@@ -162,15 +162,17 @@ namespace MusicBotPlayer
         private void DiscordBot_TrackFinishedPlaying(object sender, EventArgs e)
         {
             IsPlaying = false;
-            OnNextTrack();
         }
 
         /// <summary>
         /// Skips to the next track in the queue.
         /// </summary>
-        private void OnNextTrack()
+        private async void OnNextTrack()
         {
             AddCurrentTrackToHistory();
+
+            await DiscordBot.StopPlaying();
+            IsPlaying = false;
 
             AddNextTrackFromQueueToCurrentTrack();
         }
@@ -322,9 +324,8 @@ namespace MusicBotPlayer
         /// </summary>
         public void PlayCurrentTrack()
         {
-            DiscordBot.Play(CurrentlyPlayingTrack);
-
             IsPlaying = true;
+            DiscordBot.Play(CurrentlyPlayingTrack);
         }
 
         /// <summary>
