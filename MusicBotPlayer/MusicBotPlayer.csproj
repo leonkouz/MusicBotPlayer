@@ -229,7 +229,7 @@
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Youtube\LibVideo.cs" />
     <Compile Include="Youtube\YoutubeApi.cs" />
-    <Compile Include="Startup.cs" />
+    <Compile Include="ApiKeys.cs" />
     <Compile Include="Controls\BaseButton.cs" />
     <Compile Include="Controls\HorizontalMenu\HorizontalMenuBar.xaml.cs">
       <DependentUpon>HorizontalMenuBar.xaml</DependentUpon>

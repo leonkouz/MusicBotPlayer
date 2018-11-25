@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MusicBotPlayer
 {
-    public class Startup
+    public class ApiKeys
     {
         /// <summary>
         /// Read the Spotify.txt file for the Spotify API client Id in %appdata%\MusicBotPlayerCache.
@@ -35,6 +35,26 @@ namespace MusicBotPlayer
         public static string GetDiscordBotTokenFromAppData()
         {
             string appDataPathTextFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MusicBotPlayerCache\\DiscordToken.txt";
+
+            if (File.Exists(appDataPathTextFile))
+            {
+                string text = File.ReadAllText(appDataPathTextFile);
+
+                return text;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Read the YoutubeToken.txt file for the youtube token in %appdata%\MusicBotPlayerCache.
+        /// </summary>
+        /// <returns>The Discord bot token.</returns>
+        public static string GetYoutubeTokenFromAppData()
+        {
+            string appDataPathTextFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MusicBotPlayerCache\\YoutubeToken.txt";
 
             if (File.Exists(appDataPathTextFile))
             {

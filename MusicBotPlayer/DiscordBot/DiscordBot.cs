@@ -67,7 +67,7 @@ namespace MusicBotPlayer
 
             await InstallCommands();
 
-            string token = Startup.GetDiscordBotTokenFromAppData();
+            string token = ApiKeys.GetDiscordBotTokenFromAppData();
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
 
