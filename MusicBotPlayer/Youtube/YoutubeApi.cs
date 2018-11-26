@@ -14,7 +14,7 @@ namespace MusicBotPlayer
         {
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
-                ApiKey = ApiKeys.GetYoutubeTokenFromAppData(),
+                ApiKey = ApiKeys.YoutubeApiKey,
                 ApplicationName = "MusicBot"
             });
 
