@@ -203,11 +203,28 @@ namespace MusicBotPlayer
         }
 
         /// <summary>
+        /// Play the track.
+        /// </summary>
+        /// <param name="track">The track to play.</param>
+        public static void Play(QueueTrack track)
+        {
+            IsTransitioningToNextTrack = true;
+
+            string artists = StringHelper.ArrayToString(track.Artists);
+
+            string url = YoutubeApi.YoutubeSearch(track.Name + artists);
+
+            string videoUrl = LibVideo.GetLink(url);
+
+            SendAudioToVoice(videoUrl);
+        }
+
+        /// <summary>
         /// Sends audio to the discord voice channel.
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private static async Task SendAudioToVoice(string pathOrUrl)
+        private static async void SendAudioToVoice(string pathOrUrl)
         {
             int blockSize = 3840; // The size of bytes to read per frame; 1920 for mono
             byte[] buffer = new byte[blockSize];
@@ -236,33 +253,15 @@ namespace MusicBotPlayer
                     await discord.FlushAsync();
                 }
             }
-            catch (OperationCanceledException opCanceledException)
+            catch (OperationCanceledException)
             {
                 await discord.FlushAsync();
             }
 
             ffmpeg.Close();
-            ffmpeg.CloseMainWindow();
             ffmpeg.ErrorDataReceived -= Process_ErrorDataReceived;
 
             OnTrackFinishedPlaying(EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Play the track.
-        /// </summary>
-        /// <param name="track">The track to play.</param>
-        public static async Task Play(QueueTrack track)
-        {
-            IsTransitioningToNextTrack = true;
-
-            string artists = StringHelper.ArrayToString(track.Artists);
-
-            string url = YoutubeApi.YoutubeSearch(track.Name + artists);
-
-            string videoUrl = LibVideo.GetLink(url);
-
-            await SendAudioToVoice(videoUrl);
         }
 
         /// <summary>

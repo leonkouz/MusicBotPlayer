@@ -353,11 +353,11 @@ namespace MusicBotPlayer
                 return;
             }
 
-            Task.Run(async () =>
+            Task.Run(() =>
             {
                 try
                 {
-                    await DiscordBot.Play(CurrentlyPlayingTrack);
+                    DiscordBot.Play(CurrentlyPlayingTrack);
                 }
                 catch (DiscordBotNotConnectedException)
                 {
@@ -406,6 +406,15 @@ namespace MusicBotPlayer
         public void RemoveFromQueue(int index)
         {
             queue.RemoveAt(index);
+        }
+
+        /// <summary>
+        /// Removes the specified track from the queue.
+        /// </summary>
+        /// <param name="track">The track to remove.</param>
+        public void RemoveFromQueue(QueueTrack track)
+        {
+            queue.Remove(track);
         }
 
         /// <summary>
