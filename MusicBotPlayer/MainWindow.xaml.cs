@@ -234,6 +234,10 @@ namespace MusicBotPlayer
 
         }
 
+        /// <summary>
+        /// Fires when the Delete button is clicked on a <see cref="QueueItem"/>.
+        /// Removes the clicked <see cref="QueueItem"/> from the queue.
+        /// </summary>
         private void QueueItem_DeleteButtonClick(object sender, EventArgs e)
         {
             QueueItem queueItem = (QueueItem)sender;
