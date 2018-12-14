@@ -227,6 +227,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
+    <Compile Include="Exceptions\DiscordBotNotConnectedException.cs" />
     <Compile Include="Youtube\LibVideo.cs" />
     <Compile Include="Youtube\YoutubeApi.cs" />
     <Compile Include="ApiKeys.cs" />

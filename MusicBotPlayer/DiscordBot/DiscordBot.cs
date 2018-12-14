@@ -40,6 +40,9 @@ namespace MusicBotPlayer
         /// </summary>
         public static event EventHandler TrackFinishedPlaying;
 
+
+        public static bool IsTransitioningToNextTrack = false;
+
         private static CommandService commands;
         private static IServiceProvider services;
         private static DiscordSocketClient client;
@@ -209,10 +212,21 @@ namespace MusicBotPlayer
             int blockSize = 3840; // The size of bytes to read per frame; 1920 for mono
             byte[] buffer = new byte[blockSize];
             int byteCount;
+            AudioOutStream discord;
 
-            var discord = AudioClient.CreatePCMStream(AudioApplication.Mixed);
+            try
+            {
+                discord = AudioClient.CreatePCMStream(AudioApplication.Mixed);
+            }
+            catch
+            {
+                IsTransitioningToNextTrack = false;
+                throw new DiscordBotNotConnectedException("Unable to create PCM stream as discord bot is not connected to a voice channel. Connect the bot first.");
+            }
 
             var ffmpeg = InitialiseAudioStream(pathOrUrl);
+
+            IsTransitioningToNextTrack = false;
 
             try
             {
@@ -225,10 +239,11 @@ namespace MusicBotPlayer
             catch (OperationCanceledException opCanceledException)
             {
                 await discord.FlushAsync();
-                ffmpeg.Close();
             }
 
             ffmpeg.Close();
+            ffmpeg.CloseMainWindow();
+            ffmpeg.ErrorDataReceived -= Process_ErrorDataReceived;
 
             OnTrackFinishedPlaying(EventArgs.Empty);
         }
@@ -237,8 +252,10 @@ namespace MusicBotPlayer
         /// Play the track.
         /// </summary>
         /// <param name="track">The track to play.</param>
-        public static async void Play(QueueTrack track)
+        public static async Task Play(QueueTrack track)
         {
+            IsTransitioningToNextTrack = true;
+
             string artists = StringHelper.ArrayToString(track.Artists);
 
             string url = YoutubeApi.YoutubeSearch(track.Name + artists);
@@ -248,6 +265,10 @@ namespace MusicBotPlayer
             await SendAudioToVoice(videoUrl);
         }
 
+        /// <summary>
+        /// Fires the TrackFinishedPlaying event.
+        /// </summary>
+        /// <param name="e"></param>
         private static void OnTrackFinishedPlaying(EventArgs e)
         {
             TrackFinishedPlaying?.Invoke(null, e);

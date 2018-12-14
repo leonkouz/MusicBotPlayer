@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MusicBotPlayer
@@ -48,6 +49,8 @@ namespace MusicBotPlayer
         /// The track that is currently playing.
         /// </summary>
         private QueueTrack currentlyPlayingTrack;
+
+        
 
         #endregion
 
@@ -159,6 +162,7 @@ namespace MusicBotPlayer
             PreviousTrackCommand = new DelegateCommand(OnPreviousTrack);
         }
 
+
         private void DiscordBot_TrackFinishedPlaying(object sender, EventArgs e)
         {
             IsPlaying = false;
@@ -169,24 +173,38 @@ namespace MusicBotPlayer
         /// </summary>
         private async void OnNextTrack()
         {
-            AddCurrentTrackToHistory();
+            await Task.Run(() =>
+            {
+                if(DiscordBot.IsTransitioningToNextTrack == true)
+                {
+                    return;
+                }
 
-            await DiscordBot.StopPlaying();
-            IsPlaying = false;
+                AddCurrentTrackToHistory();
 
-            AddNextTrackFromQueueToCurrentTrack();
+                SendStopPlayingCommandToDiscordBot();
+
+                AddNextTrackFromQueueToCurrentTrack();
+            });
         }
-
+        
         /// <summary>
         /// Goes to the previous track in the history.
         /// </summary>
         private void OnPreviousTrack()
         {
-            if(history.Count != 0)
+            if (DiscordBot.IsTransitioningToNextTrack == true)
+            {
+                return;
+            }
+
+            if (history.Count != 0)
             {
                 if (IsCurrentTrackAlreadyNextInQueue() == false)
                 {
                     AddCurrentTrackToQueue();
+
+                    SendStopPlayingCommandToDiscordBot();
 
                     RetrievePreviousTrackFromHistory();
                 }
@@ -207,7 +225,10 @@ namespace MusicBotPlayer
             {
                 CurrentlyPlayingTrack = Queue.First();
 
-                Queue.Remove(Queue.First());
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Queue.Remove(Queue.First());
+                });
 
                 RaiseQueueEventChanged(CurrentlyPlayingTrack);
             }
@@ -325,7 +346,33 @@ namespace MusicBotPlayer
         public void PlayCurrentTrack()
         {
             IsPlaying = true;
-            DiscordBot.Play(CurrentlyPlayingTrack);
+
+            // Don't play next track if the bot is currently transitioning to the next song.
+            if(DiscordBot.IsTransitioningToNextTrack == true)
+            {
+                return;
+            }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await DiscordBot.Play(CurrentlyPlayingTrack);
+                }
+                catch (DiscordBotNotConnectedException)
+                {
+                    IsPlaying = false;
+                    CurrentlyPlayingTrack = null;
+                    currentPointInTrack = TimeSpan.Zero;
+                    TrackDuration = TimeSpan.Zero;
+                    history.Clear();
+                    queue.Clear();
+
+                    MessageBox.Show("Must join a voice channel before playing a song.");
+
+                    return;
+                }
+            });
         }
 
         /// <summary>
@@ -397,5 +444,15 @@ namespace MusicBotPlayer
                 OnQueueChanged(null, args);
             }
         }
+
+        /// <summary>
+        /// Send the command to the Discord Bot to stop playing music.
+        /// </summary>
+        private async void SendStopPlayingCommandToDiscordBot()
+        {
+            await DiscordBot.StopPlaying();
+            IsPlaying = false;
+        }
+
     }
 }
