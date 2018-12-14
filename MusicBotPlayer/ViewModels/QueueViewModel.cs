@@ -324,8 +324,8 @@ namespace MusicBotPlayer
         /// </summary>
         public void PlayCurrentTrack()
         {
-            IsPlaying = true;
-            DiscordBot.Play(CurrentlyPlayingTrack);
+            //IsPlaying = true;
+            //DiscordBot.Play(CurrentlyPlayingTrack);
         }
 
         /// <summary>

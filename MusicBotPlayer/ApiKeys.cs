@@ -28,9 +28,9 @@ namespace MusicBotPlayer
         /// </summary>
         public static void GetApiKeys()
         {
-            GetSpotifyClientIdFromAppData();
-            GetDiscordBotTokenFromAppData();
-            GetSpotifyClientIdFromAppData();
+            SpotifyClientId = GetSpotifyClientIdFromAppData();
+            DiscordClientId = GetDiscordBotTokenFromAppData();
+            YoutubeApiKey = GetYoutubeTokenFromAppData();
         }
 
         /// <summary>

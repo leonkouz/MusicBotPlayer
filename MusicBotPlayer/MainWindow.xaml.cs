@@ -57,6 +57,7 @@ namespace MusicBotPlayer
             // Must be run before the brower control is initialised.
             InitialiseCefSharpBrowser();
 
+            // Initialise WPF window component.
             InitializeComponent();
 
             InitialiseSpotifyApi();

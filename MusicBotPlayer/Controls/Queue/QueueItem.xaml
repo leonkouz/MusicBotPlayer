@@ -23,10 +23,10 @@
         </Grid.ColumnDefinitions>
 
         <!-- Album Image -->
-        <Border Padding="10">
+        <Border Padding="15">
             <Image Grid.Column="0"
-                   Width="130"
-                   Height="120"
+                   Height="100"
+                   Width="100"
                    Source="{Binding AlbumImage, RelativeSource={
                            RelativeSource AncestorType={x:Type local:QueueItem}}}"
                    />
@@ -34,11 +34,12 @@
 
         <!-- Track details -->
         <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Center"
                     Grid.Column="1"
                     Grid.ColumnSpan="2">
 
             <TextBlock Foreground="{StaticResource BackgroundPurpleGradient}"
-                       Margin="15 20 0 0"
+                       Margin="15 0 0 0"
                        Text="{Binding TrackName, RelativeSource={
                        RelativeSource AncestorType={x:Type local:QueueItem}},
                        FallbackValue='Song Name'}"
@@ -53,35 +54,6 @@
                        FontSize="15"
                        />
 
-        </StackPanel>
-
-        <!--Download Progress Bar -->
-        <ProgressBar Width="450"
-                     Height="10"
-                     Grid.Column="1"
-                     HorizontalAlignment="Left"
-                     Margin="15 40 0 0"
-                     Grid.ColumnSpan="3"/>
-
-        <!--Download Progress Status -->
-        <StackPanel Orientation="Horizontal"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="3"
-                    HorizontalAlignment="Left"
-                    Height="30"
-                    Margin="15 80 0 0">
-
-            <TextBlock Text="Progress: "
-                       Foreground="White"
-                       VerticalAlignment="Center"
-                       FontSize="15"/>
-
-            <TextBlock Text="{Binding ProgressPercentage, RelativeSource={
-                             RelativeSource AncestorType={x:Type local:QueueItem}},
-                             FallbackValue='0%'}"
-                       Foreground="White"
-                       VerticalAlignment="Center"
-                       FontSize="15"/>
         </StackPanel>
 
         <TextBlock Text="{Binding TrackLength, RelativeSource={
