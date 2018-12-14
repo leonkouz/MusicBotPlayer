@@ -362,6 +362,15 @@ namespace MusicBotPlayer
         }
 
         /// <summary>
+        /// Removes the specified track from the queue.
+        /// </summary>
+        /// <param name="track">The track to remove.</param>
+        public void RemoveFromQueue(QueueTrack track)
+        {
+            queue.Remove(track);
+        }
+
+        /// <summary>
         /// Converts a <see cref="TrackSearchItem"/> object to a <see cref="QueueTrack"/> object.
         /// </summary>
         /// <param name="trackSearch"></param>

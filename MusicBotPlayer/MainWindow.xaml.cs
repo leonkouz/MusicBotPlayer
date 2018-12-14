@@ -233,5 +233,14 @@ namespace MusicBotPlayer
         {
 
         }
+
+        private void QueueItem_DeleteButtonClick(object sender, EventArgs e)
+        {
+            QueueItem queueItem = (QueueItem)sender;
+
+            QueueTrack track = (QueueTrack)queueItem.DataContext;
+
+            viewModel.QueueViewModel.RemoveFromQueue(track);
+        }
     }
 }

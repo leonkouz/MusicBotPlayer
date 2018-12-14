@@ -342,12 +342,12 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <local:QueueItem AlbumImage="{Binding Image, UpdateSourceTrigger=PropertyChanged}"
-                                         TrackArtists="{Binding Artists,
-                                         Converter={StaticResource ArtistIEnumerableConcaternatorConverter}}"
-                                         TrackName="{Binding Name}"
-                                         TrackLength="{Binding Duration}"
-                                         />
-
+                                             TrackArtists="{Binding Artists,
+                                             Converter={StaticResource ArtistIEnumerableConcaternatorConverter}}"
+                                             TrackName="{Binding Name}"
+                                             TrackLength="{Binding Duration}"
+                                             DeleteButtonClick="QueueItem_DeleteButtonClick"
+                                             />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
