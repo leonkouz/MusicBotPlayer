@@ -226,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\SpotifySearch\PlaylistSearchItem.xaml.cs">
+      <DependentUpon>PlaylistSearchItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\SelectImageNullableConverter.cs" />
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Exceptions\DiscordBotNotConnectedException.cs" />
     <Compile Include="Youtube\LibVideo.cs" />
@@ -287,6 +291,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Controls\SpotifySearch\AlbumSearchItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SpotifySearch\PlaylistSearchItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

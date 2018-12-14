@@ -171,7 +171,7 @@ namespace MusicBotPlayer
                         ClearCurrentSearch();
                     });
 
-                    searchResponse = Spotify.Api.Search(text, Spotify.AllSearchTypes, 20, 0);
+                    searchResponse = Spotify.Api.Search(text, Spotify.AllSearchTypes, 40, 0);
                     searchResult = JsonConvert.DeserializeObject<SearchResult>(searchResponse);
                 });
             }
@@ -194,7 +194,7 @@ namespace MusicBotPlayer
             await Task.Run(() =>
             {
                 AddToCollection(Albums, results.albums);
-                AddToCollection(Tracks, results.tracks);
+                AddToCollection(Tracks, results.tracks.OrderByDescending(x => x.popularity));
                 AddToCollection(Playlists, results.playlists);
                 AddToCollection(Artists, results.artists);
             });
@@ -253,6 +253,5 @@ namespace MusicBotPlayer
                 AddToCollection(AlbumsTracks, album.items);
             });
         }
-
     }
 }

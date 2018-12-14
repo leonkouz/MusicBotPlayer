@@ -9,10 +9,35 @@ namespace MusicBotPlayer
     public class ApiKeys
     {
         /// <summary>
+        /// The Spotify client Id for the Spotify API.
+        /// </summary>
+        public static string SpotifyClientId { get; private set; }
+
+        /// <summary>
+        /// The Youtube API Key.
+        /// </summary>
+        public static string YoutubeApiKey { get; private set; }
+
+        /// <summary>
+        /// The Discord Client Id to allow the bot to log on.
+        /// </summary>
+        public static string DiscordClientId { get; private set; }
+
+        /// <summary>
+        /// Get all API Keys.
+        /// </summary>
+        public static void GetApiKeys()
+        {
+            SpotifyClientId = GetSpotifyClientIdFromAppData();
+            DiscordClientId = GetDiscordBotTokenFromAppData();
+            YoutubeApiKey = GetYoutubeTokenFromAppData();
+        }
+
+        /// <summary>
         /// Read the Spotify.txt file for the Spotify API client Id in %appdata%\MusicBotPlayerCache.
         /// </summary>
         /// <returns>The Spotify client ID.</returns>
-        public static string GetSpotifyClientIdFromAppData()
+        private static string GetSpotifyClientIdFromAppData()
         {
             string appDataPathTextFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MusicBotPlayerCache\\SpotifyToken.txt";
 
@@ -32,7 +57,7 @@ namespace MusicBotPlayer
         /// Read the DiscordToken.txt file for the Discord Bot token in %appdata%\MusicBotPlayerCache.
         /// </summary>
         /// <returns>The Discord bot token.</returns>
-        public static string GetDiscordBotTokenFromAppData()
+        private static string GetDiscordBotTokenFromAppData()
         {
             string appDataPathTextFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MusicBotPlayerCache\\DiscordToken.txt";
 
@@ -52,7 +77,7 @@ namespace MusicBotPlayer
         /// Read the YoutubeToken.txt file for the youtube token in %appdata%\MusicBotPlayerCache.
         /// </summary>
         /// <returns>The Discord bot token.</returns>
-        public static string GetYoutubeTokenFromAppData()
+        private static string GetYoutubeTokenFromAppData()
         {
             string appDataPathTextFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\MusicBotPlayerCache\\YoutubeToken.txt";
 

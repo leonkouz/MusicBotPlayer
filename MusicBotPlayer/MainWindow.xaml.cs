@@ -57,6 +57,7 @@ namespace MusicBotPlayer
             // Must be run before the brower control is initialised.
             InitialiseCefSharpBrowser();
 
+            // Initialise WPF window component.
             InitializeComponent();
 
             InitialiseSpotifyApi();
@@ -231,6 +232,19 @@ namespace MusicBotPlayer
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
 
+        }
+
+        /// <summary>
+        /// Fires when the Delete button is clicked on a <see cref="QueueItem"/>.
+        /// Removes the clicked <see cref="QueueItem"/> from the queue.
+        /// </summary>
+        private void QueueItem_DeleteButtonClick(object sender, EventArgs e)
+        {
+            QueueItem queueItem = (QueueItem)sender;
+
+            QueueTrack track = (QueueTrack)queueItem.DataContext;
+
+            viewModel.QueueViewModel.RemoveFromQueue(track);
         }
     }
 }
