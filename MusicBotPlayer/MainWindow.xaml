@@ -18,6 +18,7 @@
         <local:MsToStringConverter x:Key="MsToStringConverter"/>
         <local:ArtistIEnumerableConcaternatorConverter x:Key="ArtistIEnumerableConcaternatorConverter"/>
         <local:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+        <local:SelectImageNullableConverter x:Key="SelectImageNullableConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -153,12 +154,13 @@
 
                 </Canvas>
 
+                <!-- Search Bar -->
                 <Canvas Grid.Row="0"
                         Width="460"
                         Height="60"
                         VerticalAlignment="Center"
                         >
-                    <!-- Search Bar -->
+                    
                     <Border Height="46" Width="47" Canvas.Left="10" Canvas.Top="10"
                             CornerRadius="27"
                             BorderBrush="{StaticResource BackgroundPurpleGradient}"
@@ -190,8 +192,6 @@
                 <local:HorizontalMenuBar x:Name="horizontalMenuBar"
                                          Grid.Row="1"
                                          />
-
-               
 
                 <!-- Search result window -->
                 <TabControl HorizontalAlignment="Stretch"
@@ -289,13 +289,23 @@
 
                     <!-- Playlists Tab -->
                     <TabItem Header="Playlists" Width="100"
-                                 Height="100"
-                                 >
+                             Height="100"
+                             >
                         <ListView HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          ItemsSource="{Binding Playlists, UpdateSourceTrigger=PropertyChanged}">
-
-
+                                  VerticalAlignment="Stretch"
+                                  Background="Transparent"
+                                  BorderThickness="0"
+                                  Style="{StaticResource CustomListView}"
+                                  HorizontalContentAlignment="Stretch"
+                                  ItemsSource="{Binding Playlists, UpdateSourceTrigger=PropertyChanged}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <local:PlaylistSearchItem PlaylistName="{Binding name}"
+                                                              PlaylistImage="{Binding images,
+                                                              Converter={StaticResource SelectImageNullableConverter}}"
+                                                              />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </TabItem>
 
