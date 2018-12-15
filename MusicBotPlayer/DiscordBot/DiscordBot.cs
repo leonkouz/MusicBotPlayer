@@ -40,13 +40,18 @@ namespace MusicBotPlayer
         /// </summary>
         public static event EventHandler TrackFinishedPlaying;
 
-
+        /// <summary>
+        /// Indicates if the bot is currently transitioning to the next track.
+        /// </summary>
         public static bool IsTransitioningToNextTrack = false;
 
         private static CommandService commands;
         private static IServiceProvider services;
         private static DiscordSocketClient client;
 
+        /// <summary>
+        /// Cancellation token used to cancel track playback.
+        /// </summary>
         private static CancellationTokenSource cts = new CancellationTokenSource();
 
         /// <summary>
@@ -159,6 +164,7 @@ namespace MusicBotPlayer
         /// <param name="e"></param>
         private static void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
+            // Listen for duration of track.
             if (e.Data != null && e.Data.Contains("Duration"))
             {
                 string[] data = e.Data.Split(' ');
@@ -175,6 +181,7 @@ namespace MusicBotPlayer
                 });
             }
 
+            // Listen for current point in track.
             if (e.Data != null && e.Data.Contains("time="))
             {
                 string[] data = e.Data.Split(' ');
@@ -238,7 +245,7 @@ namespace MusicBotPlayer
             catch
             {
                 IsTransitioningToNextTrack = false;
-                throw new DiscordBotNotConnectedException("Unable to create PCM stream as discord bot is not connected to a voice channel. Connect the bot first.");
+                throw new DiscordBotNotConnectedException("Unable to create PCM stream. Discord bot may not be connected to a voice channel.");
             }
 
             var ffmpeg = InitialiseAudioStream(pathOrUrl);

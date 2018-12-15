@@ -161,6 +161,11 @@ namespace MusicBotPlayer
         /// </summary>
         public async void Search(string text)
         {
+            if(String.IsNullOrEmpty(text))
+            {
+                return;
+            }
+
             string searchResponse = String.Empty;
             try
             {

@@ -166,6 +166,7 @@ namespace MusicBotPlayer
         private void DiscordBot_TrackFinishedPlaying(object sender, EventArgs e)
         {
             IsPlaying = false;
+            OnNextTrack();
         }
 
         /// <summary>
