@@ -28,6 +28,11 @@ namespace MusicBotPlayer
     public partial class MainWindow : Window
     {
         /// <summary>
+        /// Spotify instance.
+        /// </summary>
+        private Spotify spotify;
+
+        /// <summary>
         /// The Side Menu buttons.
         /// </summary>
         private List<SideMenuButton> buttons = new List<SideMenuButton>();
@@ -60,6 +65,8 @@ namespace MusicBotPlayer
             // Initialise WPF window component.
             InitializeComponent();
 
+            this.Closed += MainWindow_Closed;
+
             InitialiseSpotifyApi();
             YoutubeApi.Authenticate();
 
@@ -78,6 +85,18 @@ namespace MusicBotPlayer
             sliderTimer.Interval = TimeSpan.FromSeconds(1);
             sliderTimer.Tick += SliderTimer_Tick;
             sliderTimer.Start();
+        }
+
+        /// <summary>
+        /// Fires when the application is closing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            // Kill the authentication thread.
+            spotify.KillAuthenticationThread();
+
         }
 
         /// <summary>
@@ -120,14 +139,14 @@ namespace MusicBotPlayer
         /// </summary>
         private void InitialiseSpotifyApi()
         {
-            Spotify Spotify = new Spotify();
+            spotify = new Spotify();
 
             spotifyAuthenticationCompleted = new ManualResetEvent(false);
 
             Spotify.Api.Authenticated += API_Authenticated;
 
             //Begin Authentication process, this is run on a different thread
-            Spotify.Authenticate();
+            spotify.Authenticate();
 
             string authUrl = Spotify.Api.GetAuthenticationUrl();
 

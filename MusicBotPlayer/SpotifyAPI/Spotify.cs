@@ -14,6 +14,11 @@ namespace MusicBotPlayer
     public class Spotify
     {
         /// <summary>
+        /// The thread used to run the authentication process.
+        /// </summary>
+        private Thread authenticationThread;
+
+        /// <summary>
         /// The Spotify API.
         /// </summary>
         public static SpotifyAPI Api { get; private set; }
@@ -57,8 +62,19 @@ namespace MusicBotPlayer
         /// </summary>
         public void Authenticate()
         {
-            Thread authentication = new Thread(new ThreadStart(DoAuthentication));
-            authentication.Start();
+            authenticationThread = new Thread(new ThreadStart(DoAuthentication));
+            authenticationThread.Start();
+        }
+
+        /// <summary>
+        /// Stops the authentication thread.
+        /// </summary>
+        public void KillAuthenticationThread()
+        {
+            if(authenticationThread.IsAlive)
+            {
+                authenticationThread.Abort();
+            }
         }
 
         /// <summary>
