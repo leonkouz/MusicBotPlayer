@@ -27,9 +27,6 @@ namespace MusicBotPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// Spotify instance.
-        /// </summary>
         private Spotify spotify;
 
         /// <summary>
@@ -65,8 +62,6 @@ namespace MusicBotPlayer
             // Initialise WPF window component.
             InitializeComponent();
 
-            this.Closed += MainWindow_Closed;
-
             InitialiseSpotifyApi();
             YoutubeApi.Authenticate();
 
@@ -76,6 +71,8 @@ namespace MusicBotPlayer
             buttons.Add(YouTubeButton);
             buttons.Add(SpotifyButton);
             buttons.Add(QueueButton);
+
+            this.Closed += MainWindow_Closed;
 
             // Set Youtube and Queue grid visibility to collapsed so 
             // controls from those grids are not visible on statup.
@@ -96,7 +93,6 @@ namespace MusicBotPlayer
         {
             // Kill the authentication thread.
             spotify.KillAuthenticationThread();
-
         }
 
         /// <summary>
@@ -151,6 +147,8 @@ namespace MusicBotPlayer
             string authUrl = Spotify.Api.GetAuthenticationUrl();
 
             browser.Address = authUrl;
+
+            spotifyAuthenticationCompleted.Dispose();
         }
 
         /// <summary>
