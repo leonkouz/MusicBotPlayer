@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,11 @@ namespace MusicBotPlayer
         private bool isSelected = false;
 
         /// <summary>
+        /// Stores the list of youtube search results.
+        /// </summary>
+        private ObservableCollection<Google.Apis.YouTube.v3.Data.SearchResult> youtubeSearchResults = new ObservableCollection<Google.Apis.YouTube.v3.Data.SearchResult>();
+
+        /// <summary>
         /// Indicates whether the View Model is selected.
         /// </summary>
         public bool IsSelected
@@ -26,9 +32,44 @@ namespace MusicBotPlayer
             }
         }
 
+        /// <summary>
+        /// Stores the list of youtube search results.
+        /// </summary>
+        public ObservableCollection<Google.Apis.YouTube.v3.Data.SearchResult> YoutubeSearchResults
+        {
+            get => youtubeSearchResults;
+            set
+            {
+                youtubeSearchResults = value;
+            }
+        }
+
         public YoutubeViewModel()
         {
 
+        }
+
+        /// <summary>
+        /// Search the Youtube API for the specified search term 
+        /// and populate the YoutubeSearchResults collection.
+        /// </summary>
+        /// <param name="searchTerm"></param>
+        public async void Search(string searchTerm)
+        {
+            if (String.IsNullOrEmpty(searchTerm))
+            {
+                return;
+            }
+
+            await Task.Run(() =>
+            {
+                var results = YoutubeApi.GetSearchResults(searchTerm);
+
+                foreach(var video in results)
+                {
+                    YoutubeSearchResults.Add(video);
+                }
+            });
         }
     }
 }
