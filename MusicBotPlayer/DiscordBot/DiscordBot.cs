@@ -219,7 +219,7 @@ namespace MusicBotPlayer
 
             string artists = StringHelper.ArrayToString(track.Artists);
 
-            string url = YoutubeApi.YoutubeSingleResultSearch(track.Name + artists);
+            string url = YoutubeApi.SingleResultSearch(track.Name + artists);
 
             string videoUrl = LibVideo.GetLink(url);
 

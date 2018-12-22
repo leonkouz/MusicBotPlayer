@@ -10,19 +10,28 @@ namespace MusicBotPlayer
 {
     public class YoutubeApi
     {
+        private static YouTubeService youtubeService;
+
         /// <summary>
-        /// Returns the URL of the most relevant search result.
+        /// Authenticate to the Youtube API.
         /// </summary>
-        /// <param name="searchTerm">The term to search.</param>
-        /// <returns></returns>
-        public static string YoutubeSingleResultSearch(string searchTerm)
+        public static void Authenticate()
         {
-            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+            youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
                 ApiKey = ApiKeys.YoutubeApiKey,
                 ApplicationName = "MusicBot"
             });
+        }
 
+        /// <summary>
+        /// Returns a list of search results for the specified search term.
+        /// List is ordered by relevance.
+        /// </summary>
+        /// <param name="searchTerm">The term to search the API for.</param>
+        /// <returns></returns>
+        public static List<Google.Apis.YouTube.v3.Data.SearchResult> GetSearchResults(string searchTerm)
+        {
             var searchListRequest = youtubeService.Search.List("snippet");
             searchListRequest.Q = searchTerm; //Search Term
             searchListRequest.MaxResults = 50;
@@ -32,10 +41,28 @@ namespace MusicBotPlayer
             // Call the search.list method to retrieve results matching the specified query term.
             var searchListResponse = searchListRequest.ExecuteAsync();
 
-            List<string> videos = new List<string>();
             List<string> videosID = new List<string>();
-            List<string> channels = new List<string>();
-            List<string> playlists = new List<string>();
+
+            return searchListResponse.Result.Items.ToList();
+        }
+
+        /// <summary>
+        /// Returns the URL of the most relevant search result.
+        /// </summary>
+        /// <param name="searchTerm">The term to search.</param>
+        /// <returns></returns>
+        public static string SingleResultSearch(string searchTerm)
+        {
+            var searchListRequest = youtubeService.Search.List("snippet");
+            searchListRequest.Q = searchTerm; //Search Term
+            searchListRequest.MaxResults = 50;
+            searchListRequest.Order = SearchResource.ListRequest.OrderEnum.Relevance; //set the search to order by relevance
+            searchListRequest.Type = "video";
+
+            // Call the search.list method to retrieve results matching the specified query term.
+            var searchListResponse = searchListRequest.ExecuteAsync();
+
+            List<string> videosID = new List<string>();
 
             // Add each result to the appropriate list, and then display the lists of
             // matching videos, channels, and playlists.

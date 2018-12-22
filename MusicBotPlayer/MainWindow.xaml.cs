@@ -61,6 +61,7 @@ namespace MusicBotPlayer
             InitializeComponent();
 
             InitialiseSpotifyApi();
+            YoutubeApi.Authenticate();
 
             viewModel = (ApplicationViewModel)this.DataContext;
 
@@ -167,19 +168,23 @@ namespace MusicBotPlayer
             if(bttn.Name == "SpotifyButton")
             {
                 SpotifyGrid.Visibility = Visibility.Visible;
+                viewModel.SpotifyViewModel.IsSelected = true;
             }
             else
             {
                 SpotifyGrid.Visibility = Visibility.Collapsed;
+                viewModel.SpotifyViewModel.IsSelected = false;
             }
 
             if (bttn.Name == "YouTubeButton")
             {
                 YoutubeGrid.Visibility = Visibility.Visible;
+                viewModel.YoutubeViewModel.IsSelected = true;
             }
             else
             {
                 YoutubeGrid.Visibility = Visibility.Collapsed;
+                viewModel.YoutubeViewModel.IsSelected = false;
             }
 
             if (bttn.Name == "QueueButton")

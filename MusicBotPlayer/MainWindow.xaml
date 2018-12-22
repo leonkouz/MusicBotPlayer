@@ -329,7 +329,8 @@
 
         <!-- Youtube Content Area -->
         <Grid Grid.Column="1"
-              x:Name="YoutubeGrid">
+              x:Name="YoutubeGrid"
+              DataContext="YoutubeViewModel">
 
             <Grid.RowDefinitions>
                 <!-- Search Bar -->
@@ -373,6 +374,29 @@
                          Canvas.Left="54" 
                          Canvas.Top="18"/>
             </Canvas>
+
+            <ListView HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      x:Name="YoutubeListView"
+                      Style="{StaticResource CustomListView}"
+                      BorderThickness="0"
+                      Panel.ZIndex="0"
+                      HorizontalContentAlignment="Stretch"
+                      ItemsSource="{Binding , UpdateSourceTrigger=PropertyChanged}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:AlbumSearchItem ArtistNames="{Binding artists, 
+                                               Converter={StaticResource ArtistListConcaternatorConverter}}"
+                                               AlbumImage="{Binding images,
+                                               Converter={StaticResource SelectImageConverter}}"
+                                               AlbumName="{Binding name}"
+                                               AlbumId="{Binding id}"
+                                               HorizontalAlignment="Stretch"
+                                               Click="AlbumSearchItem_Click"
+                                               />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
         </Grid>
 
