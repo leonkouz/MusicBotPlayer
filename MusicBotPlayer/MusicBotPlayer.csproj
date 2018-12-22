@@ -229,6 +229,9 @@
     <Compile Include="Controls\SpotifySearch\PlaylistSearchItem.xaml.cs">
       <DependentUpon>PlaylistSearchItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\YoutubeSearch\YoutubeSearchItem.xaml.cs">
+      <DependentUpon>YoutubeSearchItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\SelectImageNullableConverter.cs" />
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Exceptions\DiscordBotNotConnectedException.cs" />
@@ -299,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SpotifySearch\TrackSearchItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\YoutubeSearch\YoutubeSearchItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

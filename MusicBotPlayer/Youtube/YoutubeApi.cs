@@ -10,7 +10,12 @@ namespace MusicBotPlayer
 {
     public class YoutubeApi
     {
-        public static string YoutubeSearch(string searchTerm)
+        /// <summary>
+        /// Returns the URL of the most relevant search result.
+        /// </summary>
+        /// <param name="searchTerm">The term to search.</param>
+        /// <returns></returns>
+        public static string YoutubeSingleResultSearch(string searchTerm)
         {
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
@@ -52,5 +57,6 @@ namespace MusicBotPlayer
 
             return videoURL;
         }
+
     }
 }

@@ -185,7 +185,9 @@
                              Padding="15 0 0 0"
                              Foreground="White"
                              CaretBrush="White"
-                             KeyDown="SearchBar_KeyDown" Canvas.Left="54" Canvas.Top="18"/>
+                             KeyDown="SpotifySearchBar_KeyDown" 
+                             Canvas.Left="54" 
+                             Canvas.Top="18"/>
                 </Canvas>
 
                 <!-- Horizontal Menu Bar -->
@@ -328,6 +330,49 @@
         <!-- Youtube Content Area -->
         <Grid Grid.Column="1"
               x:Name="YoutubeGrid">
+
+            <Grid.RowDefinitions>
+                <!-- Search Bar -->
+                <RowDefinition Height="*"/>
+                <!-- Video display -->
+                <RowDefinition Height="7.5*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Search Bar -->
+            <Canvas Grid.Row="0"
+                    Width="460"
+                    Height="60"
+                    VerticalAlignment="Center"
+                    >
+
+                <Border Height="46" Width="47" Canvas.Left="10" Canvas.Top="10"
+                            CornerRadius="27"
+                            BorderBrush="{StaticResource BackgroundPurpleGradient}"
+                            Background="{StaticResource BackgroundPurpleGradient}"
+                            Panel.ZIndex="1"
+                            >
+                    <TextBlock Text="{StaticResource FontAwesomeSearchIcon}" 
+                                   FontFamily="{StaticResource FontAwesome}"
+                                   FontSize="23"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" Margin="12,10,13,12"/>
+                </Border>
+
+                <TextBox Background="{StaticResource BackgroundFlatGrayGradient}"
+                         AcceptsReturn="False"
+                         BorderThickness="0" 
+                         Width="400"
+                         Height="30"
+                         HorizontalContentAlignment="Left"
+                         VerticalContentAlignment="Center"
+                         Padding="15 0 0 0"
+                         Foreground="White"
+                         CaretBrush="White"
+                         KeyDown="YoutubeSearchBar_KeyDown" 
+                         Canvas.Left="54" 
+                         Canvas.Top="18"/>
+            </Canvas>
 
         </Grid>
 

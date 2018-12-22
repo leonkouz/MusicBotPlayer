@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="MusicBotPlayer.YoutubeSearchItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MusicBotPlayer"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="1500">
+    
+    <Border BorderThickness="0 1 0 0"
+            BorderBrush="White"
+            Padding="25"
+            Background="{StaticResource BackgroundDarkBrush}"
+            >
+
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              >
+
+            <Grid.ColumnDefinitions>
+                <!-- Video Image -->
+                <ColumnDefinition Width="300"/>
+                <!-- Title + other info -->
+                <ColumnDefinition Width="500"/>
+                <!-- Blank -->
+                <ColumnDefinition Width="*"/>
+                <!-- Play button -->
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Video Image -->
+            <Grid Grid.Column="0">
+                <Image HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Source="{Binding AlbumImage, RelativeSource={
+                       RelativeSource AncestorType={x:Type local:YoutubeSearchItem}}}"/>
+                
+                <TextBlock VerticalAlignment="Bottom"
+                           Padding="0 0 10 0"
+                           HorizontalAlignment="Right"
+                           Text="{Binding VideoDuration, RelativeSource={
+                           RelativeSource AncestorType={x:Type local:YoutubeSearchItem}}}"
+                           FontSize="25"
+                           Foreground="{StaticResource BackgroundPurpleGradient}"/>
+            </Grid>
+
+
+            <!-- Video Info -->
+            <StackPanel Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        Orientation="Vertical"
+                        Margin="10 0 0 0"
+                        >
+
+                <!-- Video Title -->
+                <TextBlock Foreground="White"
+                           FontFamily="Roboto"
+                           HorizontalAlignment="Stretch">
+                    <TextBlock.Inlines>
+                        <Run FontWeight="Bold"
+                             FontSize="30" 
+                             Text="This is WPF TextBlock Example. " />
+                    </TextBlock.Inlines>
+                </TextBlock>
+
+                <!-- Channel Info -->
+                <StackPanel Orientation="Horizontal"
+                            Margin="0 4 0 0">
+
+                    <!-- Channel Lable -->
+                    <TextBlock Foreground="White"
+                               
+                               FontSize="20"
+                               FontFamily="Roboto"
+                               Text="Channel: "/>
+
+                    <!-- Channel Name -->
+                    <TextBlock Margin="5 0 0 0"
+                               Foreground="White"
+                               FontFamily="Roboto"
+                               FontSize="20"
+                               Text="Channel123Test">
+                    </TextBlock>
+                </StackPanel>
+
+                <!-- Video Description-->
+                <TextBlock Margin="0 30 0 0"
+                           FontFamily="Roboto"
+                           FontSize="15"
+                           Foreground="White"
+                           MaxHeight="100"
+                           TextWrapping="WrapWithOverflow"
+                           TextTrimming="CharacterEllipsis"
+                           Text="This is a test description of a random video."
+                           />
+                
+            </StackPanel>
+
+            <Button Grid.Column="3"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource FontAwesomeRegular}"
+                    Content="{StaticResource FontAwesomeRegularPlayButtonCircle}"
+                    Foreground="{StaticResource BackgroundPurpleGradient}"
+                    HorizontalAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    FontSize="100"
+                    Click="PlayButton_Click"
+                    />
+
+        </Grid>
+    </Border>
+</UserControl>

@@ -213,17 +213,17 @@ namespace MusicBotPlayer
         /// Play the track.
         /// </summary>
         /// <param name="track">The track to play.</param>
-        public static void Play(QueueTrack track)
+        public static async Task Play(QueueTrack track)
         {
             IsTransitioningToNextTrack = true;
 
             string artists = StringHelper.ArrayToString(track.Artists);
 
-            string url = YoutubeApi.YoutubeSearch(track.Name + artists);
+            string url = YoutubeApi.YoutubeSingleResultSearch(track.Name + artists);
 
             string videoUrl = LibVideo.GetLink(url);
 
-            SendAudioToVoice(videoUrl);
+            await SendAudioToVoice(videoUrl);
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace MusicBotPlayer
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private static async void SendAudioToVoice(string pathOrUrl)
+        private static async Task SendAudioToVoice(string pathOrUrl)
         {
             int blockSize = 3840; // The size of bytes to read per frame; 1920 for mono
             byte[] buffer = new byte[blockSize];

@@ -189,11 +189,11 @@ namespace MusicBotPlayer
         }
 
         /// <summary>
-        /// Fires when a key is pressed while the Search Bar is in focus.
+        /// Fires when a key is pressed while the Spotify Search Bar is in focus.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SearchBar_KeyDown(object sender, KeyEventArgs e)
+        private void SpotifySearchBar_KeyDown(object sender, KeyEventArgs e)
         {
             TextBox txtBox = sender as TextBox;
 
@@ -203,6 +203,11 @@ namespace MusicBotPlayer
             {
                 viewModel.SpotifyViewModel.Search(txtBox.Text);
             }
+        }
+
+        private void YoutubeSearchBar_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
 
         private void AlbumSearchItem_Click(object sender, EventArgs e)
@@ -246,5 +251,6 @@ namespace MusicBotPlayer
 
             viewModel.QueueViewModel.RemoveFromQueue(track);
         }
+
     }
 }

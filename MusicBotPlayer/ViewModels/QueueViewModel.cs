@@ -50,7 +50,7 @@ namespace MusicBotPlayer
         /// </summary>
         private QueueTrack currentlyPlayingTrack;
 
-        
+
 
         #endregion
 
@@ -176,7 +176,7 @@ namespace MusicBotPlayer
         {
             await Task.Run(() =>
             {
-                if(DiscordBot.IsTransitioningToNextTrack == true)
+                if (DiscordBot.IsTransitioningToNextTrack == true)
                 {
                     return;
                 }
@@ -188,7 +188,7 @@ namespace MusicBotPlayer
                 AddNextTrackFromQueueToCurrentTrack();
             });
         }
-        
+
         /// <summary>
         /// Goes to the previous track in the history.
         /// </summary>
@@ -268,10 +268,10 @@ namespace MusicBotPlayer
         private bool IsCurrentTrackAlreadyNextInQueue()
         {
             // If current track is not null
-            if(CurrentlyPlayingTrack != null)
+            if (CurrentlyPlayingTrack != null)
             {
                 // If the queue does not contain any tracks.
-                if(Queue.Count != 0)
+                if (Queue.Count != 0)
                 {
                     if (CurrentlyPlayingTrack.Name == Queue.First().Name &&
                          CurrentlyPlayingTrack.Artists[0] == Queue.First().Artists[0])
@@ -299,7 +299,7 @@ namespace MusicBotPlayer
         /// </summary>
         private void AddCurrentTrackToHistory()
         {
-            if(CurrentlyPlayingTrack != null)
+            if (CurrentlyPlayingTrack != null)
             {
                 history.Add(CurrentlyPlayingTrack);
             }
@@ -310,7 +310,7 @@ namespace MusicBotPlayer
         /// </summary>
         private void AddCurrentTrackToQueue()
         {
-            if(CurrentlyPlayingTrack != null)
+            if (CurrentlyPlayingTrack != null)
             {
                 // Insert the track to the start of the queue
                 // so the next track will be the current track.
@@ -349,27 +349,30 @@ namespace MusicBotPlayer
             IsPlaying = true;
 
             // Don't play next track if the bot is currently transitioning to the next song.
-            if(DiscordBot.IsTransitioningToNextTrack == true)
+            if (DiscordBot.IsTransitioningToNextTrack == true)
             {
                 return;
             }
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 try
                 {
-                    DiscordBot.Play(CurrentlyPlayingTrack);
+                    await DiscordBot.Play(CurrentlyPlayingTrack);
                 }
                 catch (DiscordBotNotConnectedException)
                 {
-                    IsPlaying = false;
-                    CurrentlyPlayingTrack = null;
-                    currentPointInTrack = TimeSpan.Zero;
-                    TrackDuration = TimeSpan.Zero;
-                    history.Clear();
-                    queue.Clear();
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        IsPlaying = false;
+                        CurrentlyPlayingTrack = null;
+                        currentPointInTrack = TimeSpan.Zero;
+                        TrackDuration = TimeSpan.Zero;
+                        history.Clear();
+                        queue.Clear();
 
-                    MessageBox.Show("Must join a voice channel before playing a song.");
+                        MessageBox.Show("Must join a voice channel before playing a song.");
+                    });
 
                     return;
                 }
