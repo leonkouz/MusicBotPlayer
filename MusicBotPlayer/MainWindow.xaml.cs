@@ -69,6 +69,11 @@ namespace MusicBotPlayer
             buttons.Add(SpotifyButton);
             buttons.Add(QueueButton);
 
+            // Set Youtube and Queue grid visibility to collapsed so 
+            // controls from those grids are not visible on statup.
+            YoutubeGrid.Visibility = Visibility.Collapsed;
+            QueueGrid.Visibility = Visibility.Collapsed;
+
             sliderTimer.Interval = TimeSpan.FromSeconds(1);
             sliderTimer.Tick += SliderTimer_Tick;
             sliderTimer.Start();
