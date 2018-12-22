@@ -14,6 +14,11 @@ namespace MusicBotPlayer
         {
             var artistEnumerable = (IEnumerable<string>)value;
 
+            if(artistEnumerable == null || artistEnumerable.Count() == 0)
+            {
+                return "Youtube Video";
+            }
+
             string artistConcat = String.Empty;
 
             foreach(string artist in artistEnumerable)

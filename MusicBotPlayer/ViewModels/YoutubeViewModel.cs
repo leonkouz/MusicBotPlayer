@@ -17,7 +17,7 @@ namespace MusicBotPlayer
         /// <summary>
         /// Stores the list of youtube search results.
         /// </summary>
-        private ObservableCollection<Google.Apis.YouTube.v3.Data.SearchResult> youtubeSearchResults = new ObservableCollection<Google.Apis.YouTube.v3.Data.SearchResult>();
+        private ObservableCollection<Google.Apis.YouTube.v3.Data.Video> youtubeSearchResults = new ObservableCollection<Google.Apis.YouTube.v3.Data.Video>();
 
         /// <summary>
         /// Indicates whether the View Model is selected.
@@ -35,7 +35,7 @@ namespace MusicBotPlayer
         /// <summary>
         /// Stores the list of youtube search results.
         /// </summary>
-        public ObservableCollection<Google.Apis.YouTube.v3.Data.SearchResult> YoutubeSearchResults
+        public ObservableCollection<Google.Apis.YouTube.v3.Data.Video> YoutubeSearchResults
         {
             get => youtubeSearchResults;
             set
@@ -61,14 +61,23 @@ namespace MusicBotPlayer
                 return;
             }
 
+            if(YoutubeSearchResults.Count >= 0)
+            {
+                YoutubeSearchResults.Clear();
+            }
+
             await Task.Run(() =>
             {
                 var results = YoutubeApi.GetSearchResults(searchTerm);
 
-                foreach(var video in results)
+                App.Current.Dispatcher.Invoke(() =>
                 {
-                    YoutubeSearchResults.Add(video);
-                }
+                    foreach (var video in results)
+                    {
+                        video.ContentDetails.Duration = StringHelper.ConvertISO8601DurationToString(video.ContentDetails.Duration);
+                        YoutubeSearchResults.Add(video);
+                    }
+                });
             });
         }
     }

@@ -147,6 +147,29 @@ namespace MusicBotPlayer
 
         #endregion
 
+        #region VideoId Dependency Property
+
+        /// <summary>
+        /// Store the Youtube ID of the video.
+        /// </summary>
+        public string VideoId
+        {
+            get { return (string)GetValue(VideoIdProperty); }
+            set
+            {
+                SetValue(VideoIdProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// The VideoId dependency property.
+        /// </summary>
+        public static readonly DependencyProperty VideoIdProperty =
+            DependencyProperty.Register("VideoId", typeof(string),
+              typeof(YoutubeSearchItem), new PropertyMetadata(null));
+
+        #endregion
+
         #endregion
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)

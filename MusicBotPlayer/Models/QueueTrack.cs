@@ -36,6 +36,11 @@ namespace MusicBotPlayer
         /// </summary>
         private string spotifyId;
 
+        /// <summary>
+        /// The track's youtubeUrl.
+        /// </summary>
+        private string youtubeId;
+
         #endregion
 
         #region Public Properties
@@ -107,6 +112,19 @@ namespace MusicBotPlayer
                 {
                     LoadAlbumImage();
                 }
+            }
+        }
+
+        /// <summary>
+        /// The track's Youtube URL.
+        /// </summary>
+        public string YoutubeId
+        {
+            get => youtubeId;
+            set
+            {
+                youtubeId = value;
+                OnPropertyChanged("YoutubeId");
             }
         }
 

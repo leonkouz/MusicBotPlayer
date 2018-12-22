@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace MusicBotPlayer
 {
@@ -20,7 +21,7 @@ namespace MusicBotPlayer
         }
 
         /// <summary>
-        /// Cocnatenates an array into a string.
+        /// Concatenates an array into a string, delimited by commas.
         /// </summary>
         /// <param name="arr">The array to concatenate.</param>
         /// <returns>A string containing all elements of the array.</returns>
@@ -34,6 +35,17 @@ namespace MusicBotPlayer
             }
 
             return fullString.TrimEnd(',');
+        }
+
+        /// <summary>
+        /// Convert an ISO 8601 Duration to a string.
+        /// E.g. PT19M30S to 19:30.
+        /// </summary>
+        /// <param name="youtubeApiDuration"></param>
+        /// <returns></returns>
+        public static string ConvertISO8601DurationToString(string duration)
+        {
+            return XmlConvert.ToTimeSpan(duration).ToString();
         }
     }
 }

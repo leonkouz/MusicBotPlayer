@@ -30,7 +30,7 @@ namespace MusicBotPlayer
         /// </summary>
         /// <param name="searchTerm">The term to search the API for.</param>
         /// <returns></returns>
-        public static List<Google.Apis.YouTube.v3.Data.SearchResult> GetSearchResults(string searchTerm)
+        public static List<Google.Apis.YouTube.v3.Data.Video> GetSearchResults(string searchTerm)
         {
             var searchListRequest = youtubeService.Search.List("snippet");
             searchListRequest.Q = searchTerm; //Search Term
@@ -41,9 +41,15 @@ namespace MusicBotPlayer
             // Call the search.list method to retrieve results matching the specified query term.
             var searchListResponse = searchListRequest.ExecuteAsync();
 
-            List<string> videosID = new List<string>();
+            
 
-            return searchListResponse.Result.Items.ToList();
+            var videoListRequest = youtubeService.Videos.List("snippet,contentDetails");
+            videoListRequest.Id = StringHelper.ArrayToString(searchListResponse.Result.Items.Select(x => x.Id.VideoId).ToArray());
+            videoListRequest.MaxResults = 50;
+
+            var videoListResponse = videoListRequest.ExecuteAsync();
+
+            return videoListResponse.Result.Items.ToList();
         }
 
         /// <summary>

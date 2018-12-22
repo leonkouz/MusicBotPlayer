@@ -217,7 +217,14 @@ namespace MusicBotPlayer
 
         private void YoutubeSearchBar_KeyDown(object sender, KeyEventArgs e)
         {
+            TextBox txtBox = sender as TextBox;
 
+            // If the enter key is pressed and the Spotify API has authenticated, 
+            // do a search.
+            if (e.Key == Key.Enter && spotifyAuthenticated == true)
+            {
+                viewModel.YoutubeViewModel.Search(txtBox.Text);
+            }
         }
 
         private void AlbumSearchItem_Click(object sender, EventArgs e)
@@ -237,11 +244,28 @@ namespace MusicBotPlayer
             BackButton.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Fires when a Spotify Track item Play button is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TrackSearchItem_Click(object sender, EventArgs e)
         {
             TrackSearchItem track = sender as TrackSearchItem;
 
             viewModel.QueueViewModel.AddToQueue(track);
+        }
+
+        /// <summary>
+        /// Fires when a YoutubeSearch item is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void YoutubeSearchItem_Click(object sender, EventArgs e)
+        {
+            YoutubeSearchItem youtubeSearchItem = sender as YoutubeSearchItem;
+
+            viewModel.QueueViewModel.AddToQueue(youtubeSearchItem);
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

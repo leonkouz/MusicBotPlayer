@@ -344,7 +344,7 @@ namespace MusicBotPlayer
         /// <summary>
         /// Play the current track.
         /// </summary>
-        public void PlayCurrentTrack()
+        public async void PlayCurrentTrack()
         {
             IsPlaying = true;
 
@@ -354,13 +354,10 @@ namespace MusicBotPlayer
                 return;
             }
 
-            Task.Run(async () =>
+            await Task.Run(() =>
             {
-                try
-                {
-                    await DiscordBot.Play(CurrentlyPlayingTrack);
-                }
-                catch (DiscordBotNotConnectedException)
+                if(DiscordBot.AudioClient == null ||
+                 DiscordBot.AudioClient.ConnectionState != Discord.ConnectionState.Connected)
                 {
                     App.Current.Dispatcher.Invoke(() =>
                     {
@@ -375,6 +372,10 @@ namespace MusicBotPlayer
                     });
 
                     return;
+                }
+                else
+                {
+                    DiscordBot.Play(CurrentlyPlayingTrack);
                 }
             });
         }
@@ -395,6 +396,15 @@ namespace MusicBotPlayer
         /// </summary>
         /// <param name="track"></param>
         public void AddToQueue(TrackSearchItem track)
+        {
+            QueueTrack qTrack = ConvertToQueueTrack(track);
+
+            Queue.Add(qTrack);
+
+            RaiseQueueEventChanged(qTrack);
+        }
+
+        public void AddToQueue(YoutubeSearchItem track)
         {
             QueueTrack qTrack = ConvertToQueueTrack(track);
 
@@ -440,6 +450,29 @@ namespace MusicBotPlayer
                     SpotifyId = trackSearch.TrackId
                 };
 
+            });
+
+            return track;
+        }
+
+        /// <summary>
+        /// Converts a <see cref="YoutubeSearchItem"/> object to a <see cref="QueueTrack"/> object.
+        /// </summary>
+        /// <param name="youtubeSearchItem">The YoutubeSearchItem object.</param>
+        /// <returns></returns>
+        private QueueTrack ConvertToQueueTrack(YoutubeSearchItem youtubeSearchItem)
+        {
+            QueueTrack track = null;
+
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                track = new QueueTrack()
+                {
+                    Name = youtubeSearchItem.VideoName,
+                    Image = youtubeSearchItem.VideoImage,
+                    Duration = youtubeSearchItem.VideoDuration,
+                    YoutubeId = youtubeSearchItem.VideoId,
+                };
             });
 
             return track;

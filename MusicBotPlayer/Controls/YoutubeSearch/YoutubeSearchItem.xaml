@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicBotPlayer"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="1500">
+             d:DesignHeight="200" d:DesignWidth="1000">
     
     <Border BorderThickness="0 1 0 0"
             BorderBrush="White"
@@ -19,9 +19,9 @@
 
             <Grid.ColumnDefinitions>
                 <!-- Video Image -->
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="150"/>
                 <!-- Title + other info -->
-                <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="300"/>
                 <!-- Blank -->
                 <ColumnDefinition Width="*"/>
                 <!-- Play button -->
@@ -32,21 +32,30 @@
             <Grid Grid.Column="0">
                 <Image HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
-                       Source="{Binding AlbumImage, RelativeSource={
+                       Source="{Binding VideoImage, RelativeSource={
                        RelativeSource AncestorType={x:Type local:YoutubeSearchItem}}}"/>
-                
+
+                <Grid HorizontalAlignment="Right"
+                      VerticalAlignment="Bottom"
+                      Width="{Binding ElementName=timeText, Path=ActualWidth}"
+                      Height="{Binding ElementName=timeText, Path=ActualHeight}"
+                      Background="{StaticResource BackgroundDarkBrush}"
+                      Panel.ZIndex="1"/>
+
                 <TextBlock VerticalAlignment="Bottom"
-                           Padding="0 0 10 0"
+                           Panel.ZIndex="2"
+                           x:Name="timeText"
                            HorizontalAlignment="Right"
                            Text="{Binding VideoDuration, RelativeSource={
                            RelativeSource AncestorType={x:Type local:YoutubeSearchItem}}}"
-                           FontSize="25"
-                           Foreground="{StaticResource BackgroundPurpleGradient}"/>
+                           FontSize="10"
+                           Foreground="White"/>
             </Grid>
 
 
             <!-- Video Info -->
             <StackPanel Grid.Column="1"
+                        Grid.ColumnSpan="2"
                         HorizontalAlignment="Stretch"
                         Orientation="Vertical"
                         Margin="10 0 0 0"
@@ -55,11 +64,13 @@
                 <!-- Video Title -->
                 <TextBlock Foreground="White"
                            FontFamily="Roboto"
+                           Margin="0 5 0 0"
                            HorizontalAlignment="Stretch">
                     <TextBlock.Inlines>
                         <Run FontWeight="Bold"
-                             FontSize="30" 
-                             Text="This is WPF TextBlock Example. " />
+                             FontSize="25" 
+                             Text="{Binding VideoName, RelativeSource={
+                             RelativeSource AncestorType={x:Type local:YoutubeSearchItem}}}" />
                     </TextBlock.Inlines>
                 </TextBlock>
 
@@ -70,7 +81,7 @@
                     <!-- Channel Lable -->
                     <TextBlock Foreground="White"
                                
-                               FontSize="20"
+                               FontSize="15"
                                FontFamily="Roboto"
                                Text="Channel: "/>
 
@@ -78,20 +89,22 @@
                     <TextBlock Margin="5 0 0 0"
                                Foreground="White"
                                FontFamily="Roboto"
-                               FontSize="20"
-                               Text="Channel123Test">
+                               FontSize="15"
+                               Text="{Binding ChannelName, RelativeSource={
+                               RelativeSource AncestorType={x:Type local:YoutubeSearchItem}}}">
                     </TextBlock>
                 </StackPanel>
 
                 <!-- Video Description-->
-                <TextBlock Margin="0 30 0 0"
+                <TextBlock Margin="0 25 0 0"
                            FontFamily="Roboto"
-                           FontSize="15"
+                           FontSize="12"
                            Foreground="White"
-                           MaxHeight="100"
+                           MaxHeight="40"
                            TextWrapping="WrapWithOverflow"
                            TextTrimming="CharacterEllipsis"
-                           Text="This is a test description of a random video."
+                           Text="{Binding VideoDescription, RelativeSource={
+                           RelativeSource AncestorType={x:Type local:YoutubeSearchItem}}}"
                            />
                 
             </StackPanel>
@@ -104,7 +117,7 @@
                     HorizontalAlignment="Center"
                     Background="Transparent"
                     BorderThickness="0"
-                    FontSize="100"
+                    FontSize="80"
                     Click="PlayButton_Click"
                     />
 

@@ -330,7 +330,8 @@
         <!-- Youtube Content Area -->
         <Grid Grid.Column="1"
               x:Name="YoutubeGrid"
-              DataContext="YoutubeViewModel">
+              Background="{StaticResource BackgroundDarkBrush}"
+              DataContext="{Binding YoutubeViewModel}">
 
             <Grid.RowDefinitions>
                 <!-- Search Bar -->
@@ -377,23 +378,24 @@
 
             <ListView HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
+                      Margin="0 0 0 94"
                       x:Name="YoutubeListView"
                       Style="{StaticResource CustomListView}"
                       BorderThickness="0"
+                      Grid.Row="1"
                       Panel.ZIndex="0"
                       HorizontalContentAlignment="Stretch"
-                      ItemsSource="{Binding , UpdateSourceTrigger=PropertyChanged}">
+                      ItemsSource="{Binding YoutubeSearchResults, UpdateSourceTrigger=PropertyChanged}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <local:AlbumSearchItem ArtistNames="{Binding artists, 
-                                               Converter={StaticResource ArtistListConcaternatorConverter}}"
-                                               AlbumImage="{Binding images,
-                                               Converter={StaticResource SelectImageConverter}}"
-                                               AlbumName="{Binding name}"
-                                               AlbumId="{Binding id}"
-                                               HorizontalAlignment="Stretch"
-                                               Click="AlbumSearchItem_Click"
-                                               />
+                        <local:YoutubeSearchItem VideoName="{Binding Snippet.Title}"
+                                                 VideoDescription="{Binding Snippet.Description}"
+                                                 ChannelName="{Binding Snippet.ChannelTitle}"
+                                                 VideoImage="{Binding Snippet.Thumbnails.High.Url}"
+                                                 VideoDuration="{Binding ContentDetails.Duration}"
+                                                 VideoId="{Binding Id}"
+                                                 PlayClick="YoutubeSearchItem_Click"/>
+
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

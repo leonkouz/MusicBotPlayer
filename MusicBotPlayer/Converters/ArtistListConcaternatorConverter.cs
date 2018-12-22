@@ -14,6 +14,11 @@ namespace MusicBotPlayer
         {
             var artistsList = (List<ArtistSimplified>)value;
 
+            if (artistsList == null || artistsList.Count == 0)
+            {
+                return "Youtube Video";
+            }
+
             string artistConcat = String.Empty;
 
             foreach(ArtistSimplified artist in artistsList)
