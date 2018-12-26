@@ -199,7 +199,7 @@ namespace MusicBotPlayer
         }
 
         /// <summary>
-        /// Stop the discord bot playing the current song.
+        /// Stop the discord bot playing the current track.
         /// </summary>
         public static Task StopPlaying()
         {
