@@ -181,6 +181,8 @@ namespace MusicBotPlayer
                     return;
                 }
 
+                DiscordBot.IsTransitioningToNextTrack = true;
+
                 AddCurrentTrackToHistory();
 
                 SendStopPlayingCommandToDiscordBot();
@@ -198,6 +200,8 @@ namespace MusicBotPlayer
             {
                 return;
             }
+
+            DiscordBot.IsTransitioningToNextTrack = true;
 
             if (history.Count != 0)
             {
@@ -348,35 +352,43 @@ namespace MusicBotPlayer
         {
             IsPlaying = true;
 
-            // Don't play next track if the bot is currently transitioning to the next song.
-            if (DiscordBot.IsTransitioningToNextTrack == true)
-            {
-                return;
-            }
-
             await Task.Run(() =>
             {
                 if(DiscordBot.AudioClient == null ||
                  DiscordBot.AudioClient.ConnectionState != Discord.ConnectionState.Connected)
                 {
-                    App.Current.Dispatcher.Invoke(() =>
-                    {
-                        IsPlaying = false;
-                        CurrentlyPlayingTrack = null;
-                        currentPointInTrack = TimeSpan.Zero;
-                        TrackDuration = TimeSpan.Zero;
-                        history.Clear();
-                        queue.Clear();
-
-                        MessageBox.Show("Must join a voice channel before playing a song.");
-                    });
-
+                    ClearCurrentTrackAndShowError("Please join a voice channel before playing a song.");
                     return;
                 }
                 else
                 {
-                    DiscordBot.Play(CurrentlyPlayingTrack);
+                    try
+                    {
+                        DiscordBot.Play(CurrentlyPlayingTrack);
+                    }
+                    catch (Exception e)
+                    {
+                        ClearCurrentTrackAndShowError("Error occured when attempting to play track. Error: " + e.ToString());
+                    }
                 }
+            });
+        }
+
+        /// <summary>
+        /// Clears the UI for the current track and stops playing.
+        /// </summary>
+        private void ClearCurrentTrackAndShowError(string errorMessageToDisplay)
+        {
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                IsPlaying = false;
+                CurrentlyPlayingTrack = null;
+                currentPointInTrack = TimeSpan.Zero;
+                TrackDuration = TimeSpan.Zero;
+                history.Clear();
+                queue.Clear();
+
+                MessageBox.Show(errorMessageToDisplay);
             });
         }
 

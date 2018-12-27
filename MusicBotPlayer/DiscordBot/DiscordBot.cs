@@ -215,8 +215,6 @@ namespace MusicBotPlayer
         /// <param name="track">The track to play.</param>
         public static Task Play(QueueTrack track)
         {
-            IsTransitioningToNextTrack = true;
-
             string artists = String.Empty;
             string url = String.Empty;
             string embeddedVideoUrl = String.Empty;
