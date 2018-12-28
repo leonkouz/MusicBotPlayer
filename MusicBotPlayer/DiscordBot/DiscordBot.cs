@@ -191,10 +191,14 @@ namespace MusicBotPlayer
                 TimeSpan timeSpan;
                 TimeSpan.TryParse(time, out timeSpan);
 
-                App.Current.Dispatcher.Invoke(() =>
+                // If application is closing, App.Current will be null.
+                if(App.Current != null)
                 {
-                    queueViewModel.CurrentPointInTrack = timeSpan;
-                });
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        queueViewModel.CurrentPointInTrack = timeSpan;
+                    });
+                }
             }
         }
 

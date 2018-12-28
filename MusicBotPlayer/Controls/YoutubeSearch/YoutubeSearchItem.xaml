@@ -10,6 +10,7 @@
     <Border BorderThickness="0 1 0 0"
             BorderBrush="White"
             Padding="25"
+            Height="175"
             Background="{StaticResource BackgroundDarkBrush}"
             >
 

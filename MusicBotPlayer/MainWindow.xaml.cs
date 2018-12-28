@@ -93,6 +93,19 @@ namespace MusicBotPlayer
         {
             // Kill the authentication thread.
             spotify.KillAuthenticationThread();
+
+            // Dispose of the Discord Audio Client if it is currently playing.
+            if(DiscordBot.AudioClient != null)
+            {
+                DiscordBot.StopPlaying();
+                DiscordBot.AudioClient.Dispose();
+            }
+
+            // Kill the thread currently running the Discord Bot.
+            if(viewModel.DiscordThread.IsAlive == true)
+            {
+                viewModel.DiscordThread.Abort();
+            }
         }
 
         /// <summary>

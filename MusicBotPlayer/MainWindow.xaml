@@ -103,7 +103,7 @@
 
             </Canvas>
         </Grid>
-        
+
         <!-- Spotify Authentication Browser window -->
         <cefSharp:ChromiumWebBrowser x:Name="browser"
                                      HorizontalAlignment="Stretch"
@@ -111,7 +111,7 @@
                                      Panel.ZIndex="1"
                                      Grid.ColumnSpan="2"
                                      Margin="0 0 0 94"/>
-        
+
         <!-- Spotify Content Area -->
         <Border Grid.Column="1"
                 x:Name="SpotifyGrid"
@@ -160,7 +160,7 @@
                         Height="60"
                         VerticalAlignment="Center"
                         >
-                    
+
                     <Border Height="46" Width="47" Canvas.Left="10" Canvas.Top="10"
                             CornerRadius="27"
                             BorderBrush="{StaticResource BackgroundPurpleGradient}"
@@ -328,85 +328,89 @@
         </Border>
 
         <!-- Youtube Content Area -->
-        <Grid Grid.Column="1"
-              x:Name="YoutubeGrid"
-              Background="{StaticResource BackgroundDarkBrush}"
-              DataContext="{Binding YoutubeViewModel}">
+        <Border Grid.Column="1"
+                x:Name="YoutubeGrid"
+                BorderBrush="DimGray"
+                BorderThickness="1 0 0 0"
+                Background="{StaticResource BackgroundDarkBrush}"
+                >
+            <Grid DataContext="{Binding YoutubeViewModel}">
+                <Grid.RowDefinitions>
+                    <!-- Search Bar -->
+                    <RowDefinition Height="*"/>
+                    <!-- Video display -->
+                    <RowDefinition Height="7.5*"/>
+                </Grid.RowDefinitions>
 
-            <Grid.RowDefinitions>
                 <!-- Search Bar -->
-                <RowDefinition Height="*"/>
-                <!-- Video display -->
-                <RowDefinition Height="7.5*"/>
-            </Grid.RowDefinitions>
+                <Canvas Grid.Row="0"
+                        Width="460"
+                        Height="60"
+                        VerticalAlignment="Center"
+                        >
 
-            <!-- Search Bar -->
-            <Canvas Grid.Row="0"
-                    Width="460"
-                    Height="60"
-                    VerticalAlignment="Center"
-                    >
-
-                <Border Height="46" Width="47" Canvas.Left="10" Canvas.Top="10"
+                    <Border Height="46" Width="47" Canvas.Left="10" Canvas.Top="10"
                             CornerRadius="27"
                             BorderBrush="{StaticResource BackgroundPurpleGradient}"
                             Background="{StaticResource BackgroundPurpleGradient}"
                             Panel.ZIndex="1"
                             >
-                    <TextBlock Text="{StaticResource FontAwesomeSearchIcon}" 
+                        <TextBlock Text="{StaticResource FontAwesomeSearchIcon}" 
                                    FontFamily="{StaticResource FontAwesome}"
                                    FontSize="23"
                                    Foreground="White"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center" Margin="12,10,13,12"/>
-                </Border>
+                    </Border>
 
-                <TextBox Background="{StaticResource BackgroundFlatGrayGradient}"
-                         AcceptsReturn="False"
-                         BorderThickness="0" 
-                         Width="400"
-                         Height="30"
-                         HorizontalContentAlignment="Left"
-                         VerticalContentAlignment="Center"
-                         Padding="15 0 0 0"
-                         Foreground="White"
-                         CaretBrush="White"
-                         KeyDown="YoutubeSearchBar_KeyDown" 
-                         Canvas.Left="54" 
-                         Canvas.Top="18"/>
-            </Canvas>
+                    <TextBox Background="{StaticResource BackgroundFlatGrayGradient}"
+                             AcceptsReturn="False"
+                             BorderThickness="0" 
+                             Width="400"
+                             Height="30"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center"
+                             Padding="15 0 0 0"
+                             Foreground="White"
+                             CaretBrush="White"
+                             KeyDown="YoutubeSearchBar_KeyDown" 
+                             Canvas.Left="54" 
+                             Canvas.Top="18"/>
+                </Canvas>
 
-            <ListView HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
-                      Margin="0 0 0 94"
-                      x:Name="YoutubeListView"
-                      Style="{StaticResource CustomListView}"
-                      BorderThickness="0"
-                      Grid.Row="1"
-                      Panel.ZIndex="0"
-                      HorizontalContentAlignment="Stretch"
-                      ItemsSource="{Binding YoutubeSearchResults, UpdateSourceTrigger=PropertyChanged}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <local:YoutubeSearchItem VideoName="{Binding Snippet.Title}"
-                                                 VideoDescription="{Binding Snippet.Description}"
-                                                 ChannelName="{Binding Snippet.ChannelTitle}"
-                                                 VideoImage="{Binding Snippet.Thumbnails.High.Url}"
-                                                 VideoDuration="{Binding ContentDetails.Duration}"
-                                                 VideoId="{Binding Id}"
-                                                 PlayClick="YoutubeSearchItem_Click"/>
+                <ListView HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          Margin="0 0 0 94"
+                          x:Name="YoutubeListView"
+                          Style="{StaticResource CustomListView}"
+                          BorderThickness="0"
+                          Grid.Row="1"
+                          Panel.ZIndex="0"
+                          HorizontalContentAlignment="Stretch"
+                          ItemsSource="{Binding YoutubeSearchResults, UpdateSourceTrigger=PropertyChanged}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <local:YoutubeSearchItem VideoName="{Binding Snippet.Title}"
+                                                     VideoDescription="{Binding Snippet.Description}"
+                                                     ChannelName="{Binding Snippet.ChannelTitle}"
+                                                     VideoImage="{Binding Snippet.Thumbnails.High.Url}"
+                                                     VideoDuration="{Binding ContentDetails.Duration}"
+                                                     VideoId="{Binding Id}"
+                                                     PlayClick="YoutubeSearchItem_Click"/>
 
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
-        </Grid>
+            </Grid>
+        </Border>
+
 
         <!-- Queue Content Area -->
         <Border Grid.Column="1"
                 x:Name="QueueGrid"
                 BorderBrush="DimGray"
-                BorderThickness="0 0 0 1"
+                BorderThickness="1 0 0 0"
                 Visibility="Collapsed"
                 Background="{StaticResource BackgroundDarkBrush}"
                 DataContext="{Binding QueueViewModel}">

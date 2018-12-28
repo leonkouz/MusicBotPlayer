@@ -25,7 +25,9 @@ namespace MusicBotPlayer
         /// <summary>
         /// The Queue View Model.
         /// </summary>
-        public QueueViewModel QueueViewModel { get; set; } 
+        public QueueViewModel QueueViewModel { get; set; }
+
+        public Thread DiscordThread;
 
         public ApplicationViewModel()
         {
@@ -37,8 +39,8 @@ namespace MusicBotPlayer
 
             ApiKeys.GetApiKeys();
 
-            Thread discordThread = new Thread(() => DiscordBot.InitialiseBot(QueueViewModel));
-            discordThread.Start();
+            DiscordThread = new Thread(() => DiscordBot.InitialiseBot(QueueViewModel));
+            DiscordThread.Start();
         }
        
         /// <summary>
