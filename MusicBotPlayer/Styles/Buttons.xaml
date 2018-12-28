@@ -28,7 +28,7 @@
                             BorderThickness="{TemplateBinding BorderThickness}" 
                             Background="{TemplateBinding Background}" 
                             SnapsToDevicePixels="True">
-                            <TextBlock x:Name="textBox"
+                        <TextBlock x:Name="textBox"
                                        Text="{TemplateBinding Content}" 
                                        FontFamily="{TemplateBinding FontFamily}"
                                        FontSize="{TemplateBinding FontSize}"
@@ -54,9 +54,9 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </DataTrigger.EnterActions>
-                            
+
                             <DataTrigger.ExitActions>
-                                
+
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <local:LinearGradientAnimation Storyboard.TargetProperty="Background" 
@@ -67,7 +67,7 @@
                                 </BeginStoryboard>
                             </DataTrigger.ExitActions>
                         </DataTrigger>
-                        
+
 
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Foreground" Value="White"/>
@@ -81,7 +81,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!-- Horizontal Menu Button -->
     <Style TargetType="{x:Type Button}" x:Key="HorizontalMenuButton" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Background" Value="{StaticResource BackgroundFlatGrayGradient}"/>
@@ -90,7 +90,7 @@
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
-        
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -144,7 +144,94 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
-    
+
+    <Style TargetType="{x:Type Button}" x:Key="GrowOnHover" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Name="ButtonGrid" Background="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Grid.RenderTransform>
+                            <ScaleTransform/>
+                        </Grid.RenderTransform>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <!-- Enter Animation -->
+                            <Trigger.EnterActions>
+                                <!-- Stop the mouse over story boards so that the pressed story board can run. -->
+                                <StopStoryboard BeginStoryboardName="MouseOverStoryBoardEnter"/>
+                                <StopStoryboard BeginStoryboardName="MouseOverStoryBoardExit"/>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ButtonGrid"
+                                            Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                            To="0.95" SpeedRatio="15"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ButtonGrid"
+                                            Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                            To="0.95" SpeedRatio="15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <!-- Exit Animation -->
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                             Storyboard.TargetName="ButtonGrid" 
+                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                             To="1" SpeedRatio="10"/>
+                                        <DoubleAnimation
+                                             Storyboard.TargetName="ButtonGrid" 
+                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                             To="1" SpeedRatio="10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <!-- Enter Animation -->
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Name="MouseOverStoryBoardEnter">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ButtonGrid"
+                                            Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                            To="1.05" SpeedRatio="10"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="ButtonGrid"
+                                            Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                            To="1.05" SpeedRatio="10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <!-- Exit Animation -->
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Name="MouseOverStoryBoardExit">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                             Storyboard.TargetName="ButtonGrid" 
+                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                             To="1" SpeedRatio="10"/>
+                                        <DoubleAnimation
+                                             Storyboard.TargetName="ButtonGrid" 
+                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                             To="1" SpeedRatio="10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

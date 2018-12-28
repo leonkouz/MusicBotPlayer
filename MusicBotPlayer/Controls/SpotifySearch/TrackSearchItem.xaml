@@ -63,6 +63,7 @@
 
             <Button Grid.Column="3"
                     VerticalAlignment="Center"
+                    Style="{StaticResource GrowOnHover}"
                     FontFamily="{StaticResource FontAwesomeRegular}"
                     Content="{StaticResource FontAwesomeRegularPlayButtonCircle}"
                     Foreground="{StaticResource BackgroundPurpleGradient}"
