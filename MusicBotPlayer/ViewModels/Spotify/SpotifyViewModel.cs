@@ -54,7 +54,13 @@ namespace MusicBotPlayer
         /// Stores the tracks of an album. Used to display the tracks of an 
         /// album when it is clicked on.
         /// </summary>
-        private ObservableCollection<AblumTrackSearchTrack> albumsTracks = new ObservableCollection<AblumTrackSearchTrack>();
+        private ObservableCollection<AlbumTrackSearchTrack> albumsTracks = new ObservableCollection<AlbumTrackSearchTrack>();
+
+        /// <summary>
+        /// Stores the tracks of a playlist. Used to display the tracks of a
+        /// playlist when it is clicked on.
+        /// </summary>
+        private ObservableCollection<PlaylistTrackSearchDetails> playlistTracks = new ObservableCollection<PlaylistTrackSearchDetails>();
 
         #endregion
 
@@ -137,7 +143,7 @@ namespace MusicBotPlayer
         /// Stores the tracks of an album. Used to display the tracks of an 
         /// album when it is clicked on.
         /// </summary>
-        public ObservableCollection<AblumTrackSearchTrack> AlbumsTracks
+        public ObservableCollection<AlbumTrackSearchTrack> AlbumsTracks
         {
             get => albumsTracks;
             set
@@ -145,6 +151,20 @@ namespace MusicBotPlayer
                 albumsTracks = value;
             }
         }
+
+        /// <summary>
+        /// Stores the tracks of a playlist. Used to display the tracks of a
+        /// playlist when it is clicked on.
+        /// </summary>
+        public ObservableCollection<PlaylistTrackSearchDetails> PlaylistTracks
+        {
+            get => playlistTracks;
+            set
+            {
+                playlistTracks = value;
+            }
+        }
+
 
         #endregion
 
@@ -258,5 +278,30 @@ namespace MusicBotPlayer
                 AddToCollection(AlbumsTracks, album.items);
             });
         }
+
+        /// <summary>
+        /// Search for the tracks of the specified playlist.
+        /// </summary>
+        /// <param name="id"></param>
+        public async void PlaylistTrackSearch(string id)
+        {
+            await Task.Run(() =>
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    PlaylistTracks.Clear();
+                });
+
+                PlaylistTrackSearchResult playlist = JsonConvert.DeserializeObject<PlaylistTrackSearchResult>(Spotify.Api.GetPlaylistsTracks(id));
+
+                if (playlist.items.Count == 0)
+                {
+                    return;
+                }
+
+                AddToCollection(PlaylistTracks, playlist.items);
+            });
+        }
+
     }
 }

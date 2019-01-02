@@ -207,6 +207,7 @@
                     <TabItem Header="Albums" 
                              Height="100"
                              Width="100"
+                             PreviewMouseDown="TabItem_PreviewMouseDown"
                              >
                         <Grid>
                             <!-- Album List View -->
@@ -261,11 +262,13 @@
                     </TabItem>
 
                     <!-- Tracks Tab -->
-                    <TabItem Header="Tracks" Width="100"
-                                 Height="100"
-                                 >
+                    <TabItem Header="Tracks" 
+                             Width="100"
+                             Height="100"
+                             PreviewMouseDown="TabItem_PreviewMouseDown"
+                             >
 
-                        <!-- Album tracks List View -->
+                        <!-- Tracks List View -->
                         <ListView HorizontalAlignment="Stretch"
                                   VerticalAlignment="Stretch"
                                   Background="Transparent"
@@ -290,25 +293,58 @@
                     </TabItem>
 
                     <!-- Playlists Tab -->
-                    <TabItem Header="Playlists" Width="100"
+                    <TabItem Header="Playlists" 
+                             Width="100"
                              Height="100"
+                             PreviewMouseDown="TabItem_PreviewMouseDown"
                              >
-                        <ListView HorizontalAlignment="Stretch"
+                        <Grid>
+                            <!-- Playlist List View -->
+                            <ListView HorizontalAlignment="Stretch"
                                   VerticalAlignment="Stretch"
+                                  Name="PlaylistListView"
                                   Background="Transparent"
                                   BorderThickness="0"
                                   Style="{StaticResource CustomListView}"
                                   HorizontalContentAlignment="Stretch"
                                   ItemsSource="{Binding Playlists, UpdateSourceTrigger=PropertyChanged}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <local:PlaylistSearchItem PlaylistName="{Binding name}"
-                                                              PlaylistImage="{Binding images,
-                                                              Converter={StaticResource SelectImageNullableConverter}}"
-                                                              />
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <local:PlaylistSearchItem PlaylistName="{Binding name}"
+                                                                  PlaylistId="{Binding id}"
+                                                                  PlaylistImage="{Binding images,
+                                                                  Converter={StaticResource SelectImageNullableConverter}}"
+                                                                  Click="PlaylistSearchItem_Click"
+                                                                  />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <!-- Playlist tracks List View -->
+                            <ListView HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      Background="Transparent"
+                                      BorderThickness="0"
+                                      x:Name="PlaylistTracksListView"
+                                      Visibility="Collapsed"
+                                      Panel.ZIndex="1"
+                                      Style="{StaticResource CustomListView}"
+                                      HorizontalContentAlignment="Stretch"
+                                      ItemsSource="{Binding PlaylistTracks, UpdateSourceTrigger=PropertyChanged}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <local:TrackSearchItem TrackArtists="{Binding track.artists,
+                                                               Converter={StaticResource ArtistListConcaternatorConverter}}"
+                                                               TrackName="{Binding track.name}"
+                                                               TrackLength="{Binding track.duration_ms,
+                                                               Converter={StaticResource MsToStringConverter}}"
+                                                               TrackId="{Binding track.id}"
+                                                               PlayButtonClick="TrackSearchItem_Click"
+                                                               />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+
                     </TabItem>
 
                     <!-- Artists Tab -->

@@ -49,7 +49,16 @@ namespace MusicBotPlayer
         /// </summary>
         private bool spotifyAuthenticated;
 
+        /// <summary>
+        /// Used to update the track duration slider.
+        /// </summary>
         private DispatcherTimer sliderTimer = new DispatcherTimer();
+
+        /// <summary>
+        /// Used to track which track sub-list is currently being shown. 
+        /// E.g. AlbumTrackListView, PlaylistTrackListView.
+        /// </summary>
+        private UIElement currentlyShownSubList;
 
         /// <summary>
         /// Constructor.
@@ -262,15 +271,33 @@ namespace MusicBotPlayer
             AlbumSearchItem album = sender as AlbumSearchItem;
             viewModel.SpotifyViewModel.AlbumTrackSearch(album.AlbumId);
 
+            currentlyShownSubList = AlbumTracksListView;
+
             AlbumListView.Visibility = Visibility.Collapsed;
             AlbumTracksListView.Visibility = Visibility.Visible;
+            BackButton.Visibility = Visibility.Visible;
+        }
+
+        private void PlaylistSearchItem_Click(object sender, EventArgs e)
+        {
+            PlaylistSearchItem playlist = sender as PlaylistSearchItem;
+            viewModel.SpotifyViewModel.PlaylistTrackSearch(playlist.PlaylistId);
+
+            currentlyShownSubList = PlaylistTracksListView;
+
+            PlaylistListView.Visibility = Visibility.Collapsed;
+            PlaylistTracksListView.Visibility = Visibility.Visible;
             BackButton.Visibility = Visibility.Visible;
         }
 
         private void BackButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             AlbumListView.Visibility = Visibility.Visible;
-            AlbumTracksListView.Visibility = Visibility.Collapsed;
+            PlaylistListView.Visibility = Visibility.Visible;
+
+            currentlyShownSubList.Visibility = Visibility.Collapsed;
+            currentlyShownSubList = null;
+
             BackButton.Visibility = Visibility.Collapsed;
         }
 
@@ -316,5 +343,12 @@ namespace MusicBotPlayer
             viewModel.QueueViewModel.RemoveFromQueue(track);
         }
 
+        private void TabItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(currentlyShownSubList != null)
+            {
+                BackButton_PreviewMouseDown(null, null);
+            }
+        }
     }
 }

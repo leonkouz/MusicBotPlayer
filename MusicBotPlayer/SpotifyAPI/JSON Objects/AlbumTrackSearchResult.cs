@@ -8,7 +8,7 @@ using System.Text;
 namespace MusicBotPlayer
 {
     [JsonObject]
-    public class AblumTrackSearchTrack
+    public class AlbumTrackSearchTrack
     {
         public List<ArtistSimplified> artists { get; set; }
         public List<string> available_markets { get; set; }
@@ -29,7 +29,7 @@ namespace MusicBotPlayer
     public class AlbumTrackSearchResult
     {
         public string href { get; set; }
-        public List<AblumTrackSearchTrack> items { get; set; }
+        public List<AlbumTrackSearchTrack> items { get; set; }
         public int limit { get; set; }
         public string next { get; set; }
         public int offset { get; set; }
