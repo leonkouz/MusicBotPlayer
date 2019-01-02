@@ -39,8 +39,8 @@ namespace MusicBotPlayer
 
             ApiKeys.GetApiKeys();
 
-            DiscordThread = new Thread(() => DiscordBot.InitialiseBot(QueueViewModel));
-            DiscordThread.Start();
+            //DiscordThread = new Thread(() => DiscordBot.InitialiseBot(QueueViewModel));
+            //DiscordThread.Start();
         }
        
         /// <summary>
