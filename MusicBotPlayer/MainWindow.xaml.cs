@@ -102,7 +102,7 @@ namespace MusicBotPlayer
             }
 
             // Kill the thread currently running the Discord Bot.
-            if(viewModel.DiscordThread.IsAlive == true)
+            if(viewModel.DiscordThread != null && viewModel.DiscordThread.IsAlive == true)
             {
                 viewModel.DiscordThread.Abort();
             }
