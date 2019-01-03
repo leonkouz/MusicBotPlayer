@@ -31,36 +31,9 @@ namespace MusicBotPlayer
         private bool isLoadingSearchResults = false;
 
         /// <summary>
-        /// Stores the search results for albums.
+        /// The page controller. 
         /// </summary>
-        private ObservableCollection<Album> albums = new ObservableCollection<Album>();
-        
-        /// <summary>
-        /// Stores the search results for tracks.
-        /// </summary>
-        private ObservableCollection<Track> tracks = new ObservableCollection<Track>();
-
-        /// <summary>
-        /// Stores the search results for playlists.
-        /// </summary>
-        private ObservableCollection<Playlist> playlists = new ObservableCollection<Playlist>();
-
-        /// <summary>
-        /// Stores the search results for artists.
-        /// </summary>
-        private ObservableCollection<Artist> artists = new ObservableCollection<Artist>();
-
-        /// <summary>
-        /// Stores the tracks of an album. Used to display the tracks of an 
-        /// album when it is clicked on.
-        /// </summary>
-        private ObservableCollection<AlbumTrackSearchTrack> albumsTracks = new ObservableCollection<AlbumTrackSearchTrack>();
-
-        /// <summary>
-        /// Stores the tracks of a playlist. Used to display the tracks of a
-        /// playlist when it is clicked on.
-        /// </summary>
-        private ObservableCollection<PlaylistTrackSearchDetails> playlistTracks = new ObservableCollection<PlaylistTrackSearchDetails>();
+        private PageController pageController;
 
         #endregion
 
@@ -91,80 +64,10 @@ namespace MusicBotPlayer
             }
         }
 
-        /// <summary>
-        /// Stores the search results from albums.
-        /// </summary>
-        public ObservableCollection<Album> Albums
+        public PageController PageController
         {
-            get => albums;
-            set
-            {
-                albums = value;
-            }
+            get => pageController;
         }
-        
-        /// <summary>
-        /// Stores the search results for tracks.
-        /// </summary>
-        public ObservableCollection<Track> Tracks
-        {
-            get => tracks;
-            set
-            {
-                tracks = value;
-            }
-        }
-
-        /// <summary>
-        /// Stores the search results for playlists.
-        /// </summary>
-        public ObservableCollection<Playlist> Playlists
-        {
-            get => playlists;
-            set
-            {
-                playlists = value;
-            }
-        }
-
-        /// <summary>
-        /// Stores the search results for artists.
-        /// </summary>
-        public ObservableCollection<Artist> Artists
-        {
-            get => artists;
-            set
-            {
-                artists = value;
-            }
-        }
-
-        /// <summary>
-        /// Stores the tracks of an album. Used to display the tracks of an 
-        /// album when it is clicked on.
-        /// </summary>
-        public ObservableCollection<AlbumTrackSearchTrack> AlbumsTracks
-        {
-            get => albumsTracks;
-            set
-            {
-                albumsTracks = value;
-            }
-        }
-
-        /// <summary>
-        /// Stores the tracks of a playlist. Used to display the tracks of a
-        /// playlist when it is clicked on.
-        /// </summary>
-        public ObservableCollection<PlaylistTrackSearchDetails> PlaylistTracks
-        {
-            get => playlistTracks;
-            set
-            {
-                playlistTracks = value;
-            }
-        }
-
 
         #endregion
 
@@ -173,6 +76,26 @@ namespace MusicBotPlayer
         /// </summary>
         public SpotifyViewModel()
         {
+            pageController = new PageController();
+
+            Page albumPage = new Page("AlbumPage");
+            albumPage.ChildPage = new Page("AlbumTracksPage");
+
+            Page playlistPage = new Page("PlaylistPage");
+            playlistPage.ChildPage = new Page("PlaylistTrackPage");
+
+            Page trackpage = new Page("TracksPage");
+
+            Page artistsPage = new Page("ArtistPage");
+            artistsPage.ChildPage = new Page("ArtistAlbumPage");
+            artistsPage.ChildPage.ChildPage = new Page("ArtistsAlbumTracksPage");
+
+            pageController.AddPage(albumPage);
+            pageController.AddPage(playlistPage);
+            pageController.AddPage(trackpage);
+            pageController.AddPage(artistsPage);
+
+            pageController.NavigateToPage(albumPage);
         }
 
         /// <summary>
@@ -193,7 +116,7 @@ namespace MusicBotPlayer
                 {
                     App.Current.Dispatcher.Invoke(() =>
                     {
-                        ClearCurrentSearch();
+                        pageController.ClearItemsOfAllPages();
                     });
 
                     searchResponse = Spotify.Api.Search(text, Spotify.AllSearchTypes, 40, 0);
@@ -218,41 +141,11 @@ namespace MusicBotPlayer
         {
             await Task.Run(() =>
             {
-                AddToCollection(Albums, results.albums);
-                AddToCollection(Tracks, results.tracks.OrderByDescending(x => x.popularity));
-                AddToCollection(Playlists, results.playlists);
-                AddToCollection(Artists, results.artists);
+                Util.AddToCollection(pageController.GetPage("AlbumPage").Items, results.albums);
+                Util.AddToCollection(pageController.GetPage("TracksPage").Items, results.tracks.OrderByDescending(x => x.popularity));
+                Util.AddToCollection(pageController.GetPage("PlaylistPage").Items, results.playlists);
+                Util.AddToCollection(pageController.GetPage("ArtistPage").Items, results.artists);
             });
-        }
-
-        /// <summary>
-        /// Adds the items from a specified <see cref="IEnumerable{T}"/> to a <see cref="ObservableCollection{T}"/>.
-        /// </summary>
-        /// <typeparam name="T">The type of <see cref="ObservableCollection{T}"/></typeparam>
-        /// <param name="collectionToAddTo">The collection to add to.</param>
-        /// <param name="toAddFrom">The collection of items to add from.</param>
-        public void AddToCollection<T>(ObservableCollection<T> collectionToAddTo, IEnumerable<object> toAddFrom)
-        {
-            foreach(object obj in toAddFrom)
-            {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    collectionToAddTo.Add((T)obj);
-                });
-            }
-        }
-
-        /// <summary>
-        /// Clears the current search collections.
-        /// </summary>
-        private void ClearCurrentSearch()
-        {
-            Albums.Clear();
-            AlbumsTracks.Clear();
-            Tracks.Clear();
-            Playlists.Clear();
-            Artists.Clear();
-            AlbumsTracks.Clear();
         }
 
         /// <summary>
@@ -265,7 +158,7 @@ namespace MusicBotPlayer
             {
                 App.Current.Dispatcher.Invoke(() =>
                 {
-                    AlbumsTracks.Clear();
+                    pageController.GetPage("AlbumTracksPage").Items.Clear();
                 });
 
                 AlbumTrackSearchResult album = JsonConvert.DeserializeObject<AlbumTrackSearchResult>(Spotify.Api.GetAlbumTracks(id, 50, 0));
@@ -275,7 +168,7 @@ namespace MusicBotPlayer
                     return;
                 }
 
-                AddToCollection(AlbumsTracks, album.items);
+                Util.AddToCollection(pageController.GetPage("AlbumTracksPage").Items, album.items);
             });
         }
 
@@ -289,7 +182,7 @@ namespace MusicBotPlayer
             {
                 App.Current.Dispatcher.Invoke(() =>
                 {
-                    PlaylistTracks.Clear();
+                    pageController.GetPage("PlaylistTrackPage").Items.Clear();
                 });
 
                 PlaylistTrackSearchResult playlist = JsonConvert.DeserializeObject<PlaylistTrackSearchResult>(Spotify.Api.GetPlaylistsTracks(id));
@@ -299,7 +192,7 @@ namespace MusicBotPlayer
                     return;
                 }
 
-                AddToCollection(PlaylistTracks, playlist.items);
+                Util.AddToCollection(pageController.GetPage("PlaylistTrackPage").Items, playlist.items);
             });
         }
 

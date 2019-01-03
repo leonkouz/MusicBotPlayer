@@ -8,7 +8,7 @@ using System.Text;
 namespace MusicBotPlayer
 {
     [JsonObject]
-    public class AlbumTrackSearchTrack
+    public class AlbumTrackSearchTrack : IPage
     {
         public List<ArtistSimplified> artists { get; set; }
         public List<string> available_markets { get; set; }

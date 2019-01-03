@@ -48,7 +48,7 @@ namespace MusicBotPlayer
     }
 
     [JsonObject]
-    public class Album
+    public class Album : IPage
     {
         public string album_type { get; set; }
         public List<ArtistSimplified> artists { get; set; }
@@ -106,7 +106,7 @@ namespace MusicBotPlayer
     }
 
     [JsonObject]
-    public class Artist
+    public class Artist : IPage
     {
         public ExternalUrls external_urls { get; set; }
         public Followers followers { get; set; }
@@ -152,7 +152,7 @@ namespace MusicBotPlayer
     }
 
     [JsonObject]
-    public class Track
+    public class Track : IPage
     {
         public Album album { get; set; }
         public List<ArtistSimplified> artists { get; set; }
@@ -225,7 +225,7 @@ namespace MusicBotPlayer
     }
 
     [JsonObject]
-    public class Playlist
+    public class Playlist : IPage
     {
         public bool collaborative { get; set; }
         public ExternalUrls external_urls { get; set; }

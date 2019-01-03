@@ -18,7 +18,6 @@
         <local:MsToStringConverter x:Key="MsToStringConverter"/>
         <local:ArtistIEnumerableConcaternatorConverter x:Key="ArtistIEnumerableConcaternatorConverter"/>
         <local:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
-        <local:SelectImageNullableConverter x:Key="SelectImageNullableConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -207,7 +206,8 @@
                     <TabItem Header="Albums" 
                              Height="100"
                              Width="100"
-                             PreviewMouseDown="TabItem_PreviewMouseDown"
+                             Name="AlbumTab"
+                             PreviewMouseDown="AlbumTab_PreviewMouseDown"
                              >
                         <Grid>
                             <!-- Album List View -->
@@ -218,7 +218,8 @@
                                       BorderThickness="0"
                                       Panel.ZIndex="0"
                                       HorizontalContentAlignment="Stretch"
-                                      ItemsSource="{Binding Albums, UpdateSourceTrigger=PropertyChanged}">
+                                      ItemsSource="{Binding PageController.CurrentPage.Items, 
+                                      UpdateSourceTrigger=PropertyChanged}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <local:AlbumSearchItem ArtistNames="{Binding artists, 
@@ -229,6 +230,7 @@
                                                                AlbumId="{Binding id}"
                                                                HorizontalAlignment="Stretch"
                                                                Click="AlbumSearchItem_Click"
+                                                               Name="AlbumSearchItemControl"
                                                                />
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -243,7 +245,8 @@
                                       Panel.ZIndex="1"
                                       Style="{StaticResource CustomListView}"
                                       HorizontalContentAlignment="Stretch"
-                                      ItemsSource="{Binding AlbumsTracks, UpdateSourceTrigger=PropertyChanged}">
+                                      ItemsSource="{Binding PageController.CurrentPage.Items, 
+                                      UpdateSourceTrigger=PropertyChanged}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <local:TrackSearchItem TrackArtists="{Binding artists,
@@ -265,7 +268,8 @@
                     <TabItem Header="Tracks" 
                              Width="100"
                              Height="100"
-                             PreviewMouseDown="TabItem_PreviewMouseDown"
+                             Name="TracksTab"
+                             PreviewMouseDown="TracksTab_PreviewMouseDown"
                              >
 
                         <!-- Tracks List View -->
@@ -276,7 +280,8 @@
                                   x:Name="TracksListView"
                                   Style="{StaticResource CustomListView}"
                                   HorizontalContentAlignment="Stretch"
-                                  ItemsSource="{Binding Tracks, UpdateSourceTrigger=PropertyChanged}">
+                                  ItemsSource="{Binding PageController.CurrentPage.Items, 
+                                      UpdateSourceTrigger=PropertyChanged}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <local:TrackSearchItem TrackArtists="{Binding artists,
@@ -296,7 +301,8 @@
                     <TabItem Header="Playlists" 
                              Width="100"
                              Height="100"
-                             PreviewMouseDown="TabItem_PreviewMouseDown"
+                             Name="PlaylistTab"
+                             PreviewMouseDown="PlaylistTab_PreviewMouseDown"
                              >
                         <Grid>
                             <!-- Playlist List View -->
@@ -307,13 +313,14 @@
                                   BorderThickness="0"
                                   Style="{StaticResource CustomListView}"
                                   HorizontalContentAlignment="Stretch"
-                                  ItemsSource="{Binding Playlists, UpdateSourceTrigger=PropertyChanged}">
+                                  ItemsSource="{Binding PageController.CurrentPage.Items, 
+                                      UpdateSourceTrigger=PropertyChanged}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <local:PlaylistSearchItem PlaylistName="{Binding name}"
                                                                   PlaylistId="{Binding id}"
                                                                   PlaylistImage="{Binding images,
-                                                                  Converter={StaticResource SelectImageNullableConverter}}"
+                                                                  Converter={StaticResource SelectImageConverter}}"
                                                                   Click="PlaylistSearchItem_Click"
                                                                   />
                                     </DataTemplate>
@@ -329,7 +336,8 @@
                                       Panel.ZIndex="1"
                                       Style="{StaticResource CustomListView}"
                                       HorizontalContentAlignment="Stretch"
-                                      ItemsSource="{Binding PlaylistTracks, UpdateSourceTrigger=PropertyChanged}">
+                                      ItemsSource="{Binding PageController.CurrentPage.Items, 
+                                      UpdateSourceTrigger=PropertyChanged}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <local:TrackSearchItem TrackArtists="{Binding track.artists,
@@ -348,11 +356,17 @@
                     </TabItem>
 
                     <!-- Artists Tab -->
-                    <TabItem Header="Artists" Width="100"
-                                 Height="100">
+                    <TabItem Header="Artists" 
+                             Width="100"
+                             Height="100"
+                             Name="ArtistTab"
+                             PreviewMouseDoubleClick="ArtistTab_PreviewMouseDoubleClick">
+                        <!-- Artist List View -->
                         <ListView HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          ItemsSource="{Binding Artists, UpdateSourceTrigger=PropertyChanged}">
+                                  Name="ArtistListView"
+                                  VerticalAlignment="Stretch"
+                                  ItemsSource="{Binding PageController.CurrentPage.Items, 
+                                      UpdateSourceTrigger=PropertyChanged}">
 
 
                         </ListView>

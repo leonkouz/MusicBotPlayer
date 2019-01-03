@@ -285,6 +285,8 @@ namespace MusicBotPlayer
 
             currentlyShownSubList = PlaylistTracksListView;
 
+            viewModel.SpotifyViewModel.PageController.NavigateToChildPage();
+
             PlaylistListView.Visibility = Visibility.Collapsed;
             PlaylistTracksListView.Visibility = Visibility.Visible;
             BackButton.Visibility = Visibility.Visible;
@@ -297,6 +299,8 @@ namespace MusicBotPlayer
 
             currentlyShownSubList.Visibility = Visibility.Collapsed;
             currentlyShownSubList = null;
+
+            viewModel.SpotifyViewModel.PageController.NavigateToParentPage();
 
             BackButton.Visibility = Visibility.Collapsed;
         }
@@ -349,6 +353,50 @@ namespace MusicBotPlayer
             {
                 BackButton_PreviewMouseDown(null, null);
             }
+        }
+
+        private void AlbumTab_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.SpotifyViewModel.PageController.NavigateToPage("AlbumPage");
+            TabItem_PreviewMouseDown(null, null);
+
+            // Updates the items source so that images do not appear as blank.
+            var binding = BindingOperations.GetBindingExpression(AlbumListView, ListView.ItemsSourceProperty);
+            binding.UpdateTarget();
+            binding.UpdateSource();
+        }
+
+        private void TracksTab_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.SpotifyViewModel.PageController.NavigateToPage("TracksPage");
+            TabItem_PreviewMouseDown(null, null);
+
+            // Updates the items source so that images do not appear as blank.
+            var binding = BindingOperations.GetBindingExpression(TracksListView, ListView.ItemsSourceProperty);
+            binding.UpdateTarget();
+            binding.UpdateSource();
+        }
+
+        private void PlaylistTab_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.SpotifyViewModel.PageController.NavigateToPage("PlaylistPage");
+            TabItem_PreviewMouseDown(null, null);
+
+            // Updates the items source so that images do not appear as blank.
+            var binding = BindingOperations.GetBindingExpression(PlaylistListView, ListView.ItemsSourceProperty);
+            binding.UpdateTarget();
+            binding.UpdateSource();
+        }
+
+        private void ArtistTab_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.SpotifyViewModel.PageController.NavigateToPage("ArtistPage");
+            TabItem_PreviewMouseDown(null, null);
+
+            // Updates the items source so that images do not appear as blank.
+            var binding = BindingOperations.GetBindingExpression(ArtistListView, ListView.ItemsSourceProperty);
+            binding.UpdateTarget();
+            binding.UpdateSource();
         }
     }
 }

@@ -12,12 +12,27 @@ namespace MusicBotPlayer
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var imageList = (List<Image>)value;
+            List<Image> imageList = null;
+            List<ImageNullable> imageNullableList = null;
 
-            if(imageList.Count != 0)
+            try
+            {
+                imageList = (List<Image>)value;
+            }
+            catch (InvalidCastException)
+            {
+                imageNullableList = (List<ImageNullable>)value;
+            }
+ 
+            if(imageList != null && imageList.Count != 0)
             {
                 // Return the last image from the list which is 64 x x64
                 return imageList.First().url;
+            }
+            else if(imageNullableList != null && imageNullableList.Count != 0)
+            {
+                // Return the last image from the list which is 64 x x64
+                return imageNullableList.First().url;
             }
             else
             {

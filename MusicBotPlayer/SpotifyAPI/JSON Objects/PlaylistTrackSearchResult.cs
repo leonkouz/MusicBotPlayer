@@ -60,7 +60,7 @@ namespace MusicBotPlayer
     }
 
     [JsonObject]
-    public class PlaylistTrackSearchDetails
+    public class PlaylistTrackSearchDetails : IPage
     {
         public DateTime added_at { get; set; }
         public AddedBy added_by { get; set; }
