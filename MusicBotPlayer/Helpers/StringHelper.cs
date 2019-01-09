@@ -41,8 +41,8 @@ namespace MusicBotPlayer
         /// Convert an ISO 8601 Duration to a string.
         /// E.g. PT19M30S to 19:30.
         /// </summary>
-        /// <param name="youtubeApiDuration"></param>
-        /// <returns></returns>
+        /// <param name="duration">The duration to convert.</param>
+        /// <returns>A string in 24 hour time format. e.g. 19:30.</returns>
         public static string ConvertISO8601DurationToString(string duration)
         {
             return XmlConvert.ToTimeSpan(duration).ToString();

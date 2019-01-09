@@ -27,12 +27,12 @@ namespace MusicBotPlayer
         /// List of all search types.
         /// </summary>
         public static List<SearchType> AllSearchTypes = new List<SearchType>()
-            {
-                SearchType.album,
-                SearchType.artist,
-                SearchType.playlist,
-                SearchType.track,
-            };
+        {
+            SearchType.album,
+            SearchType.artist,
+            SearchType.playlist,
+            SearchType.track,
+        };
 
         /// <summary>
         /// Initialises the Spotify API.
@@ -71,7 +71,7 @@ namespace MusicBotPlayer
         /// </summary>
         public void KillAuthenticationThread()
         {
-            if(authenticationThread.IsAlive)
+            if (authenticationThread.IsAlive)
             {
                 authenticationThread.Abort();
             }
@@ -89,7 +89,7 @@ namespace MusicBotPlayer
         /// Gets the image of the track.
         /// </summary>
         /// <param name="id">The id of the track.</param>
-        /// <returns></returns>
+        /// <returns>The URL of the track's image.</returns>
         public static string GetTrackImage(string id)
         {
             TrackSearchResult result = JsonConvert.DeserializeObject<TrackSearchResult>(Spotify.Api.GetTrack(id));
